@@ -182,9 +182,9 @@
                     </li>
 
                     <li
-                        class="menu-item {{ Request::is('admin/stocks/schoolbags') || Request::is('admin/stocks/handcarries') || Request::is('admin/stocks/travelbags')|| Request::is('admin/stocks/handbags') ? 'active' : '' }}">
+                        class="menu-item {{ Request::is('admin/stocks/schoolbags') || Request::is('admin/stocks/handcarries') || Request::is('admin/stocks/travelbags')|| Request::is('admin/stocks/handbags')|| Request::is('admin/stocks/create/schoolbags')|| Request::is('admin/stocks/create/handcarries')|| Request::is('admin/stocks/create/travelbags')|| Request::is('admin/stocks/create/handbags') ? 'active' : '' }}">
                         <a href="javascript:void(0);"
-                            class="menu-link menu-toggle {{ !(Request::is('admin/stocks/schoolbags') ) && !(Request::is('admin/stocks/handcarries') ) && !(Request::is('admin/stocks/travelbags') )&& !(Request::is('admin/stocks/handbags') ) ? 'text-dark' : '' }}">
+                            class="menu-link menu-toggle {{ !(Request::is('admin/stocks/schoolbags') ) && !(Request::is('admin/stocks/handcarries') ) && !(Request::is('admin/stocks/travelbags') )&& !(Request::is('admin/stocks/handbags') )&& !Request::is('admin/stocks/create/schoolbags')&& !Request::is('admin/stocks/create/handcarries')&& !Request::is('admin/stocks/create/travelbags')&& !Request::is('admin/stocks/create/handbags') ? 'text-dark' : '' }}">
                             <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                             <div data-i18n="Misc">Stocks</div>
                         </a>
@@ -247,22 +247,6 @@
                                     <div data-i18n="Carousel">List Sale Invoices</div>
                                 </a>
                             </li>
-
-
-                            <li class="menu-item {{ Request::is('admin/invoice/make/return') ? 'active' : '' }}">
-                                <a href="{{ url('admin/invoice/make/return') }}"
-                                    class="menu-link {{ !Request::is('admin/invoice/make/return') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Buttons">Make Return Invoice</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ Request::is('admin/invoices/return') ? 'active' : '' }}">
-                                <a href="{{ url('admin/invoices/return') }}"
-                                    class="menu-link {{ !Request::is('admin/invoices/return') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Carousel">List Returned Invoices</div>
-                                </a>
-                            </li>
-
-
                         </ul>
                     </li>
 
@@ -271,7 +255,7 @@
                     <!-- Sale History -->
                     <li
                         class="menu-header small text-uppercase fw-bold {{ Request::is('admin/sale-history*') ? '' : 'text-dark' }}">
-                        <span class="menu-header-text">Sale | Return History</span>
+                        <span class="menu-header-text">Sale History</span>
                     </li>
 
                     <li class="menu-item {{ Request::is('admin/sale-history') ? 'active' : '' }}">
@@ -279,14 +263,6 @@
                             class="menu-link {{ Request::is('admin/sale-history*') ? '' : 'text-dark' }}">
                             <i class="menu-icon tf-icons bx bx-history"></i>
                             <div data-i18n="Tables">Sale History</div>
-                        </a>
-                    </li>
-
-                    <li class="menu-item {{ Request::is('admin/return-history') ? 'active' : '' }}">
-                        <a href="{{ url('admin/return-history') }}"
-                            class="menu-link {{ Request::is('admin/return-history*') ? '' : 'text-dark' }}">
-                            <i class="menu-icon tf-icons bx bx-undo"></i>
-                            <div data-i18n="Tables">Return History</div>
                         </a>
                     </li>
 

@@ -29,19 +29,6 @@
                 </a>
             </li>
 
-              <li class="nav-item" role="presentation">
-                <a class="nav-link {{ Request::is('admin/invoice/make/return') ? 'active' : '' }}"
-                    href="{{ url('admin/invoice/make/return') }}">
-                    Make Return Invoice
-                </a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link {{ Request::is('admin/invoices/return')  ? 'active' : '' }}"
-                href="{{ url('admin/invoices/return') }}">
-                    List Returned Invoices
-                </a>
-            </li>
-
         </ul>
 
 

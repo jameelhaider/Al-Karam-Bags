@@ -1,5 +1,17 @@
 @extends('dashboard.master2')
-@section('admin_title', 'Admin | Stocks')
+@php
+    $title = request()->type == 'handcarries'
+        ? 'Admin | Stocks | Hand Carries'
+        : (request()->type == 'handbags'
+            ? 'Admin | Stocks | Hand Bags'
+            : (request()->type == 'schoolbags'
+                ? 'Admin | Stocks | School Bags'
+                : (request()->type == 'travelbags'
+                    ? 'Admin | Stocks | Travel Bags'
+                    : 'Title Not Found')));
+@endphp
+
+@section('admin_title',$title)
 @section('content2')
 
     <div class="container-fluid px-3">
@@ -130,10 +142,6 @@
                                     <option value="">All</option>
                                     <option value="AVAILABLE" {{ request()->status == 'AVAILABLE' ? 'selected' : '' }}>
                                         AVAILABLE</option>
-                                    <option value="AVAILABLE, LOW STOCK"
-                                        {{ request()->status == 'AVAILABLE, LOW STOCK' ? 'selected' : '' }}>
-                                        AVAILABLE, LOW STOCK
-                                    </option>
                                     <option value="OUT OF STOCK"
                                         {{ request()->status == 'OUT OF STOCK' ? 'selected' : '' }}>
                                         OUT OF STOCK
@@ -362,7 +370,7 @@
                     </table>
                 </div>
 
-                <h4 class="text-center fw-normal text-muted mt-2">No Data Found!</h4>
+                <h4 class="text-center fw-normal text-dark mt-2">No Data Found!</h4>
             @endif
         </div>
 

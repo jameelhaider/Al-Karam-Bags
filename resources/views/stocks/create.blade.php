@@ -1,11 +1,3 @@
-{{-- @php
-    $layout = isset($stock->id) ? 'dashboard.master2' : 'components.stockstabs';
-    $title = $stock->id ? 'Admin | Edit Stock' : 'Admin | Add New Stock';
-@endphp
-@extends($layout)
-@section('admin_title', $title)
-@section(isset($stock->id) ? 'content2' : 'content3') --}}
-
 @php
     $action = request()->routeIs('stock.edit') ? 'Edit Stock' : 'Add New Stock';
 

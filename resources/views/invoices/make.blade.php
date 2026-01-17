@@ -82,17 +82,29 @@
         </style>
         <form action="{{ route('save.invoice') }}" id="invoiceForm" method="post">
             @csrf
-            {{-- Parts --}}
+            {{-- School Bags --}}
             @include('partials.invoice_table', [
-                'items' => $parts,
-                'title' => 'Parts',
+                'items' => $schoolbags,
+                'title' => 'School Bags',
                 'showPurchase' => true,
             ])
 
-            {{-- Tools --}}
+            {{-- Hand Carries --}}
             @include('partials.invoice_table', [
-                'items' => $tools,
-                'title' => 'Tools',
+                'items' => $handcarries,
+                'title' => 'Hand Carries',
+                'showPurchase' => true,
+            ])
+            {{-- Travel Bags --}}
+            @include('partials.invoice_table', [
+                'items' => $travelbags,
+                'title' => 'Travel Bags',
+                'showPurchase' => true,
+            ])
+            {{-- Hand Bags --}}
+            @include('partials.invoice_table', [
+                'items' => $handbags,
+                'title' => 'Hand Bags',
                 'showPurchase' => true,
             ])
 

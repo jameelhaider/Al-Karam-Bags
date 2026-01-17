@@ -138,24 +138,41 @@ class InvoicesController extends Controller
     public function make(Request $request)
     {
         if (Gate::allows('is_admin')) {
-            $toolsQuery = DB::table('stocks')
-                ->where('type', 'tools')
+            $schoolbagsQuery = DB::table('stocks')
+                ->where('type', 'schoolbags')
+                ->where('qty','>',0)
                 ->select('id', 'name', 'sale_price', 'purchase_price', 'qty');
-            $partsQuery = DB::table('stocks')
-                ->where('type', 'parts')
+            $handcarriesQuery = DB::table('stocks')
+                ->where('type', 'handcarries')
+                ->where('qty','>',0)
                 ->select('id', 'name', 'sale_price', 'purchase_price', 'qty');
+
+            $travelbagsQuery = DB::table('stocks')
+                ->where('type', 'travelbags')
+                ->where('qty','>',0)
+                ->select('id', 'name', 'sale_price', 'purchase_price', 'qty');
+            $handbagsQuery = DB::table('stocks')
+                ->where('type', 'handbags')
+                ->where('qty','>',0)
+                ->select('id', 'name', 'sale_price', 'purchase_price', 'qty');
+
             if ($request->has('name')) {
                 $searchName = $request->input('name');
-                $toolsQuery->where('name', 'LIKE', '%' . $searchName . '%');
-                $partsQuery->where('name', 'LIKE', '%' . $searchName . '%');
+                $schoolbagsQuery->where('name', 'LIKE', '%' . $searchName . '%');
+                $handcarriesQuery->where('name', 'LIKE', '%' . $searchName . '%');
+                $travelbagsQuery->where('name', 'LIKE', '%' . $searchName . '%');
+                $handbagsQuery->where('name', 'LIKE', '%' . $searchName . '%');
             }
-            $tools = $toolsQuery->orderByDesc('created_at')->get();
-            $parts = $partsQuery->orderByDesc('created_at')->get();
+            $schoolbags = $schoolbagsQuery->orderByDesc('created_at')->get();
+            $handcarries = $handcarriesQuery->orderByDesc('created_at')->get();
+            $travelbags = $travelbagsQuery->orderByDesc('created_at')->get();
+            $handbags = $handbagsQuery->orderByDesc('created_at')->get();
+
             $accounts = DB::table('accounts')
-                ->select('id', 'customer_name','prev_balance')
+                ->select('id', 'customer_name', 'prev_balance')
                 ->orderBy('id', 'asc')
                 ->get();
-            return view('invoices.make', compact('tools', 'parts', 'accounts'));
+            return view('invoices.make', compact('schoolbags', 'handcarries', 'travelbags', 'handbags', 'accounts'));
         } else {
             return abort(401);
         }
