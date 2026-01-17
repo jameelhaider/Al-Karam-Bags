@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\CloseMonths;
-use App\Models\LoanEntries;
 use Illuminate\Support\Carbon;
 use App\Mail\DatabaseBackupMail;
 use Illuminate\Support\Facades\DB;
@@ -11,21 +10,13 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Response;
-use App\Http\Controllers\TypesController;
-use App\Http\Controllers\ModelsController;
 use App\Http\Controllers\StocksController;
-use App\Http\Controllers\DealersController;
 use App\Http\Controllers\DemandsController;
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\CashReceivedController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\InvoicesController;
-use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\CloseMonthController;
-use App\Http\Controllers\IssuesController;
-use App\Http\Controllers\JobsController;
-use App\Http\Controllers\StickyNotesController;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,61 +33,11 @@ use Symfony\Component\HttpFoundation\Request;
 Route::post('stock/parts/download-pdf', [StocksController::class, 'downloadpartspdf'])->name('stock.parts.download.pdf');
 Route::post('stock/tools/download-pdf', [StocksController::class, 'downloadtoolspdf'])->name('stock.tools.download.pdf');
 Route::post('cash/received/download-pdf', [CashReceivedController::class, 'downloadpdf'])->name('cash.received.download.pdf');
-
 Route::post('demands/download/pdf', [DemandsController::class, 'downloadpdf'])->name('demands.download.pdf');
-Route::get('dealers/download-pdf', [DealersController::class, 'downloadpdf'])->name('dealers.download.pdf');
-
 Route::post('accounts/download-pdf', [AccountsController::class, 'downloadpdf'])->name('accounts.download.pdf');
-
-
 Route::get('demands/delete/all/{type}', [DemandsController::class, 'deleteall'])->name("demand.delete.all");
 Route::post('/demand/delete-selected', [DemandsController::class, 'deleteSelected'])->name('demand.delete.selected');
 
-
-
-
-Route::get('admin/copy-row-parts', function (Request $request) {
-    $types = DB::table('types')
-        ->where('type', 'parts')
-        ->get();
-    $partscompanies = DB::table('companies')
-        ->where('type', 'parts')
-        ->get();
-    $output = null;
-    if ($request->filled('company_id') && $request->filled('type_id')) {
-
-        $stocks = DB::table('stocks')
-            ->join('companies', 'stocks.company_id', '=', 'companies.id')
-            ->join('models', 'stocks.model_id', '=', 'models.id')
-            ->select(
-                'companies.name as company_name',
-                'models.model as model_name',
-                'stocks.type_name',
-                'stocks.sale_price'
-            )
-            ->where('stocks.type', 'parts')
-            ->where('stocks.company_id', $request->company_id)
-            ->where('stocks.type_name', function ($q) use ($request) {
-                $q->select('name')
-                    ->from('types')
-                    ->where('id', $request->type_id);
-            })
-            ->where('stocks.qty', '>', 0)
-            ->orderBy('models.model')
-            ->get();
-
-        $output = $stocks->map(function ($stock) {
-            $model = str_pad($stock->model_name, 30, ' ', STR_PAD_RIGHT);
-            $price = number_format($stock->sale_price);
-            return "{$model}  Rs. {$price}";
-        })->implode("\n");
-    }
-    return view('copyrawdata', compact(
-        'types',
-        'partscompanies',
-        'output'
-    ));
-});
 
 
 
