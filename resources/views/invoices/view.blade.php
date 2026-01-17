@@ -66,10 +66,6 @@
                             onclick="copyToClipboard('{{ $invoice->invoice_id }}')">
                             Copy Invoice ID <i class="bx bx-copy"></i>
                         </a>
-                        <a href="{{ url('/admin/stocks/parts') }}" target="_BLANK" class="btn btn-sm me-2"
-                            style="background-color: rgb(30, 176, 30);color:white">Add Parts <i class="bx bx-plus"></i></a>
-                        <a href="{{ url('/admin/stocks/tools') }}" target="_BLANK" class="btn btn-sm me-2"
-                            style="background-color: rgb(22, 128, 151);color:white">Add Tools <i class="bx bx-plus"></i></a>
 
                         <button id="downloadImage" class="btn btn-sm btn-dark me-2">Download as Image <i
                                 class="bx bx-image"></i></button>
@@ -165,12 +161,12 @@
                                         <h6 class="text-dark">-Shop # FF/340 D-Point Plaza GT Road, Gujranwala</h6>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-6">
-                                        <h5 class="fw-bold text-dark">Conatct</h5>
-                                        <span class="h5 fw-bold text-dark">Husnain Nasir:</span> <span
-                                            class="h6 text-dark">0337-4967077
+                                        <h5 class="fw-bold text-dark">Contact</h5>
+                                        <span class="h5 fw-bold text-dark">Awais:</span> <span
+                                            class="h6 text-dark">0315-8182213
                                         </span>
                                         <br>
-                                        <span class="h5 fw-bold text-dark">Nasir Ahmad:</span> <span
+                                        <span class="h5 fw-bold text-dark">Sabir:</span> <span
                                             class="h6 text-dark">0305-5760932</span>
                                     </div>
                                 </div>

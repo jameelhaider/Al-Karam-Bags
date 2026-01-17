@@ -26,8 +26,7 @@ class DemandsController extends Controller
             $demands = $query
                 ->orderBy('created_at', 'desc')
                 ->paginate(100);
-            $types = DB::table('types')->get();
-            return view('demands.index', compact('demands', 'types'));
+            return view('demands.index', compact('demands'));
         } else {
             return abort(401);
         }
@@ -41,8 +40,7 @@ class DemandsController extends Controller
     {
         if (Gate::allows('is_admin')) {
             $demand = new Demands();
-            $types = DB::table('types')->get();
-            return view("demands.create", compact('demand', 'types'));
+            return view("demands.create", compact('demand'));
         } else {
             return abort(401);
         }
@@ -53,10 +51,9 @@ class DemandsController extends Controller
     {
         if (Gate::allows('is_admin')) {
             $demand = Demands::find($id);
-            $types = DB::table('types')->get();
             if (!$demand)
                 return redirect()->back();
-            return view("demands.create", compact('demand', 'types'));
+            return view("demands.create", compact('demand'));
         } else {
             return abort(401);
         }
@@ -68,17 +65,8 @@ class DemandsController extends Controller
         if (Gate::allows('is_admin')) {
             $demand = new Demands();
             $demand->type = $request->type;
+            $demand->name = $request->name;
             $demand->qty = $request->qty ? $request->qty : null;
-            if ($request->type == 'parts') {
-                $demand->item_type_id = $request->item_type_id;
-                $item_type = DB::table('types')->where('id', $request->item_type_id)->first()->name;
-                $demand->item_type = $item_type;
-                $demand->name = $request->name;
-            } else {
-                $demand->item_type = null;
-                $demand->item_type_id = null;
-                $demand->name = $request->name;
-            }
             $demand->save();
             if ($request->action === 'save_add_new') {
                 return redirect()->back()->with('success', 'Demand Added! You can add another one.');
@@ -96,29 +84,11 @@ class DemandsController extends Controller
     {
         if (Gate::allows('is_admin')) {
             $demand = Demands::findOrFail($id);
-
             $demand->qty = $request->qty ? $request->qty : null;
-
-            if ($request->type == 'parts') {
-                $demand->item_type_id = $request->item_type_id;
-                $item_type = DB::table('types')->where('id', $request->item_type_id)->first()->name;
-                $demand->item_type = $item_type;
-                $demand->name = $request->name;
-                $demand->type = 'parts';
-            } else {
-                $demand->item_type = null;
-                $demand->item_type_id = null;
-                $demand->name = $request->name;
-                $demand->type = 'tools';
-            }
-
+             $demand->type = $request->type;
+            $demand->name = $request->name;
             $demand->save();
-
-              if ($request->type == 'parts') {
-          return redirect()->route('index.demand', ['type' => 'parts'])->with('success', 'Demand Updated Successfully!');
-            } else {
-                return redirect()->route('index.demand', ['type' => 'tools'])->with('success', 'Demand Updated Successfully!');
-            }
+          return redirect()->route('index.demand', ['type' => $request->type])->with('success', 'Demand Updated Successfully!');
 
         } else {
             return abort(401);

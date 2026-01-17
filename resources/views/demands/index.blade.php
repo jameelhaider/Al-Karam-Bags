@@ -1,8 +1,16 @@
 @extends('dashboard.master2')
 @php
-    $tit = request()->type == 'parts' ? 'Admin | Parts Demands' : 'Admin | Tools Demands';
+    $title = request()->type == 'handcarries'
+        ? 'Admin | Demands | Hand Carries'
+        : (request()->type == 'handbags'
+            ? 'Admin | Demands | Hand Bags'
+            : (request()->type == 'schoolbags'
+                ? 'Admin | Demands | School Bags'
+                : (request()->type == 'travelbags'
+                    ? 'Admin | Demands | Travel Bags'
+                    : 'Title Not Found')));
 @endphp
-@section('admin_title', $tit)
+@section('admin_title', $title)
 @section('content2')
 
     <div class="container-fluid px-3">
@@ -18,23 +26,26 @@
 
                     <div class="d-flex align-items-center">
                         <h3 class="mt-1 d-none d-lg-block d-md-block" style="font-family: cursive;">
-                            {{ request()->type == 'parts' ? 'Parts' : 'Tools' }}
-                            Demands</h3>
+                             {{ request()->type == 'handcarries'
+                                ? 'Demands | Hand Carries'
+                                : (request()->type == 'handbags'
+                                    ? 'Demands | Hand Bags'
+                                    : (request()->type == 'schoolbags'
+                                        ? 'Demands | School Bags'
+                                        : (request()->type == 'travelbags'
+                                            ? 'Demands | Travel Bags'
+                                            : 'Title Not Found'))) }}</h3>
                         <h5 class="mt-1 d-block d-lg-none d-md-none" style="font-family: cursive;">
-                            {{ request()->type == 'parts' ? 'Parts' : 'Tools' }}
-                            Demands</h5>
-
-                        @if ($demands->count() > 0)
-                            <form action="{{ route('demands.download.pdf') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="type" value="{{ request()->type }}">
-                                @if (request()->type == 'parts')
-                                    <input type="hidden" name="type_id" value="All">
-                                @endif
-
-                                <button type="submit" class="btn btn-primary ms-3">Download PDF</button>
-                            </form>
-                        @endif
+                            {{ request()->type == 'handcarries'
+                                ? 'Demands | Hand Carries'
+                                : (request()->type == 'handbags'
+                                    ? 'Demands | Hand Bags'
+                                    : (request()->type == 'schoolbags'
+                                        ? 'Demands | School Bags'
+                                        : (request()->type == 'travelbags'
+                                            ? 'Demands | Travel Bags'
+                                            : 'Title Not Found'))) }}
+                            </h5>
 
                     </div>
 
@@ -74,16 +85,6 @@
                         <div class="col-lg-5 col-md-4 col-sm-4 col-6 mt-1 mb-1">
                             <input type="text" class="form-control" value="{{ request()->name }}"
                                 placeholder="Demand Name" name="name">
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-6 mt-1 mb-1">
-                            <select name="type_id" id="type-select" class=" form-select" onchange="this.form.submit()">
-                                <option value="{{ null }}">Select Type</option>
-                                @foreach ($types as $type)
-                                    <option value="{{ $type->id }}"
-                                        {{ request()->type_id == $type->id ? 'selected' : '' }}>
-                                        {{ $type->name }}</option>
-                                @endforeach
-                            </select>
                         </div>
                     @endif
                     @if (request()->type == 'tools')
@@ -175,7 +176,8 @@
 
                                         <td class="text-dark">{{ ++$key }}</td>
                                         <td title="{{ $demand->name }}">
-                                            <a class="text-dark fw-bold" href="{{ route('demand.edit', ['type'=>$demand->type,'id' => $demand->id]) }}">
+                                            <a class="text-dark fw-bold"
+                                                href="{{ route('demand.edit', ['type' => $demand->type, 'id' => $demand->id]) }}">
                                                 {{ $demand->name }}
                                             </a>
                                         </td>
@@ -216,7 +218,7 @@
                         </thead>
                     </table>
                 </div>
-                <h4 class="h4 text-center fw-normal text-muted mt-2">No Data Found!</h4>
+                <h4 class="h4 text-center fw-normal text-dark mt-2">No Data Found!</h4>
             @endif
 
         </div>

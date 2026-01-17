@@ -1,9 +1,25 @@
-@extends('dashboard.master2')
+{{-- @extends('dashboard.master2')
 @php
     $title = $demand->id != null ? 'Edit Demand' : 'Add New Demand';
 @endphp
 @section('admin_title', $title)
+@section('content2') --}}
+@php
+    $action = request()->routeIs('demand.edit') ? 'Edit Demand' : 'Add New Demand';
+
+    $title = match (request()->type) {
+        'handcarries' => "$action | Hand Carries",
+        'handbags'    => "$action | Hand Bags",
+        'schoolbags'  => "$action | School Bags",
+        'travelbags'  => "$action | Travel Bags",
+        default       => 'Title Not Found',
+    };
+@endphp
+
+@extends('dashboard.master2')
+@section('admin_title', $title)
 @section('content2')
+
     <div class="container-fluid px-3">
 
         <div class="card shadow-sm bg-white rounded-0">
@@ -16,10 +32,10 @@
                 </div>
                 <div class="col-lg-10 col-md-9 col-6 col-sm-8">
                     <h3 class="mt-1 d-none d-md-block d-lg-block" style="font-family:cursive">
-                        {{ $demand->id != null ? 'Edit Demand' : 'Add New Demand' }}</h3>
+                        {{ $title }}</h3>
 
                     <h5 class="mt-1 d-block d-md-none d-lg-none" style="font-family:cursive">
-                        {{ $demand->id != null ? 'Edit Demand' : 'Add New Demand' }}</h5>
+                        {{ $title }}</h5>
                 </div>
             </div>
         </div>
@@ -64,25 +80,6 @@
                             </span>
                         @enderror
                     </div>
-
-                    @if (request()->type == 'parts')
-                        <div class="col-lg-4 col-md-4">
-                            <label for="" class="fw-bold mb-2">Select Type <span class="text-danger">*</span></label>
-                            <select name="item_type_id" required
-                                class="form-select @error('item_type_id') is-invalid @enderror" id="type-select">
-                                <option value="{{ null }}">Select Type</option>
-                                @foreach ($types as $type)
-                                    <option value="{{ $type->id }}"
-                                        {{ $demand->item_type_id == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('item_type_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    @endif
 
 
                     <div class="col-lg-4 col-md-4">

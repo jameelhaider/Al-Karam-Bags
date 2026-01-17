@@ -183,11 +183,21 @@
 
                     <li
                         class="menu-item {{ Request::is('admin/stocks/schoolbags') || Request::is('admin/stocks/handcarries') || Request::is('admin/stocks/travelbags')|| Request::is('admin/stocks/handbags')|| Request::is('admin/stocks/create/schoolbags')|| Request::is('admin/stocks/create/handcarries')|| Request::is('admin/stocks/create/travelbags')|| Request::is('admin/stocks/create/handbags') ? 'active' : '' }}">
-                        <a href="javascript:void(0);"
-                            class="menu-link menu-toggle {{ !(Request::is('admin/stocks/schoolbags') ) && !(Request::is('admin/stocks/handcarries') ) && !(Request::is('admin/stocks/travelbags') )&& !(Request::is('admin/stocks/handbags') )&& !Request::is('admin/stocks/create/schoolbags')&& !Request::is('admin/stocks/create/handcarries')&& !Request::is('admin/stocks/create/travelbags')&& !Request::is('admin/stocks/create/handbags') ? 'text-dark' : '' }}">
-                            <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                            <div data-i18n="Misc">Stocks</div>
-                        </a>
+                      <a href="javascript:void(0);"
+   class="menu-link menu-toggle {{ !(
+        Request::is('admin/stocks/schoolbags') ||
+        Request::is('admin/stocks/handcarries') ||
+        Request::is('admin/stocks/travelbags') ||
+        Request::is('admin/stocks/handbags') ||
+        Request::is('admin/stocks/create/schoolbags') ||
+        Request::is('admin/stocks/create/handcarries') ||
+        Request::is('admin/stocks/create/travelbags') ||
+        Request::is('admin/stocks/create/handbags')
+   ) ? 'text-dark' : '' }}">
+    <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+    <div data-i18n="Misc">Stocks</div>
+</a>
+
                         <ul class="menu-sub">
                             <li
                                 class="menu-item {{ Request::is('admin/stocks/schoolbags') || Request::is('admin/stocks/create/schoolbags') ? 'active' : '' }}">
@@ -302,25 +312,49 @@
                     </li>
 
                     <li
-                        class="menu-item {{ Request::is('admin/demands/parts') || Request::is('admin/demands/tools') || Request::is('admin/demands/parts/create') || Request::is('admin/demands/tools/create') ? 'active' : '' }}">
-                        <a href="javascript:void(0)"
-                            class="menu-link menu-toggle {{ !(Request::is('admin/demands/parts') || Request::is('admin/demands/tools') || Request::is('admin/demands/parts/create') || Request::is('admin/demands/tools/create')) ? 'text-dark' : '' }}">
-                            <i class="menu-icon tf-icons bx bx-list-ul"></i>
-                            <div data-i18n="User interface">Stock Demands</div>
-                        </a>
+                        class="menu-item {{ Request::is('admin/demands/schoolbags') || Request::is('admin/demands/schoolbags/create') || Request::is('admin/demands/handcarries/create') || Request::is('admin/demands/handcarries') || Request::is('admin/demands/travelbags') || Request::is('admin/demands/travelbags/create') || Request::is('admin/demands/handbags/create') || Request::is('admin/demands/handbags') ? 'active' : '' }}">
+                       <a href="javascript:void(0)"
+   class="menu-link menu-toggle {{ !(
+        Request::is('admin/demands/schoolbags') ||
+        Request::is('admin/demands/schoolbags/create') ||
+        Request::is('admin/demands/handcarries') ||
+        Request::is('admin/demands/handcarries/create') ||
+        Request::is('admin/demands/travelbags') ||
+        Request::is('admin/demands/travelbags/create') ||
+        Request::is('admin/demands/handbags') ||
+        Request::is('admin/demands/handbags/create')
+   ) ? 'text-dark' : '' }}">
+    <i class="menu-icon tf-icons bx bx-list-ul"></i>
+    <div data-i18n="User interface">Stock Demands</div>
+</a>
+
                         <ul class="menu-sub">
                             <li
-                                class="menu-item {{ Request::is('admin/demands/parts') || Request::is('admin/demands/parts/create') ? 'active' : '' }}">
-                                <a href="{{ url('admin/demands/parts') }}"
-                                    class="menu-link {{ !Request::is('admin/demands/parts') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Buttons">Parts</div>
+                                class="menu-item {{ Request::is('admin/demands/schoolbags') || Request::is('admin/demands/schoolbags/create') ? 'active' : '' }}">
+                                <a href="{{ url('admin/demands/schoolbags') }}"
+                                    class="menu-link {{ !Request::is('admin/demands/schoolbags') ? 'text-dark' : '' }}">
+                                    <div data-i18n="Buttons">School Bags</div>
                                 </a>
                             </li>
                             <li
-                                class="menu-item {{ Request::is('admin/demands/tools') || Request::is('admin/demands/tools/create') ? 'active' : '' }}">
-                                <a href="{{ url('admin/demands/tools') }}"
-                                    class="menu-link {{ !Request::is('admin/demands/tools') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Carousel">Tools</div>
+                                class="menu-item {{ Request::is('admin/demands/handcarries') || Request::is('admin/demands/handcarries/create') ? 'active' : '' }}">
+                                <a href="{{ url('admin/demands/handcarries') }}"
+                                    class="menu-link {{ !Request::is('admin/demands/handcarries') ? 'text-dark' : '' }}">
+                                    <div data-i18n="Carousel">Hand Carries</div>
+                                </a>
+                            </li>
+                             <li
+                                class="menu-item {{ Request::is('admin/demands/travelbags') || Request::is('admin/demands/travelbags/create') ? 'active' : '' }}">
+                                <a href="{{ url('admin/demands/travelbags') }}"
+                                    class="menu-link {{ !Request::is('admin/demands/travelbags') ? 'text-dark' : '' }}">
+                                    <div data-i18n="Carousel">Travel Bags</div>
+                                </a>
+                            </li>
+                             <li
+                                class="menu-item {{ Request::is('admin/demands/handbags') || Request::is('admin/demands/handbags/create') ? 'active' : '' }}">
+                                <a href="{{ url('admin/demands/handbags') }}"
+                                    class="menu-link {{ !Request::is('admin/demands/handbags') ? 'text-dark' : '' }}">
+                                    <div data-i18n="Carousel">Hand Bags</div>
                                 </a>
                             </li>
                         </ul>

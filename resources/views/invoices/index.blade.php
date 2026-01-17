@@ -239,13 +239,6 @@
                                                         href="{{ route('invoice.view', ['id' => $invoice->id]) }}">View
                                                         Invoice</a>
                                                 </li>
-                                                @if ($invoice->status != 'Returned')
-                                                    <li>
-                                                        <a class="dropdown-item" href="javascript:void(0)"
-                                                            onclick="confirmReturned('{{ route('return.invoice', ['id' => $invoice->id, 'invoice_to' => $invoice->invoice_to, 'acc_id' => $invoice->acc_id]) }}')">Mark
-                                                            As Returned</a>
-                                                    </li>
-                                                @endif
                                             </ul>
                                         </div>
 
@@ -283,25 +276,6 @@
     </div>
 
 
-
-    <script>
-        // Function to handle Returned confirmation
-        function confirmReturned(url) {
-            Swal.fire({
-                title: 'Are you sure you want to Mark This Invoice As Returned?',
-                text: "You won't be able to revert this! This May Returned Complete Invoice. Plz Double Check The Invoice",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Marked it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            })
-        }
-    </script>
     <script>
         $(":input").inputmask();
     </script>

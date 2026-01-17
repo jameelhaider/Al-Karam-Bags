@@ -12,7 +12,5 @@ class Demands extends Model
         'type',
         'name',
         'qty',
-        'item_type',
-        'item_type_id',
     ];
 }
