@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\Demands;
 use App\Models\Stocks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +22,7 @@ class StocksController extends Controller
             }
             if ($request->status == "AVAILABLE") {
                 $query->where('qty', '>', 0);
-            }elseif ($request->status == "OUT OF STOCK") {
+            } elseif ($request->status == "OUT OF STOCK") {
                 $query->where('qty', '<=', 0);
             }
 
@@ -140,13 +142,34 @@ class StocksController extends Controller
     }
 
 
+      public function addtodemand(Request $request)
+    {
+        if (Gate::allows('is_admin')) {
+            $request->validate([
+                'stock_id' => 'required|exists:stocks,id',
+                'qty' => 'nullable|numeric|min:1',
+            ]);
+            $stock = Stocks::find($request->stock_id);
+            $demand = new Demands();
+            $demand->qty = $request->qty ?? null;
+            $demand->type = $request->type;
+            $demand->name = $stock->name;
+            $demand->save();
+            return redirect()->back()->with('success', 'Added to demand successfully');
+        } else {
+            return abort(401);
+        }
+    }
+
+
+
     public function stockstats(Request $request, $type)
     {
         if (!Gate::allows('is_admin')) {
             return abort(401);
         }
 
-        if (!in_array($type, ['parts', 'tools'])) {
+        if (!in_array($type, ['schoolbags', 'handcarries', 'handbags', 'travelbags'])) {
             return redirect()->back()->with('error', 'Invalid type');
         }
 
@@ -156,46 +179,30 @@ class StocksController extends Controller
             ->join('stocks', 'invoice_items.stock_id', '=', 'stocks.id')
             ->select(
                 'stocks.id as stock_id',
-                'stocks.company_name',
-                'stocks.model_name',
-                'stocks.type_name',
-                'stocks.type_id',
                 'stocks.name',
                 DB::raw('SUM(invoice_items.qty) as total_sold')
             )
             ->where('stocks.type', $type);
-        if ($request->filled('type_id')) {
-            $query->where('stocks.type_id', $request->type_id);
-        }
-        if ($request->filled('company_id')) {
-            $query->where('stocks.company_id', $request->company_id);
-        }
         $topSelling = $query
             ->groupBy(
                 'stocks.id',
-                'stocks.type_id',
                 'stocks.name',
-                'stocks.company_name',
-                'stocks.model_name',
-                'stocks.type_name',
             )
             ->orderByDesc('total_sold')
             ->limit($limit)
             ->get();
-
-        $types = DB::table('types')
-            ->orderBy('created_at', 'asc')
-            ->get();
-        $companies = DB::table('companies')
-            ->where('type', $type)
-            ->orderBy('created_at', 'asc')
-            ->get();
-        if ($type === 'parts' && $request->filled('type_id')) {
-            $selectedType = DB::table('types')->where('id', $request->type_id)->value('name');
-            $title2 = "Top {$limit} Selling {$selectedType}";
-        } else {
-            $title2 = "Top {$limit} Selling " . ucfirst($type);
-        }
-        return view('stocks.sellingstats', compact('topSelling', 'types', 'limit', 'title2', 'companies'));
+           if($type=='schoolbags'){
+ $tit='School Bags';
+            }elseif($type=='handcarries'){
+ $tit='Hand Carries';
+            }
+            elseif($type=='travelbags'){
+ $tit='Tarvel Bags';
+            }
+             elseif($type=='handbags'){
+ $tit='Hand Bags';
+            }
+            $title2 = "Top {$limit} Selling {$tit}";
+        return view('stocks.sellingstats', compact('topSelling', 'limit', 'title2'));
     }
 }

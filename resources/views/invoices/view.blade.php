@@ -158,16 +158,16 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-6">
                                         <h5 class="fw-bold text-dark">Address</h5>
-                                        <h6 class="text-dark">-Shop # FF/340 D-Point Plaza GT Road, Gujranwala</h6>
+                                        <h6 class="text-dark">~Shop No#80 Gali Chubakan Wali Sad Nagrii Bazaar Sialkoti Gate Gujranwala</h6>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-6">
                                         <h5 class="fw-bold text-dark">Contact</h5>
-                                        <span class="h5 fw-bold text-dark">Awais:</span> <span
+                                        <span class="h5 fw-bold text-dark">Rana Awais:</span> <span
                                             class="h6 text-dark">0315-8182213
                                         </span>
                                         <br>
-                                        <span class="h5 fw-bold text-dark">Sabir:</span> <span
-                                            class="h6 text-dark">0305-5760932</span>
+                                        <span class="h5 fw-bold text-dark">Sabir Ali:</span> <span
+                                            class="h6 text-dark">0318-4499953</span>
                                     </div>
                                 </div>
                             </div>

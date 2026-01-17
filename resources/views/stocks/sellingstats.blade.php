@@ -16,13 +16,13 @@
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-8 col-9">
                     <h5 class="mt-1 d-none d-lg-none d-md-block" style="font-family:cursive">
-                        Stock Sale Stats | {{ ucfirst(request()->type) }}
+                        Stock Sale Stats | {{ $title }}
                     </h5>
                     <h3 class="mt-1 d-none d-lg-block d-md-none" style="font-family:cursive">
-                        Stock Sale Stats | {{ ucfirst(request()->type) }}
+                        Stock Sale Stats | {{ $title }}
                     </h3>
                     <small class="mt-1 d-block d-md-none d-lg-none" style="font-family:cursive">
-                        Stock Sale Stats | {{ ucfirst(request()->type) }}
+                        Stock Sale Stats | {{ $title }}
                     </small>
                 </div>
             </div>
@@ -56,30 +56,8 @@
         <div class="card mb-2 p-2 mt-2">
             <form action="" method="GET">
                 <div class="row">
-                    @if (request()->type == 'parts')
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1 mb-1">
-                            <select name="company_id" id="company-select" class="form-select" onchange="this.form.submit()">
-                                <option value="">Select Companies
-                                </option>
-                                @foreach ($companies as $company)
-                                    <option value="{{ $company->id }}"
-                                        {{ request()->company_id == $company->id ? 'selected' : '' }}>{{ $company->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1 mb-1">
-                            <select name="type_id" id="type-select" class="form-select" onchange="this.form.submit()">
-                                <option value="">Select Type
-                                </option>
-                                @foreach ($types as $type)
-                                    <option value="{{ $type->id }}"
-                                        {{ request()->type_id == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1 mb-1">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-1 mb-1">
                             <select name="limit" class="form-select" onchange="this.form.submit()">
                                 <option value="10" {{ request()->input('limit', 10) == 10 ? 'selected' : '' }}>Limit 10
                                 </option>
@@ -95,50 +73,6 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1 mb-1">
-                            <div class="btn-group w-100">
-                                <a href="{{ url('admin/stock-stats/parts') }}" title="Clear"
-                                    class="btn btn-outline-danger">Clear</a>
-                                <button type="submit" title="Search" class="btn btn-outline-success">Search</button>
-                            </div>
-                        </div>
-                    @else
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-6 mt-1 mb-1">
-                            <select name="company_id" id="company-select" class="form-select" onchange="this.form.submit()">
-                                <option value="">Select Companies
-                                </option>
-                                @foreach ($companies as $company)
-                                    <option value="{{ $company->id }}"
-                                        {{ request()->company_id == $company->id ? 'selected' : '' }}>{{ $company->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-6 mt-1 mb-1">
-                            <select name="limit" class="form-select" onchange="this.form.submit()">
-                                <option value="10" {{ request()->input('limit', 10) == 10 ? 'selected' : '' }}>Limit 10
-                                </option>
-                                <option value="20" {{ request()->input('limit', 10) == 20 ? 'selected' : '' }}>20
-                                </option>
-                                <option value="30" {{ request()->input('limit', 10) == 30 ? 'selected' : '' }}>30
-                                </option>
-                                <option value="40" {{ request()->input('limit', 10) == 40 ? 'selected' : '' }}>40
-                                </option>
-                                <option value="50" {{ request()->input('limit', 10) == 50 ? 'selected' : '' }}>50
-                                </option>
-                                <option value="100" {{ request()->input('limit', 10) == 100 ? 'selected' : '' }}>100
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-12 mt-1 mb-1">
-                            <div class="btn-group w-100">
-                                <a href="{{ url('admin/stock-stats/tools') }}" title="Clear"
-                                    class="btn btn-outline-danger">Clear</a>
-                                <button type="submit" title="Search" class="btn btn-outline-success">Search</button>
-                            </div>
-                        </div>
-                    @endif
 
 
 
@@ -184,15 +118,7 @@
                                 <tr>
                                     <td class="text-dark">{{ ++$key }}</td>
                                     <td class="text-dark fw-bold">
-                                        @if (request()->type == 'parts')
-                                            {{ collect([
-                                                !empty($item->company_name) && $item->company_name !== 'No Company' ? $item->company_name : null,
-                                                !empty($item->model_name) && $item->model_name !== 'No Model' ? $item->model_name : null,
-                                                $item->type_name,
-                                            ])->filter()->implode(' - ') }}
-                                        @elseif (request()->type == 'tools')
                                             {{ $item->name }}
-                                        @endif
                                     </td>
 
                                     <td class="text-center"><span class="badge bg-primary">{{ $item->total_sold }}</span>
@@ -216,7 +142,7 @@
                     </table>
                 </div>
 
-                <h4 class="text-center fw-normal text-muted mt-2">No Data Found!</h4>
+                <h4 class="text-center fw-normal text-dark mt-2">No Data Found!</h4>
             @endif
         </div>
 

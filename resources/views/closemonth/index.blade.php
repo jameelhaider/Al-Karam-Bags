@@ -185,6 +185,7 @@
                                     <option value="Electricity Bill">Electricity Bill</option>
                                     <option value="Internet Bill">Internet Bill</option>
                                     <option value="Shop Rent">Shop Rent</option>
+                                    <option value="Petrol Charges">Petrol Charges</option>
                                     <option value="Others">Others</option>
                                 </select>
                             </div>

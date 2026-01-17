@@ -182,21 +182,23 @@
                     </li>
 
                     <li
-                        class="menu-item {{ Request::is('admin/stocks/schoolbags') || Request::is('admin/stocks/handcarries') || Request::is('admin/stocks/travelbags')|| Request::is('admin/stocks/handbags')|| Request::is('admin/stocks/create/schoolbags')|| Request::is('admin/stocks/create/handcarries')|| Request::is('admin/stocks/create/travelbags')|| Request::is('admin/stocks/create/handbags') ? 'active' : '' }}">
-                      <a href="javascript:void(0);"
-   class="menu-link menu-toggle {{ !(
-        Request::is('admin/stocks/schoolbags') ||
-        Request::is('admin/stocks/handcarries') ||
-        Request::is('admin/stocks/travelbags') ||
-        Request::is('admin/stocks/handbags') ||
-        Request::is('admin/stocks/create/schoolbags') ||
-        Request::is('admin/stocks/create/handcarries') ||
-        Request::is('admin/stocks/create/travelbags') ||
-        Request::is('admin/stocks/create/handbags')
-   ) ? 'text-dark' : '' }}">
-    <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-    <div data-i18n="Misc">Stocks</div>
-</a>
+                        class="menu-item {{ Request::is('admin/stocks/schoolbags') || Request::is('admin/stocks/handcarries') || Request::is('admin/stocks/travelbags') || Request::is('admin/stocks/handbags') || Request::is('admin/stocks/create/schoolbags') || Request::is('admin/stocks/create/handcarries') || Request::is('admin/stocks/create/travelbags') || Request::is('admin/stocks/create/handbags') ? 'active' : '' }}">
+                        <a href="javascript:void(0);"
+                            class="menu-link menu-toggle {{ !(
+                                Request::is('admin/stocks/schoolbags') ||
+                                Request::is('admin/stocks/handcarries') ||
+                                Request::is('admin/stocks/travelbags') ||
+                                Request::is('admin/stocks/handbags') ||
+                                Request::is('admin/stocks/create/schoolbags') ||
+                                Request::is('admin/stocks/create/handcarries') ||
+                                Request::is('admin/stocks/create/travelbags') ||
+                                Request::is('admin/stocks/create/handbags')
+                            )
+                                ? 'text-dark'
+                                : '' }}">
+                            <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+                            <div data-i18n="Misc">Stocks</div>
+                        </a>
 
                         <ul class="menu-sub">
                             <li
@@ -213,252 +215,271 @@
                                     <div data-i18n="Under Maintenance">Hand Carries</div>
                                 </a>
                             </li>
-                               <li
+                            <li
                                 class="menu-item {{ Request::is('admin/stocks/travelbags') || Request::is('admin/stocks/create/travelbags') ? 'active' : '' }}">
                                 <a href="{{ url('admin/stocks/travelbags') }}"
                                     class="menu-link {{ !Request::is('admin/stocks/travelbags') ? 'text-dark' : '' }}">
                                     <div data-i18n="Under Maintenance">Travel Bags</div>
                                 </a>
                             </li>
-                             </li>
-                               <li
-                                class="menu-item {{ Request::is('admin/stocks/handbags') || Request::is('admin/stocks/create/handbags') ? 'active' : '' }}">
-                                <a href="{{ url('admin/stocks/handbags') }}"
-                                    class="menu-link {{ !Request::is('admin/stocks/handbags') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Under Maintenance">Hand Bags</div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-
-
-                    <!-- Components -->
-                    <li class="menu-header small text-uppercase text-dark fw-bold"><span
-                            class="menu-header-text">Invoices</span></li>
-
-                    <!-- User interface -->
                     <li
-                        class="menu-item {{ Request::is('admin/invoices') || Request::is('admin/invoices/return') || Request::is('admin/invoice/make') || Request::is('admin/invoice/make/return') ? 'active' : '' }}">
-                        <a href="javascript:void(0)"
-                            class="menu-link menu-toggle {{ !(Request::is('admin/invoices') || Request::is('admin/invoices/return') || Request::is('admin/invoice/make/return') || Request::is('admin/invoice/make')) ? 'text-dark' : '' }}">
-                            <i class="menu-icon tf-icons bx bx-file"></i>
-                            <div data-i18n="User interface">Invoices</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item {{ Request::is('admin/invoice/make') ? 'active' : '' }}">
-                                <a href="{{ url('admin/invoice/make') }}"
-                                    class="menu-link {{ !Request::is('admin/invoice/make') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Buttons">Make Sale Invoice</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ Request::is('admin/invoices') ? 'active' : '' }}">
-                                <a href="{{ url('admin/invoices') }}"
-                                    class="menu-link {{ !Request::is('admin/invoices') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Carousel">List Sale Invoices</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-
-                    <!-- Sale History -->
-                    <li
-                        class="menu-header small text-uppercase fw-bold {{ Request::is('admin/sale-history*') ? '' : 'text-dark' }}">
-                        <span class="menu-header-text">Sale History</span>
-                    </li>
-
-                    <li class="menu-item {{ Request::is('admin/sale-history') ? 'active' : '' }}">
-                        <a href="{{ url('admin/sale-history') }}"
-                            class="menu-link {{ Request::is('admin/sale-history*') ? '' : 'text-dark' }}">
-                            <i class="menu-icon tf-icons bx bx-history"></i>
-                            <div data-i18n="Tables">Sale History</div>
+                        class="menu-item {{ Request::is('admin/stocks/handbags') || Request::is('admin/stocks/create/handbags') ? 'active' : '' }}">
+                        <a href="{{ url('admin/stocks/handbags') }}"
+                            class="menu-link {{ !Request::is('admin/stocks/handbags') ? 'text-dark' : '' }}">
+                            <div data-i18n="Under Maintenance">Hand Bags</div>
                         </a>
                     </li>
+                </ul>
+                </li>
+
+
+                <!-- Components -->
+                <li class="menu-header small text-uppercase text-dark fw-bold"><span
+                        class="menu-header-text">Invoices</span></li>
+
+                <!-- User interface -->
+                <li
+                    class="menu-item {{ Request::is('admin/invoices') || Request::is('admin/invoices/return') || Request::is('admin/invoice/make') || Request::is('admin/invoice/make/return') ? 'active' : '' }}">
+                    <a href="javascript:void(0)"
+                        class="menu-link menu-toggle {{ !(Request::is('admin/invoices') || Request::is('admin/invoices/return') || Request::is('admin/invoice/make/return') || Request::is('admin/invoice/make')) ? 'text-dark' : '' }}">
+                        <i class="menu-icon tf-icons bx bx-file"></i>
+                        <div data-i18n="User interface">Invoices</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item {{ Request::is('admin/invoice/make') ? 'active' : '' }}">
+                            <a href="{{ url('admin/invoice/make') }}"
+                                class="menu-link {{ !Request::is('admin/invoice/make') ? 'text-dark' : '' }}">
+                                <div data-i18n="Buttons">Make Sale Invoice</div>
+                            </a>
+                        </li>
+                        <li class="menu-item {{ Request::is('admin/invoices') ? 'active' : '' }}">
+                            <a href="{{ url('admin/invoices') }}"
+                                class="menu-link {{ !Request::is('admin/invoices') ? 'text-dark' : '' }}">
+                                <div data-i18n="Carousel">List Sale Invoices</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
 
 
-                    <!-- Accounts -->
-                    <li
-                        class="menu-header small text-uppercase fw-bold {{ Request::is('admin/accounts*') ? '' : 'text-dark' }}">
-                        <span class="menu-header-text">Accounts | Cash</span>
-                    </li>
-                    <li
-                        class="menu-item {{ Request::is('admin/accounts') || Request::is('admin/accounts/create') ? 'active' : '' }}">
-                        <a href="{{ url('admin/accounts') }}"
-                            class="menu-link {{ Request::is('admin/accounts*') ? '' : 'text-dark' }} d-flex align-items-center">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Support" class="flex-grow-1">Accounts</div>
-                            @php $totalAccounts = DB::table('accounts')->count(); @endphp
-                            <span
-                                class="badge badge-center rounded-pill bg-primary w-px-20 h-px-20 ms-auto">{{ $totalAccounts }}</span>
-                        </a>
-                    </li>
-                    <li
-                        class="menu-item {{ Request::is('admin/cash-received') || Request::is('admin/cash-received/create') ? 'active' : '' }}">
-                        <a href="{{ url('admin/cash-received') }}"
-                            class="menu-link {{ Request::is('admin/cash-received*') ? '' : 'text-dark' }} d-flex align-items-center">
-                            <i class="menu-icon tf-icons bx bx-money"></i>
-                            <div data-i18n="Support">Received Amounts</div>
-                        </a>
-                    </li>
+                <!-- Sale History -->
+                <li
+                    class="menu-header small text-uppercase fw-bold {{ Request::is('admin/sale-history*') ? '' : 'text-dark' }}">
+                    <span class="menu-header-text">Sale History</span>
+                </li>
+
+                <li class="menu-item {{ Request::is('admin/sale-history') ? 'active' : '' }}">
+                    <a href="{{ url('admin/sale-history') }}"
+                        class="menu-link {{ Request::is('admin/sale-history*') ? '' : 'text-dark' }}">
+                        <i class="menu-icon tf-icons bx bx-history"></i>
+                        <div data-i18n="Tables">Sale History</div>
+                    </a>
+                </li>
 
 
 
-                    <!-- Demands -->
-                    <li
-                        class="menu-header small text-uppercase fw-bold {{ Request::is('admin/demands/parts') || Request::is('admin/demands/tools') || Request::is('admin/demands/parts/create') || Request::is('admin/demands/tools/create') ? '' : 'text-dark' }}">
-                        <span class="menu-header-text">Stock Demands</span>
-                    </li>
-
-                    <li
-                        class="menu-item {{ Request::is('admin/demands/schoolbags') || Request::is('admin/demands/schoolbags/create') || Request::is('admin/demands/handcarries/create') || Request::is('admin/demands/handcarries') || Request::is('admin/demands/travelbags') || Request::is('admin/demands/travelbags/create') || Request::is('admin/demands/handbags/create') || Request::is('admin/demands/handbags') ? 'active' : '' }}">
-                       <a href="javascript:void(0)"
-   class="menu-link menu-toggle {{ !(
-        Request::is('admin/demands/schoolbags') ||
-        Request::is('admin/demands/schoolbags/create') ||
-        Request::is('admin/demands/handcarries') ||
-        Request::is('admin/demands/handcarries/create') ||
-        Request::is('admin/demands/travelbags') ||
-        Request::is('admin/demands/travelbags/create') ||
-        Request::is('admin/demands/handbags') ||
-        Request::is('admin/demands/handbags/create')
-   ) ? 'text-dark' : '' }}">
-    <i class="menu-icon tf-icons bx bx-list-ul"></i>
-    <div data-i18n="User interface">Stock Demands</div>
-</a>
-
-                        <ul class="menu-sub">
-                            <li
-                                class="menu-item {{ Request::is('admin/demands/schoolbags') || Request::is('admin/demands/schoolbags/create') ? 'active' : '' }}">
-                                <a href="{{ url('admin/demands/schoolbags') }}"
-                                    class="menu-link {{ !Request::is('admin/demands/schoolbags') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Buttons">School Bags</div>
-                                </a>
-                            </li>
-                            <li
-                                class="menu-item {{ Request::is('admin/demands/handcarries') || Request::is('admin/demands/handcarries/create') ? 'active' : '' }}">
-                                <a href="{{ url('admin/demands/handcarries') }}"
-                                    class="menu-link {{ !Request::is('admin/demands/handcarries') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Carousel">Hand Carries</div>
-                                </a>
-                            </li>
-                             <li
-                                class="menu-item {{ Request::is('admin/demands/travelbags') || Request::is('admin/demands/travelbags/create') ? 'active' : '' }}">
-                                <a href="{{ url('admin/demands/travelbags') }}"
-                                    class="menu-link {{ !Request::is('admin/demands/travelbags') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Carousel">Travel Bags</div>
-                                </a>
-                            </li>
-                             <li
-                                class="menu-item {{ Request::is('admin/demands/handbags') || Request::is('admin/demands/handbags/create') ? 'active' : '' }}">
-                                <a href="{{ url('admin/demands/handbags') }}"
-                                    class="menu-link {{ !Request::is('admin/demands/handbags') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Carousel">Hand Bags</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                <!-- Accounts -->
+                <li
+                    class="menu-header small text-uppercase fw-bold {{ Request::is('admin/accounts*') ? '' : 'text-dark' }}">
+                    <span class="menu-header-text">Accounts | Cash</span>
+                </li>
+                <li
+                    class="menu-item {{ Request::is('admin/accounts') || Request::is('admin/accounts/create') ? 'active' : '' }}">
+                    <a href="{{ url('admin/accounts') }}"
+                        class="menu-link {{ Request::is('admin/accounts*') ? '' : 'text-dark' }} d-flex align-items-center">
+                        <i class="menu-icon tf-icons bx bx-user"></i>
+                        <div data-i18n="Support" class="flex-grow-1">Accounts</div>
+                        @php $totalAccounts = DB::table('accounts')->count(); @endphp
+                        <span
+                            class="badge badge-center rounded-pill bg-primary w-px-20 h-px-20 ms-auto">{{ $totalAccounts }}</span>
+                    </a>
+                </li>
+                <li
+                    class="menu-item {{ Request::is('admin/cash-received') || Request::is('admin/cash-received/create') ? 'active' : '' }}">
+                    <a href="{{ url('admin/cash-received') }}"
+                        class="menu-link {{ Request::is('admin/cash-received*') ? '' : 'text-dark' }} d-flex align-items-center">
+                        <i class="menu-icon tf-icons bx bx-money"></i>
+                        <div data-i18n="Support">Received Amounts</div>
+                    </a>
+                </li>
 
 
 
+                <!-- Demands -->
+                <li
+                    class="menu-header small text-uppercase fw-bold {{ Request::is('admin/demands/parts') || Request::is('admin/demands/tools') || Request::is('admin/demands/parts/create') || Request::is('admin/demands/tools/create') ? '' : 'text-dark' }}">
+                    <span class="menu-header-text">Stock Demands</span>
+                </li>
 
+                <li
+                    class="menu-item {{ Request::is('admin/demands/schoolbags') || Request::is('admin/demands/schoolbags/create') || Request::is('admin/demands/handcarries/create') || Request::is('admin/demands/handcarries') || Request::is('admin/demands/travelbags') || Request::is('admin/demands/travelbags/create') || Request::is('admin/demands/handbags/create') || Request::is('admin/demands/handbags') ? 'active' : '' }}">
+                    <a href="javascript:void(0)"
+                        class="menu-link menu-toggle {{ !(
+                            Request::is('admin/demands/schoolbags') ||
+                            Request::is('admin/demands/schoolbags/create') ||
+                            Request::is('admin/demands/handcarries') ||
+                            Request::is('admin/demands/handcarries/create') ||
+                            Request::is('admin/demands/travelbags') ||
+                            Request::is('admin/demands/travelbags/create') ||
+                            Request::is('admin/demands/handbags') ||
+                            Request::is('admin/demands/handbags/create')
+                        )
+                            ? 'text-dark'
+                            : '' }}">
+                        <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                        <div data-i18n="User interface">Stock Demands</div>
+                    </a>
 
-                    <!-- Demands -->
-                    <li
-                        class="menu-header small text-uppercase fw-bold {{ Request::is('admin/stock-stats/parts') || Request::is('admin/stock-stats/tools') ? '' : 'text-dark' }}">
-                        <span class="menu-header-text">Stock Sale Stats</span>
-                    </li>
-
-                    <li
-                        class="menu-item {{ Request::is('admin/stock-stats/parts') || Request::is('admin/stock-stats/tools') ? 'active' : '' }}">
-                        <a href="javascript:void(0)"
-                            class="menu-link menu-toggle {{ !(Request::is('admin/stock-stats/parts') || Request::is('admin/stock-stats/tools')) ? 'text-dark' : '' }}">
-                            <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
-                            <div data-i18n="User interface">Stock Sale Stats</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item {{ Request::is('admin/stock-stats/parts') ? 'active' : '' }}">
-                                <a href="{{ url('admin/stock-stats/parts') }}"
-                                    class="menu-link {{ !Request::is('admin/stock-stats/parts') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Buttons">Parts</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ Request::is('admin/stock-stats/tools') ? 'active' : '' }}">
-                                <a href="{{ url('admin/stock-stats/tools') }}"
-                                    class="menu-link {{ !Request::is('admin/stock-stats/tools') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Carousel">Tools</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-
-
-
-
-
-
-
-                    <!-- Months -->
-                    <li class="menu-header small text-uppercase text-dark fw-bold"><span
-                            class="menu-header-text">Months | Expenses | Stats</span></li>
-                    <li
-                        class="menu-item {{ Request::is('admin/close-month') || Request::is('admin/close-month/create') ? 'active' : '' }}">
-                        <a href="{{ url('admin/close-month') }}"
-                            class="menu-link {{ !(Request::is('admin/close-month') || Request::is('admin/close-month/create')) ? 'text-dark' : '' }}">
-                            <i class="menu-icon tf-icons bx bx-calendar-check"></i>
-                            <div data-i18n="Support" class="small">Start Month / Expenses</div>
-                        </a>
-                    </li>
-                    <li class="menu-item {{ Request::is('admin/profit-stats') ? 'active' : '' }}">
-                        <a href="{{ url('admin/profit-stats') }}"
-                            class="menu-link {{ !Request::is('admin/profit-stats') ? 'text-dark' : '' }}">
-                            <i class="menu-icon tf-icons bx bx-line-chart"></i>
-                            <div data-i18n="Support">Profit / Stats</div>
-                        </a>
-                    </li>
-
-
+                    <ul class="menu-sub">
+                        <li
+                            class="menu-item {{ Request::is('admin/demands/schoolbags') || Request::is('admin/demands/schoolbags/create') ? 'active' : '' }}">
+                            <a href="{{ url('admin/demands/schoolbags') }}"
+                                class="menu-link {{ !Request::is('admin/demands/schoolbags') ? 'text-dark' : '' }}">
+                                <div data-i18n="Buttons">School Bags</div>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item {{ Request::is('admin/demands/handcarries') || Request::is('admin/demands/handcarries/create') ? 'active' : '' }}">
+                            <a href="{{ url('admin/demands/handcarries') }}"
+                                class="menu-link {{ !Request::is('admin/demands/handcarries') ? 'text-dark' : '' }}">
+                                <div data-i18n="Carousel">Hand Carries</div>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item {{ Request::is('admin/demands/travelbags') || Request::is('admin/demands/travelbags/create') ? 'active' : '' }}">
+                            <a href="{{ url('admin/demands/travelbags') }}"
+                                class="menu-link {{ !Request::is('admin/demands/travelbags') ? 'text-dark' : '' }}">
+                                <div data-i18n="Carousel">Travel Bags</div>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item {{ Request::is('admin/demands/handbags') || Request::is('admin/demands/handbags/create') ? 'active' : '' }}">
+                            <a href="{{ url('admin/demands/handbags') }}"
+                                class="menu-link {{ !Request::is('admin/demands/handbags') ? 'text-dark' : '' }}">
+                                <div data-i18n="Carousel">Hand Bags</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
 
 
+                 <!-- Demands -->
+                <li
+                    class="menu-header small text-uppercase fw-bold {{ Request::is('admin/demands/parts') || Request::is('admin/demands/tools') || Request::is('admin/demands/parts/create') || Request::is('admin/demands/tools/create') ? '' : 'text-dark' }}">
+                    <span class="menu-header-text">Stock Sale Stats</span>
+                </li>
 
+                <li
+                    class="menu-item {{ Request::is('admin/stock-stats/schoolbags') || Request::is('admin/stock-stats/schoolbags/create') || Request::is('admin/stock-stats/handcarries/create') || Request::is('admin/stock-stats/handcarries') || Request::is('admin/stock-stats/travelbags') || Request::is('admin/stock-stats/travelbags/create') || Request::is('admin/stock-stats/handbags/create') || Request::is('admin/stock-stats/handbags') ? 'active' : '' }}">
+                    <a href="javascript:void(0)"
+                        class="menu-link menu-toggle {{ !(
+                            Request::is('admin/stock-stats/schoolbags') ||
+                            Request::is('admin/stock-stats/schoolbags/create') ||
+                            Request::is('admin/stock-stats/handcarries') ||
+                            Request::is('admin/stock-stats/handcarries/create') ||
+                            Request::is('admin/stock-stats/travelbags') ||
+                            Request::is('admin/stock-stats/travelbags/create') ||
+                            Request::is('admin/stock-stats/handbags') ||
+                            Request::is('admin/stock-stats/handbags/create')
+                        )
+                            ? 'text-dark'
+                            : '' }}">
+                        <i class="menu-icon tf-icons bx bx-bar-chart"></i>
+                        <div data-i18n="User interface">Stock Sale Stats</div>
+                    </a>
 
-
-
-                    <!-- PDF -->
-                    <li
-                        class="menu-header small text-uppercase fw-bold {{ Request::is('admin/generate-pdf') ? '' : 'text-dark' }}">
-                        <span class="menu-header-text">PDF</span>
-                    </li>
-                    <li class="menu-item {{ Request::is('admin/generate-pdf') ? 'active' : '' }}">
-                        <a href="{{ url('admin/generate-pdf') }}"
-                            class="menu-link {{ Request::is('admin/generate-pdf') ? '' : 'text-dark' }} d-flex align-items-center">
-                            <i class="menu-icon tf-icons bx bx-download"></i>
-                            <div data-i18n="Support" class="flex-grow-1">Download PDF</div>
-                        </a>
-                    </li>
+                    <ul class="menu-sub">
+                        <li
+                            class="menu-item {{ Request::is('admin/stock-stats/schoolbags') ? 'active' : '' }}">
+                            <a href="{{ url('admin/stock-stats/schoolbags') }}"
+                                class="menu-link {{ !Request::is('admin/stock-stats/schoolbags') ? 'text-dark' : '' }}">
+                                <div data-i18n="Buttons">School Bags</div>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item {{ Request::is('admin/stock-stats/handcarries') ? 'active' : '' }}">
+                            <a href="{{ url('admin/stock-stats/handcarries') }}"
+                                class="menu-link {{ !Request::is('admin/stock-stats/handcarries') ? 'text-dark' : '' }}">
+                                <div data-i18n="Carousel">Hand Carries</div>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item {{ Request::is('admin/stock-stats/travelbags') ? 'active' : '' }}">
+                            <a href="{{ url('admin/stock-stats/travelbags') }}"
+                                class="menu-link {{ !Request::is('admin/stock-stats/travelbags') ? 'text-dark' : '' }}">
+                                <div data-i18n="Carousel">Travel Bags</div>
+                            </a>
+                        </li>
+                        <li
+                            class="menu-item {{ Request::is('admin/stock-stats/handbags') ? 'active' : '' }}">
+                            <a href="{{ url('admin/stock-stats/handbags') }}"
+                                class="menu-link {{ !Request::is('admin/stock-stats/handbags') ? 'text-dark' : '' }}">
+                                <div data-i18n="Carousel">Hand Bags</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
 
 
 
 
 
-                    <li class="menu-header small text-uppercase text-dark fw-bold"><span
-                            class="menu-header-text">Actions</span></li>
-                    <div class="px-3">
-                        <a href="{{ route('export.database') }}" class="btn btn-primary w-100">
-                            Export Back Up
-                        </a>
-                        <a href="{{ route('send.database.backup') }}" class="btn btn-primary w-100 mt-2">
-                            Send Backup To Mail
-                        </a>
 
 
-                        <a href="{{ url('/logout') }}" class="btn btn-primary w-100 mt-2 mb-4">Log Out</a>
-                    </div>
+
+
+
+
+
+                <!-- Months -->
+                <li class="menu-header small text-uppercase text-dark fw-bold"><span class="menu-header-text">Months |
+                        Expenses | Stats</span></li>
+                <li
+                    class="menu-item {{ Request::is('admin/close-month') || Request::is('admin/close-month/create') ? 'active' : '' }}">
+                    <a href="{{ url('admin/close-month') }}"
+                        class="menu-link {{ !(Request::is('admin/close-month') || Request::is('admin/close-month/create')) ? 'text-dark' : '' }}">
+                        <i class="menu-icon tf-icons bx bx-calendar-check"></i>
+                        <div data-i18n="Support" class="small">Start Month / Expenses</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Request::is('admin/profit-stats') ? 'active' : '' }}">
+                    <a href="{{ url('admin/profit-stats') }}"
+                        class="menu-link {{ !Request::is('admin/profit-stats') ? 'text-dark' : '' }}">
+                        <i class="menu-icon tf-icons bx bx-line-chart"></i>
+                        <div data-i18n="Support">Profit / Stats</div>
+                    </a>
+                </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <li class="menu-header small text-uppercase text-dark fw-bold"><span
+                        class="menu-header-text">Actions</span></li>
+                <div class="px-3">
+                    <a href="{{ route('export.database') }}" class="btn btn-primary w-100">
+                        Export Back Up
+                    </a>
+                    <a href="{{ route('send.database.backup') }}" class="btn btn-primary w-100 mt-2">
+                        Send Backup To Mail
+                    </a>
+
+
+                    <a href="{{ url('/logout') }}" class="btn btn-primary w-100 mt-2 mb-4">Log Out</a>
+                </div>
 
 
                 </ul>
@@ -486,7 +507,8 @@
                                     placeholder="Search..." aria-label="Search..." /> --}}
 
 
-                                <h3 class="fw-normal d-none d-lg-block text-dark mt-3 animated-underline animate-on-load">
+                                <h3
+                                    class="fw-normal d-none d-lg-block text-dark mt-3 animated-underline animate-on-load">
                                     AL-KARAM BAGS | INVENTORY MANAGEMENT SYSTEM
                                 </h3>
 

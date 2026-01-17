@@ -339,7 +339,7 @@
                     </table>
                 </div>
 
-                <h4 class="h4 text-center fw-normal text-muted mt-2">No Data Found!</h4>
+                <h4 class="h4 text-center fw-normal text-dark mt-2">No Data Found!</h4>
             @endif
         </div>
 

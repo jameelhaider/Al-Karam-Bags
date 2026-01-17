@@ -13,15 +13,11 @@ class DemandsController extends Controller
     public function index(Request $request, $type)
     {
         if (Gate::allows('is_admin')) {
-            // return $type;
             $query = Demands::query()
-                ->select('demands.name', 'demands.id', 'demands.qty', 'demands.type', 'demands.item_type', 'demands.item_type_id')
+                ->select('demands.name', 'demands.id', 'demands.qty', 'demands.type')
                 ->where('demands.type', $type);
             if ($request->name) {
                 $query->where('demands.name', 'LIKE', '%' . $request->name . '%');
-            }
-            if ($request->type_id) {
-                $query->where('demands.item_type_id', $request->type_id);
             }
             $demands = $query
                 ->orderBy('created_at', 'desc')

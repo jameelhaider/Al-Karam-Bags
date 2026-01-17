@@ -402,147 +402,6 @@
         </div>
 
         <div class="row justify-content-around">
-
-            <h2 class="fw-bold text-center text-dark">Stocks Count</h2>
-
-
-
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-package"></i>
-                        Total Stock Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totalstockitems }}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-package"></i>
-                        Total Parts Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totalparts }}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-package"></i>
-                        Total Tools Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totaltools }}">
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-check-circle"></i>
-                        Total Available Stock Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totalavailitems }}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-x"></i>
-                        Total Out Off Stock Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totaloutitems }}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-error"></i>
-                        Total Low Stock Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totallowitems }}">
-                    </div>
-                </div>
-            </div>
-
-
-
-            {{-- //parts --}}
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-check-circle"></i>
-                        Total Available Parts Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totalavailitemsparts }}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-x"></i>
-                        Total Out Off Stock Parts
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totaloutitemsparts }}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-error"></i>
-                        Total Low Stock Parts Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totallowitemsparts }}">
-                    </div>
-                </div>
-            </div>
-
-
-
-            {{-- tools --}}
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-check-circle"></i>
-                        Total Available Tools Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totalavailitemstools }}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-x"></i>
-                        Total Out Off Stock Tools
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totaloutitemstools }}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-12 col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-error"></i>
-                        Total Low Stock Tools Items
-                    </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totallowitemstools }}">
-                    </div>
-                </div>
-            </div>
-
-
-
             <h2 class="fw-bold text-center text-dark">Demands Count</h2>
 
             <div class="col-lg-4 col-12 col-md-6 mb-4">
@@ -559,9 +418,9 @@
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
                         <i class="card-icon bx bx-list-ul"></i>
-                        Total Parts Damands
+                        Total School Bag Damands
                     </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totalpartsdemands }}">
+                    <div class="card-body text-center count-animation-2" data-count="{{ $totalschooldemands }}">
                     </div>
                 </div>
             </div>
@@ -569,36 +428,32 @@
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
                         <i class="card-icon bx bx-list-ul"></i>
-                        Total Tools Damands
+                        Total Hand Carry Damands
                     </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totaltoolsdemands }}">
+                    <div class="card-body text-center count-animation-2" data-count="{{ $totalhandcarrydemands }}">
                     </div>
                 </div>
             </div>
-
-
-
-            <h2 class="fw-bold text-center text-dark">Others Count</h2>
-
-
-
-
             <div class="col-lg-4 col-12 col-md-6 mb-4">
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
-                        <i class="card-icon bx bx-group"></i>
-                        Total Accounts
+                        <i class="card-icon bx bx-list-ul"></i>
+                        Total Travel Bag Damands
                     </div>
-                    <div class="card-body text-center count-animation-2" data-count="{{ $totalaccounts }}">
+                    <div class="card-body text-center count-animation-2" data-count="{{ $totaltraveldemands }}">
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
+            <div class="col-lg-4 col-12 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="card-icon bx bx-list-ul"></i>
+                        Total Hand Bag Damands
+                    </div>
+                    <div class="card-body text-center count-animation-2" data-count="{{ $totalhanddemands }}">
+                    </div>
+                </div>
+            </div>
 
 
         </div>

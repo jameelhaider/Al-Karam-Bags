@@ -219,8 +219,12 @@ Route::middleware(['auth'])->group(function () {
                 // Counts
                 $totalaccounts = DB::table('accounts')->count();
                 $totaldemands = DB::table('demands')->count();
-                $totaltoolsdemands = DB::table('demands')->where('type', 'tools')->count();
-                $totalpartsdemands = DB::table('demands')->where('type', 'parts')->count();
+                $totalschooldemands = DB::table('demands')->where('type', 'schoolbags')->count();
+                $totalhandcarrydemands = DB::table('demands')->where('type', 'handcarries')->count();
+                $totaltraveldemands = DB::table('demands')->where('type', 'travelbags')->count();
+                $totalhanddemands = DB::table('demands')->where('type', 'handbags')->count();
+
+
                 $totaltools = DB::table('stocks')->where('type', 'tools')->count();
                 $totalparts = DB::table('stocks')->where('type', 'parts')->count();
                 $totalstockitems = DB::table('stocks')->count();
@@ -345,9 +349,13 @@ Route::middleware(['auth'])->group(function () {
                     'totalavailitems',
                     'totaloutitems',
                     'totallowitems',
-                    'totaltoolsdemands',
-                    'totalpartsdemands',
+
+                    'totalschooldemands',
+                    'totalhandcarrydemands',
+                    'totaltraveldemands',
+                    'totalhanddemands',
                     'totaldemands',
+
                     'totaltools',
                     'totalparts',
                     'todayRevenue',
@@ -385,6 +393,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [StocksController::class, 'update'])->name("update.stock");
             Route::get('/delete/{id}', [StocksController::class, 'delete'])->name("stock.delete");
             Route::get('/{type}', [StocksController::class, 'index'])->name("stock.index");
+
+            Route::post('/addtodemand', [StocksController::class, 'addtodemand'])->name("add.stock.demand");
             // view
             Route::get('/{id}/view', [StocksController::class, 'view'])->name("stock.view");
         });
@@ -421,29 +431,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-        //jobs
-        Route::group(['prefix' => 'jobs'], function () {
-            //CRUD
-            Route::post('/submit', [JobsController::class, 'submit'])->name("submit.job");
-            Route::get('/create', [JobsController::class, 'create'])->name("create.job");
-            Route::get('/edit/{id}', [JobsController::class, 'edit'])->name("job.edit");
-            Route::post('/update/{id}', [JobsController::class, 'update'])->name("update.job");
-            //index
-            Route::get('/', [JobsController::class, 'index'])->name("index.job");
-            // view
-            Route::get('view/{job_id}', [JobsController::class, 'view'])->name("view.job");
-        });
-
-        //issues
-        Route::group(['prefix' => 'issues'], function () {
-            //CRUD
-            Route::post('/submit', [IssuesController::class, 'submit'])->name("submit.issue");
-            Route::get('/create', [IssuesController::class, 'create'])->name("create.issue");
-            Route::get('/edit/{id}', [IssuesController::class, 'edit'])->name("issue.edit");
-            Route::post('/update/{id}', [IssuesController::class, 'update'])->name("update.issue");
-            //index
-            Route::get('/', [IssuesController::class, 'index'])->name("index.issue");
-        });
 
         Route::get('/sale-history', [AccountsController::class, 'salehistory'])->name("sale.history");
         Route::get('/return-history', [AccountsController::class, 'returnhistory'])->name("return.history");
@@ -463,21 +450,6 @@ Route::middleware(['auth'])->group(function () {
         });
 
 
-        //sticky notes
-        Route::group(['prefix' => 'sticky-notes'], function () {
-            //CRUD
-            Route::post('/submit', [StickyNotesController::class, 'submit'])->name("submit.stickynote");
-            Route::get('/create', [StickyNotesController::class, 'create'])->name("create.stickynote");
-            Route::get('/edit/{id}', [StickyNotesController::class, 'edit'])->name("stickynote.edit");
-            Route::post('/update/{id}', [StickyNotesController::class, 'update'])->name("update.stickynote");
-            Route::get('/delete/{id}', [StickyNotesController::class, 'delete'])->name("stickynote.delete");
-            //pin / unpin
-            Route::get('/stickynote/{id}/pin', [StickyNotesController::class, 'pin'])->name('stickynote.pin');
-            Route::get('/stickynote/{id}/unpin', [StickyNotesController::class, 'unpin'])->name('stickynote.unpin');
-
-            //index
-            Route::get('/', [StickyNotesController::class, 'index'])->name("index.stickynote");
-        });
 
 
         //Demands
@@ -498,17 +470,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [ExpensesController::class, 'stats'])->name("stats.profit");
         });
 
-        //dealers
-        Route::group(['prefix' => 'dealers'], function () {
-            //CRUD
-            Route::post('/submit', [DealersController::class, 'submit'])->name("submit.dealer");
-            Route::get('/create', [DealersController::class, 'create'])->name("create.dealer");
-            Route::get('/edit/{id}', [DealersController::class, 'edit'])->name("dealer.edit");
-            Route::post('/update/{id}', [DealersController::class, 'update'])->name("update.dealer");
-            Route::get('/delete/{id}', [DealersController::class, 'delete'])->name("dealer.delete");
-            //index
-            Route::get('/', [DealersController::class, 'index'])->name("index.dealer");
-        });
+
 
         //Invoices
         Route::group(['prefix' => 'invoices'], function () {
@@ -537,45 +499,8 @@ Route::middleware(['auth'])->group(function () {
         //return
         Route::get('/invoice/make/return', [InvoicesController::class, 'makereturn'])->name("invoice.make.return");
 
-        //models
-        Route::group(['prefix' => 'models'], function () {
-            //CRUD
-            Route::post('/submit', [ModelsController::class, 'submit'])->name("submit.model");
-            // Route::get('/create', [ModelsController::class, 'create'])->name("create.model");
-            // Route::get('/edit/{id}', [ModelsController::class, 'edit'])->name("model.edit");
-            Route::post('/update/{id}', [ModelsController::class, 'update'])->name("update.model");
-            Route::get('/delete/{id}', [ModelsController::class, 'delete'])->name("model.delete");
-            //index
-            // Route::get('/', [ModelsController::class, 'index'])->name("index.model");
-        });
 
 
-        //types
-        Route::group(['prefix' => 'types'], function () {
-            //CRUD
-            Route::post('/submit', [TypesController::class, 'submit'])->name("submit.type");
-            // Route::get('/create', [TypesController::class, 'create'])->name("create.model");
-            // Route::get('/edit/{id}', [TypesController::class, 'edit'])->name("type.edit");
-            Route::post('/update/{id}', [TypesController::class, 'update'])->name("update.type");
-            Route::get('/delete/{id}', [TypesController::class, 'delete'])->name("model.type");
-            //index
-            // Route::get('/', [TypesController::class, 'index'])->name("index.type");
-        });
-
-
-
-
-        //Companies
-        Route::group(['prefix' => 'companies'], function () {
-            //CRUD
-            Route::post('/submit', [CompaniesController::class, 'submit'])->name("submit.company");
-            // Route::get('/create', [CompaniesController::class, 'create'])->name("create.company");
-            // Route::get('/edit/{id}', [CompaniesController::class, 'edit'])->name("company.edit");
-            Route::post('/update/{id}', [CompaniesController::class, 'update'])->name("update.company");
-            Route::get('/delete/{id}', [CompaniesController::class, 'delete'])->name("company.delete");
-            //index
-            // Route::get('/', [CompaniesController::class, 'index'])->name("index.company");
-        });
     });
 });
 

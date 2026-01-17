@@ -322,6 +322,12 @@
                                                 <ul class="dropdown-menu dropdown-menu-end"
                                                     aria-labelledby="dropdownMenuButton">
 
+                                                      <li>
+                                                        <a class="dropdown-item" href="#"
+                                                            onclick="openDemandModal({{ $stock->id }})">Add To
+                                                            Demand</a>
+                                                    </li>
+
                                                     <li>
                                                         <a class="dropdown-item"
                                                             href="{{ route('stock.edit', ['id' => $stock->id, 'type' => request()->type]) }}">Edit</a>
@@ -386,7 +392,43 @@
 
 
 
+ <!-- Demand Modal -->
+    <div class="modal fade" id="demandModal" tabindex="-1" aria-labelledby="demandModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="POST" action="{{ route('add.stock.demand') }}">
+                @csrf
+                <input type="hidden" name="stock_id" id="modalStockId">
+                <input type="hidden" name="type" value="{{ request()->type }}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="demandModalLabel">Add to Demand</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="qty" class="form-label">Quantity (optional)</label>
+                            <input type="number" placeholder="Quantity (optional)" class="form-control" name="qty"
+                                id="qty" min="1">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
+
+
+    <script>
+        function openDemandModal(stockId) {
+            document.getElementById('modalStockId').value = stockId;
+            var myModal = new bootstrap.Modal(document.getElementById('demandModal'));
+            myModal.show();
+        }
+    </script>
 
 
 

@@ -1,14 +1,15 @@
 @extends('dashboard.master2')
 @php
-    $title = request()->type == 'handcarries'
-        ? 'Admin | Demands | Hand Carries'
-        : (request()->type == 'handbags'
-            ? 'Admin | Demands | Hand Bags'
-            : (request()->type == 'schoolbags'
-                ? 'Admin | Demands | School Bags'
-                : (request()->type == 'travelbags'
-                    ? 'Admin | Demands | Travel Bags'
-                    : 'Title Not Found')));
+    $title =
+        request()->type == 'handcarries'
+            ? 'Admin | Demands | Hand Carries'
+            : (request()->type == 'handbags'
+                ? 'Admin | Demands | Hand Bags'
+                : (request()->type == 'schoolbags'
+                    ? 'Admin | Demands | School Bags'
+                    : (request()->type == 'travelbags'
+                        ? 'Admin | Demands | Travel Bags'
+                        : 'Title Not Found')));
 @endphp
 @section('admin_title', $title)
 @section('content2')
@@ -26,7 +27,7 @@
 
                     <div class="d-flex align-items-center">
                         <h3 class="mt-1 d-none d-lg-block d-md-block" style="font-family: cursive;">
-                             {{ request()->type == 'handcarries'
+                            {{ request()->type == 'handcarries'
                                 ? 'Demands | Hand Carries'
                                 : (request()->type == 'handbags'
                                     ? 'Demands | Hand Bags'
@@ -34,7 +35,8 @@
                                         ? 'Demands | School Bags'
                                         : (request()->type == 'travelbags'
                                             ? 'Demands | Travel Bags'
-                                            : 'Title Not Found'))) }}</h3>
+                                            : 'Title Not Found'))) }}
+                        </h3>
                         <h5 class="mt-1 d-block d-lg-none d-md-none" style="font-family: cursive;">
                             {{ request()->type == 'handcarries'
                                 ? 'Demands | Hand Carries'
@@ -45,7 +47,7 @@
                                         : (request()->type == 'travelbags'
                                             ? 'Demands | Travel Bags'
                                             : 'Title Not Found'))) }}
-                            </h5>
+                        </h5>
 
                     </div>
 
@@ -81,22 +83,10 @@
         <div class="card mb-2 p-2 mt-2">
             <form action="" method="GET">
                 <div class="row">
-                    @if (request()->type == 'parts')
-                        <div class="col-lg-5 col-md-4 col-sm-4 col-6 mt-1 mb-1">
-                            <input type="text" class="form-control" value="{{ request()->name }}"
-                                placeholder="Demand Name" name="name">
-                        </div>
-                    @endif
-                    @if (request()->type == 'tools')
-                        <div class="col-lg-9 col-md-8 col-sm-8 col-12 mt-1 mb-1">
-                            <input type="text" class="form-control" value="{{ request()->name }}"
-                                placeholder="Demand Name" name="name">
-                        </div>
-                    @endif
-
-
-
-
+                    <div class="col-lg-9 col-md-8 col-sm-8 col-12 mt-1 mb-1">
+                        <input type="text" class="form-control" value="{{ request()->name }}" placeholder="Demand Name"
+                            name="name">
+                    </div>
                     <div class="col-lg-3 col-md-4 col-sm-4 col-12 mt-1 mb-1">
                         <div class="btn-group w-100">
                             <a href="{{ url('admin/demands/' . request()->type) }}" title="Clear"
@@ -109,13 +99,13 @@
         </div>
 
 
-        @if ($demands->count() > 0 && (request()->name || request()->type_id))
+        @if ($demands->count() > 0 && request()->name)
             <div class="alert bg-primary text-white mt-3">
                 <strong>{{ $demands->count() }}
                     {{ $demands->count() > 0 && $demands->count() < 2 ? 'Result' : 'Results' }}
                     Found</strong>
             </div>
-        @elseif ($demands->count() < 1 && (request()->name != null || request()->type_id != null))
+        @elseif ($demands->count() < 1 && request()->name != null)
             <div class="alert bg-warning text-white mt-3">
                 <strong>No Results Found !</strong>
             </div>
@@ -128,8 +118,6 @@
             @if ($demands->count() > 0)
 
                 <form id="delete-selected-form" method="POST" action="{{ route('demand.delete.selected') }}">
-
-
                     @csrf
                     <div class="d-flex justify-content-between mb-2">
                         <div>
@@ -157,9 +145,6 @@
                                             style="transform: scale(1.5);" id="select-all"></th>
                                     <th style="font-size:14px" class="text-dark fw-bold">#</th>
                                     <th style="font-size:14px" class="text-dark fw-bold">Demand Name</th>
-                                    @if (request()->type == 'parts')
-                                        <th style="font-size:14px" class="text-dark fw-bold">Type</th>
-                                    @endif
                                     <th style="font-size:14px" class="text-dark fw-bold">Qty</th>
                                     <th style="font-size:14px" class="text-dark fw-bold">Action</th>
                                 </tr>
@@ -181,12 +166,6 @@
                                                 {{ $demand->name }}
                                             </a>
                                         </td>
-
-                                        @if (request()->type == 'parts')
-                                            <td title="{{ $demand->item_type }}" class="text-dark">
-                                                {{ $demand->item_type }}
-                                            </td>
-                                        @endif
 
                                         <td class="text-dark" title="{{ $demand->qty }}">{{ $demand->qty ?: '------' }}
                                         </td>
@@ -210,10 +189,10 @@
                     <table class="table">
                         <thead>
                             <tr class="text-center">
-                                <th>#</th>
-                                <th>Demand Name</th>
-                                <th>Qty</th>
-                                <th>Action</th>
+                                <th style="font-size:14px" class="text-dark fw-bold">#</th>
+                                <th style="font-size:14px" class="text-dark fw-bold">Demand Name</th>
+                                <th style="font-size:14px" class="text-dark fw-bold">Qty</th>
+                                <th style="font-size:14px" class="text-dark fw-bold">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -292,40 +271,6 @@
                 }
             });
         }
-    </script>
-
-    <style>
-        .select2-container--default .select2-selection--single {
-            display: block;
-            width: 100%;
-            padding: 0.300rem 0.200rem 0.300rem 0.200rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #ced4da;
-            border-radius: 0.375rem;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            height: auto;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__arrow {
-            top: 50%;
-            right: 0.32rem;
-            transform: translateY(-50%);
-            height: auto;
-        }
-    </style>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
-    <script>
-        $('#type-select').select2({
-            placeholder: 'Select Type',
-            allowClear: true
-        });
     </script>
 
 @endsection
