@@ -10,5 +10,9 @@ class Stocks extends Model
     use HasFactory;
     protected $fillable = [
         'qty',
+        'alert_qty',
+        'name',
+        'sale_price',
+        'purchase_price'
     ];
 }

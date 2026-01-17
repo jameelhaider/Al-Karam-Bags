@@ -381,7 +381,7 @@ Route::middleware(['auth'])->group(function () {
             //CRUD
             Route::post('/submit', [StocksController::class, 'submit'])->name("submit.stock");
             Route::get('/create/{type}', [StocksController::class, 'create'])->name("create.stock");
-            Route::get('/edit/{id}', [StocksController::class, 'edit'])->name("stock.edit");
+            Route::get('/edit/{type}/{id}', [StocksController::class, 'edit'])->name("stock.edit");
             Route::post('/update/{id}', [StocksController::class, 'update'])->name("update.stock");
             Route::get('/delete/{id}', [StocksController::class, 'delete'])->name("stock.delete");
             Route::get('/{type}', [StocksController::class, 'index'])->name("stock.index");

@@ -64,10 +64,7 @@ class StocksController extends Controller
     {
         if (Gate::allows('is_admin')) {
             $stock = new Stocks();
-            $companies = DB::table('companies')->where('type', $type)->get();
-            $types = DB::table('types')->where('type', $type)->get();
-            $dealers = DB::table('dealers')->get();
-            return view("stocks.create", compact('stock', 'companies', 'dealers', 'types'));
+            return view("stocks.create", compact('stock'));
         } else {
             return abort(401);
         }
@@ -78,12 +75,9 @@ class StocksController extends Controller
     {
         if (Gate::allows('is_admin')) {
             $stock = Stocks::find($id);
-            $companies = DB::table('companies')->where('type', $type)->get();
-            $types = DB::table('types')->where('type', $type)->get();
-            $dealers = DB::table('dealers')->get();
             if (!$stock)
                 return redirect()->back();
-            return view("stocks.create", compact('stock', 'companies', 'dealers', 'types'));
+            return view("stocks.create", compact('stock'));
         } else {
             return abort(401);
         }
@@ -94,95 +88,20 @@ class StocksController extends Controller
     {
         if (Gate::allows('is_admin')) {
             $request->validate([
-                'dealer_id'       => 'required|integer|exists:dealers,id',
                 'alert_qty'       => 'nullable|integer|min:1',
-                'type'            => 'required|in:parts,tools',
-                'type_id'         => 'nullable|integer|exists:types,id',
-                'company_id'      => 'required|integer|exists:companies,id',
-                'model_id'        => 'required|integer|exists:models,id',
-                'name2'           => 'nullable|string|max:255',
-                'other_models'    => 'nullable|string|max:255',
-                'color'           => 'nullable|string|max:100',
-                'quality_status'  => 'nullable|string|max:100',
-                'purchase_price'  => 'required|integer|min:0',
-                'sale_price'      => 'required|integer|min:0',
+                'type'            => 'required|in:schoolbags,travelbags,handbags,handcarries',
+                'purchase_price'  => 'required|integer|min:1',
+                'sale_price'      => 'required|integer|min:2',
                 'qty'             => 'required|integer|min:0',
                 'action'          => 'nullable|in:save,save_add_new',
             ]);
-
-
-
             $stock = new Stocks();
-            $stock->dealer_id = $request->dealer_id;
             $stock->alert_qty = $request->alert_qty;
-            //type
-            $stock->type = $request->type;
-            $stock->type_id = $request->type_id;
-            $type_name = DB::table('types')->where('id', $request->type_id)->first()->name;
-            $stock->type_name = $type_name;
-            //company_id or model_id
-            $stock->company_id = $request->company_id;
-            $stock->model_id = $request->model_id;
-            //company_name or model_name
-            $model_name = DB::table('models')->where('id', $request->model_id)->first()->model;
-            $company_name = DB::table('companies')->where('id', $request->company_id)->first()->name;
-            $stock->model_name = $model_name;
-            $stock->company_name = $company_name;
-            //name
-            if ($request->type == 'parts') {
-                $nameComponents = [];
-
-                if ($company_name !== 'No Company') {
-                    $nameComponents[] = $company_name;
-                }
-
-                if ($model_name !== 'No Model') {
-                    $nameComponents[] = $model_name;
-                }
-
-                if ($request->other_models !== null) {
-                    $nameComponents[] = '( ' . $request->other_models . ' )';
-                }
-
-                $nameComponents[] = $type_name;
-
-                if ($request->color !== 'No Color') {
-                    $nameComponents[] = $request->color;
-                }
-                if ($request->quality_status !== 'No Quality') {
-                    $nameComponents[] = $request->quality_status;
-                }
-
-                $stock->name = implode(' - ', $nameComponents);
-                $stock->name2 = $request->other_models;
-            } else {
-               $nameComponents = [];
-                if ($company_name !== 'No Company') {
-                    $nameComponents[] = $company_name;
-                }
-                $nameComponents[] = $type_name;
-                if ($model_name !== 'No Model') {
-                    $nameComponents[] = $model_name;
-                }
-                if ($request->name2 !== null) {
-                    $nameComponents[] = '( ' . $request->name2 . ' )';
-                }
-                $stock->name = implode(' - ', $nameComponents);
-                $stock->name2 = $request->name2;
-            }
-
-            //price
             $stock->purchase_price = $request->purchase_price;
-            $stock->l_purchase_price = $request->purchase_price;
+            $stock->name = $request->name;
             $stock->sale_price = $request->sale_price;
-            //qty
             $stock->qty = $request->qty;
-            //color or quality_status
-            $stock->color = $request->color;
-            $stock->quality_status = $request->quality_status;
-            //save
             $stock->save();
-
             if ($request->action === 'save_add_new') {
                 return redirect()->back()->with('success', 'Stock Added! You can add another one.');
             }
@@ -197,95 +116,18 @@ class StocksController extends Controller
     {
         if (Gate::allows('is_admin')) {
             $request->validate([
-                'dealer_id'       => 'required|integer|exists:dealers,id',
                 'alert_qty'       => 'nullable|integer|min:1',
-                'type'            => 'required|in:parts,tools',
-                'type_id'         => 'nullable|integer|exists:types,id',
-                'company_id'      => 'required|integer|exists:companies,id',
-                'model_id'        => 'required|integer|exists:models,id',
-                'name2'           => 'nullable|string|max:255',
-                'other_models'    => 'nullable|string|max:255',
-                'color'           => 'nullable|string|max:100',
-                'quality_status'  => 'nullable|string|max:100',
+                'type'            => 'required|in:schoolbags,travelbags,handbags,handcarries',
                 'purchase_price'  => 'required|integer|min:0',
                 'sale_price'      => 'required|integer|min:0',
                 'qty'             => 'required|integer|min:0',
-                'new_qty'         => 'nullable|integer|min:1',
-                'new_purchase_price' => 'nullable|integer|min:0',
             ]);
             $stock = Stocks::find($id);
-            $stock->dealer_id = $request->dealer_id;
             $stock->alert_qty = $request->alert_qty;
-            //type
-            $stock->type = $request->type;
-            $stock->type_id = $request->type_id;
-            $type_name = DB::table('types')->where('id', $request->type_id)->first()->name;
-            $stock->type_name = $type_name;
-            //company_id or model_id
-            $stock->company_id = $request->company_id;
-            $stock->model_id = $request->model_id;
-            //company_name or model_name
-            $model_name = DB::table('models')->where('id', $request->model_id)->first()->model;
-            $company_name = DB::table('companies')->where('id', $request->company_id)->first()->name;
-            $stock->model_name = $model_name;
-            $stock->company_name = $company_name;
-            //name
-            if ($request->type == 'parts') {
-                $nameComponents = [];
-                if ($company_name !== 'No Company') {
-                    $nameComponents[] = $company_name;
-                }
-                if ($model_name !== 'No Model') {
-                    $nameComponents[] = $model_name;
-                }
-                if ($request->other_models !== null) {
-                    $nameComponents[] = '( ' . $request->other_models . ' )';
-                }
-                $nameComponents[] = $type_name;
-                if ($request->color !== 'No Color') {
-                    $nameComponents[] = $request->color;
-                }
-                if ($request->quality_status !== 'No Quality') {
-                    $nameComponents[] = $request->quality_status;
-                }
-                $stock->name = implode(' - ', $nameComponents);
-                $stock->name2 = $request->other_models;
-            } else {
-                $nameComponents = [];
-                if ($company_name !== 'No Company') {
-                    $nameComponents[] = $company_name;
-                }
-                $nameComponents[] = $type_name;
-                if ($model_name !== 'No Model') {
-                    $nameComponents[] = $model_name;
-                }
-                if ($request->name2 !== null) {
-                    $nameComponents[] = '( ' . $request->name2 . ' )';
-                }
-                $stock->name = implode(' - ', $nameComponents);
-                $stock->name2 = $request->name2;
-            }
-
-
-            if ($request->new_qty && $request->new_purchase_price) {
-                $prevAmount = $request->qty * $request->purchase_price;
-                $newAmount = $request->new_qty * $request->new_purchase_price;
-                $totalAmount = $prevAmount + $newAmount;
-                $totalQty = $request->qty + $request->new_qty;
-                $avgPurchasePrice = round($totalAmount / $totalQty);
-                $stock->purchase_price = $avgPurchasePrice;
-                $stock->qty = $totalQty;
-
-                $stock->l_purchase_price = $request->new_purchase_price;
-            } else {
-                $stock->purchase_price = round($request->purchase_price);
-                $stock->qty = $request->qty;
-                $stock->l_purchase_price = $request->purchase_price;
-            }
-            $stock->sale_price = round($request->sale_price);
-            //color or quality_status
-            $stock->color = $request->color;
-            $stock->quality_status = $request->quality_status;
+            $stock->purchase_price = $request->purchase_price;
+            $stock->name = $request->name;
+            $stock->sale_price = $request->sale_price;
+            $stock->qty = $request->qty;
             $stock->save();
 
             return redirect()->route('index.stock', ['type' => $request->type])->with('success', 'Stock updated successfully!');

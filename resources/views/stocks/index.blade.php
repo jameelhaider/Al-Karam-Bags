@@ -191,8 +191,7 @@
                     {{-- Buttons --}}
                     <div class="col-lg-3 col-md-3 col-sm-6 col-12 mt-1 mb-1">
                         <div class="btn-group w-100">
-                            <a @if (request()->type == 'tools') href="{{ url('admin/stocks/tools') }}"
-                           @elseif (request()->type == 'parts') href="{{ url('admin/stocks/parts') }}" @endif
+                            <a href="{{ route('stock.index',['type'=>request()->type]) }}"
                                 title="Clear" class="btn btn-outline-danger">Clear</a>
                             <button type="submit" title="Search" class="btn btn-outline-success">Search</button>
                         </div>

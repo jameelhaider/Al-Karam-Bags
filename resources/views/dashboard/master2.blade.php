@@ -182,39 +182,39 @@
                     </li>
 
                     <li
-                        class="menu-item {{ Request::is('admin/stocks/parts') ? 'active' : '' }}">
+                        class="menu-item {{ Request::is('admin/stocks/schoolbags') || Request::is('admin/stocks/handcarries') || Request::is('admin/stocks/travelbags')|| Request::is('admin/stocks/handbags') ? 'active' : '' }}">
                         <a href="javascript:void(0);"
-                            class="menu-link menu-toggle {{ !(Request::is('admin/stocks/parts') ) ? 'text-dark' : '' }}">
+                            class="menu-link menu-toggle {{ !(Request::is('admin/stocks/schoolbags') ) && !(Request::is('admin/stocks/handcarries') ) && !(Request::is('admin/stocks/travelbags') )&& !(Request::is('admin/stocks/handbags') ) ? 'text-dark' : '' }}">
                             <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                             <div data-i18n="Misc">Stocks</div>
                         </a>
                         <ul class="menu-sub">
                             <li
-                                class="menu-item {{ Request::is('admin/stocks/parts')? 'active' : '' }}">
+                                class="menu-item {{ Request::is('admin/stocks/schoolbags') || Request::is('admin/stocks/create/schoolbags') ? 'active' : '' }}">
                                 <a href="{{ url('admin/stocks/schoolbags') }}"
-                                    class="menu-link {{ !Request::is('admin/stocks/parts') ? 'text-dark' : '' }}">
+                                    class="menu-link {{ !Request::is('admin/stocks/schoolbags') ? 'text-dark' : '' }}">
                                     <div data-i18n="Error">School Bags</div>
                                 </a>
                             </li>
                             <li
-                                class="menu-item {{ Request::is('admin/stocks/tools') ? 'active' : '' }}">
+                                class="menu-item {{ Request::is('admin/stocks/handcarries') || Request::is('admin/stocks/create/handcarries') ? 'active' : '' }}">
                                 <a href="{{ url('admin/stocks/handcarries') }}"
-                                    class="menu-link {{ !Request::is('admin/stocks/tools') ? 'text-dark' : '' }}">
+                                    class="menu-link {{ !Request::is('admin/stocks/handcarries') ? 'text-dark' : '' }}">
                                     <div data-i18n="Under Maintenance">Hand Carries</div>
                                 </a>
                             </li>
                                <li
-                                class="menu-item {{ Request::is('admin/stocks/tools') ? 'active' : '' }}">
+                                class="menu-item {{ Request::is('admin/stocks/travelbags') || Request::is('admin/stocks/create/travelbags') ? 'active' : '' }}">
                                 <a href="{{ url('admin/stocks/travelbags') }}"
-                                    class="menu-link {{ !Request::is('admin/stocks/tools') ? 'text-dark' : '' }}">
+                                    class="menu-link {{ !Request::is('admin/stocks/travelbags') ? 'text-dark' : '' }}">
                                     <div data-i18n="Under Maintenance">Travel Bags</div>
                                 </a>
                             </li>
                              </li>
                                <li
-                                class="menu-item {{ Request::is('admin/stocks/tools') ? 'active' : '' }}">
+                                class="menu-item {{ Request::is('admin/stocks/handbags') || Request::is('admin/stocks/create/handbags') ? 'active' : '' }}">
                                 <a href="{{ url('admin/stocks/handbags') }}"
-                                    class="menu-link {{ !Request::is('admin/stocks/tools') ? 'text-dark' : '' }}">
+                                    class="menu-link {{ !Request::is('admin/stocks/handbags') ? 'text-dark' : '' }}">
                                     <div data-i18n="Under Maintenance">Hand Bags</div>
                                 </a>
                             </li>
