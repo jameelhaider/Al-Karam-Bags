@@ -380,32 +380,11 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix' => 'stocks'], function () {
             //CRUD
             Route::post('/submit', [StocksController::class, 'submit'])->name("submit.stock");
-            Route::get('/{type}/create', [StocksController::class, 'create'])->name("create.stock");
-            Route::get('/{type}/edit/{id}', [StocksController::class, 'edit'])->name("stock.edit");
+            Route::get('/create/{type}', [StocksController::class, 'create'])->name("create.stock");
+            Route::get('/edit/{id}', [StocksController::class, 'edit'])->name("stock.edit");
             Route::post('/update/{id}', [StocksController::class, 'update'])->name("update.stock");
-            Route::post('/addtodemand', [StocksController::class, 'addtodemand'])->name("add.stock.demand");
-            Route::post('/addtoinvoice', [StocksController::class, 'addtoinvoice'])->name("add.item.invoice");
-
             Route::get('/delete/{id}', [StocksController::class, 'delete'])->name("stock.delete");
-            //index
-            Route::get('/{type}', [StocksController::class, 'index'])->name("index.stock");
-            //models
-            Route::get('/{type}/models', [ModelsController::class, 'index'])->name("index.model");
-            Route::get('/{type}/models/create', [ModelsController::class, 'create'])->name("create.model");
-            Route::get('/{type}/models/edit/{id}', [ModelsController::class, 'edit'])->name("model.edit");
-            //companies
-            Route::get('/{type}/companies', [CompaniesController::class, 'index'])->name("index.company");
-            Route::get('/{type}/companies/create', [CompaniesController::class, 'create'])->name("create.company");
-            Route::get('/{type}/companies/edit/{id}', [CompaniesController::class, 'edit'])->name("company.edit");
-            //types
-            Route::get('/{type}/types', [TypesController::class, 'index'])->name("index.type");
-            Route::get('/{type}/types/create', [TypesController::class, 'create'])->name("create.type");
-            Route::get('/{type}/types/edit/{id}', [TypesController::class, 'edit'])->name("type.edit");
-
-
-
-
-            Route::get('/sold-out', [StocksController::class, 'index2'])->name("index2.stock");
+            Route::get('/{type}', [StocksController::class, 'index'])->name("stock.index");
             // view
             Route::get('/{id}/view', [StocksController::class, 'view'])->name("stock.view");
         });

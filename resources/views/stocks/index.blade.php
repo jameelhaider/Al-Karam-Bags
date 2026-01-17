@@ -1,6 +1,6 @@
-@extends('components.stockstabs')
+@extends('dashboard.master2')
 @section('admin_title', 'Admin | Stocks')
-@section('content3')
+@section('content2')
 
     <div class="container-fluid px-3">
 
@@ -17,10 +17,29 @@
 
                     <div class="d-flex align-items-center">
                         <h3 class="mt-1 d-none d-md-block d-lg-block" style="font-family: cursive;">
-                            {{ request()->type == 'parts' ? 'Parts' : 'Tools' }} Stock Items</h3>
+                            {{ request()->type == 'handcarries'
+                                ? 'Hand Carries'
+                                : (request()->type == 'handbags'
+                                    ? 'Hand Bags'
+                                    : (request()->type == 'schoolbags'
+                                        ? 'School Bags'
+                                        : (request()->type == 'travelbags'
+                                            ? 'Travel Bags'
+                                            : 'Title Not Found'))) }}
+                        </h3>
+
+
 
                         <h5 class="mt-1 d-block d-lg-none d-md-none d-sm-block" style="font-family: cursive;">
-                            {{ request()->type == 'parts' ? 'Parts' : 'Tools' }} Stock Items
+                            {{ request()->type == 'handcarries'
+                                ? 'Hand Carries'
+                                : (request()->type == 'handbags'
+                                    ? 'Hand Bags'
+                                    : (request()->type == 'schoolbags'
+                                        ? 'School Bags'
+                                        : (request()->type == 'travelbags'
+                                            ? 'Travel Bags'
+                                            : 'Title Not Found'))) }}
                         </h5>
 
 
@@ -101,25 +120,6 @@
 
                         <div class="ms-4 d-none d-lg-block d-md-block">
                             <form action="" method="get">
-
-                                {{-- Preserve selected Companies --}}
-                                @if (is_array(request()->company_id))
-                                    @foreach (request()->company_id as $cid)
-                                        <input type="hidden" name="company_id[]" value="{{ $cid }}">
-                                    @endforeach
-                                @elseif(request()->company_id)
-                                    <input type="hidden" name="company_id[]" value="{{ request()->company_id }}">
-                                @endif
-
-                                {{-- Preserve selected Part Types --}}
-                                @if (is_array(request()->part_type))
-                                    @foreach (request()->part_type as $pid)
-                                        <input type="hidden" name="part_type[]" value="{{ $pid }}">
-                                    @endforeach
-                                @elseif(request()->part_type)
-                                    <input type="hidden" name="part_type[]" value="{{ request()->part_type }}">
-                                @endif
-
                                 {{-- Preserve search Name --}}
                                 @if (request()->name)
                                     <input type="hidden" name="name" value="{{ request()->name }}">
@@ -181,45 +181,11 @@
                 <input type="hidden" name="status" value="{{ request()->status }}">
                 <div class="row">
 
-                    {{-- Company Multi Select --}}
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-12 mt-1 mb-1">
-                        <select name="company_id[]" id="company-select" class="form-select" multiple
-                            onchange="this.form.submit()">
-                            <option disabled>Select Company</option>
-                            @foreach ($companies as $company)
-                                <option value="{{ $company->id }}"
-                                    {{ collect(request()->company_id)->contains($company->id) ? 'selected' : '' }}>
-                                    {{ $company->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
 
                     {{-- Name --}}
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-12 mt-1 mb-1">
+                    <div class="col-lg-9 col-md-3 col-sm-6 col-12 mt-1 mb-1">
                         <input type="text" class="form-control" value="{{ request()->name }}" placeholder="Name"
                             name="name">
-                    </div>
-
-                    {{-- Part Type Multi Select --}}
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-12 mt-1 mb-1">
-                        <select name="part_type[]" id="type-select" class="form-select" multiple
-                            onchange="this.form.submit()">
-                            <option disabled>Select
-                                @if (request()->type == 'tools')
-                                    Tool
-                                @else
-                                    Part
-                                @endif
-                                Type
-                            </option>
-                            @foreach ($types as $parttype)
-                                <option value="{{ $parttype->id }}"
-                                    {{ collect(request()->part_type)->contains($parttype->id) ? 'selected' : '' }}>
-                                    {{ $parttype->name }}
-                                </option>
-                            @endforeach
-                        </select>
                     </div>
 
                     {{-- Buttons --}}
@@ -239,12 +205,12 @@
 
 
 
-        @if ($stocks->count() > 0 && (request()->company_id || request()->name || request()->part_type))
+        @if ($stocks->count() > 0 && request()->name)
             <div class="alert bg-primary text-white mt-3">
                 <strong>{{ $stocks->count() }} {{ $stocks->count() > 0 && $stocks->count() < 2 ? 'Result' : 'Results' }}
                     Found</strong>
             </div>
-        @elseif ($stocks->count() < 1 && (request()->company_id || request()->name || request()->part_type))
+        @elseif ($stocks->count() < 1 && request()->name)
             <div class="alert bg-warning text-white mt-3">
                 <strong>No Results Found !</strong>
             </div>
@@ -256,30 +222,6 @@
 
         <div class="card p-2 mb-0">
             @if ($stocks->count() > 0)
-
-                @if (request()->type == 'parts')
-                    <form action="{{ route('stock.parts.download.pdf') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="type_id" value="All">
-                        <input type="hidden" name="company_id" value="All">
-                        <input type="hidden" name="status" value="both">
-                        <input type="hidden" name="show_price" value="1">
-                        <input type="hidden" name="show_qty" value="1">
-                        <input type="submit" class="btn btn-primary float-end" value="Download PDF">
-                    </form>
-                @else
-                    <form action="{{ route('stock.tools.download.pdf') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="company_id" value="All">
-                        <input type="hidden" name="status" value="both">
-                        <input type="hidden" name="show_price" value="1">
-                        <input type="hidden" name="show_qty" value="1">
-                        <input type="submit" class="btn btn-primary float-end" value="Download PDF">
-                    </form>
-                @endif
-
-
-
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -373,32 +315,6 @@
                                                 <ul class="dropdown-menu dropdown-menu-end"
                                                     aria-labelledby="dropdownMenuButton">
 
-                                                    @if ($stock->qty > 0)
-                                                        <li>
-                                                            <a class="dropdown-item" href="#"
-                                                                onclick="openInvoiceModal({{ $stock->id }}, '{{ addslashes($stock->name) }}', {{ $stock->qty }}, {{ $stock->purchase_price }}, {{ $stock->sale_price }})">
-                                                                Add To Sale Invoice
-                                                            </a>
-                                                        </li>
-                                                    @endif
-
-
-
-                                                    {{-- @if (request()->type == 'parts') --}}
-                                                    <li>
-                                                        <a class="dropdown-item" href="#"
-                                                            onclick="openDemandModal({{ $stock->id }})">Add To
-                                                            Demand</a>
-                                                    </li>
-                                                    {{-- @endif --}}
-
-
-
-                                                    {{-- <li>
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('stock.view', ['id' => $stock->id]) }}">View</a>
-                                                </li> --}}
-
                                                     <li>
                                                         <a class="dropdown-item"
                                                             href="{{ route('stock.edit', ['id' => $stock->id, 'type' => request()->type]) }}">Edit</a>
@@ -467,257 +383,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-    <!-- Demand Modal -->
-    <div class="modal fade" id="demandModal" tabindex="-1" aria-labelledby="demandModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form method="POST" action="{{ route('add.stock.demand') }}">
-                @csrf
-                <input type="hidden" name="stock_id" id="modalStockId">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="demandModalLabel">Add to Demand</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="qty" class="form-label">Quantity (optional)</label>
-                            <input type="number" placeholder="Quantity (optional)" class="form-control" name="qty"
-                                id="qty" min="1">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Add</button>
-                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-
-    <script>
-        function openDemandModal(stockId) {
-            document.getElementById('modalStockId').value = stockId;
-            var myModal = new bootstrap.Modal(document.getElementById('demandModal'));
-            myModal.show();
-        }
-    </script>
-
-
-
-
-
-    <!-- Invoice Modal -->
-    <!-- Invoice Modal -->
-    <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form method="POST" action="{{ route('add.item.invoice') }}">
-                @csrf
-                <input type="hidden" name="stock_id" id="modalStockId2">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add to Sale Invoice</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <strong>Item:</strong> <span id="modalItemName" class="text-primary"></span><br>
-                            <strong>Available Qty:</strong> <span id="modalAvailableQty" class="text-success"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="invoice_no" class="form-label">Sale Invoice No <span
-                                    class="text-danger">*</span></label>
-                            <input type="number" required placeholder="Invoice No" class="form-control"
-                                name="invoice_no" id="invoice_no" min="1">
-                        </div>
-                        <div class="mb-3">
-                            <label for="quantity" class="form-label">Quantity <span class="text-danger">*</span></label>
-                            <input type="number" required placeholder="Quantity" class="form-control" name="quantity"
-                                id="quantity">
-                        </div>
-                        <div class="mb-3">
-                            <label for="final_price" class="form-label">Final Price <span
-                                    class="text-danger">*</span></label>
-                            <input type="number" required placeholder="Final Price" class="form-control"
-                                name="final_price" id="final_price">
-                        </div>
-                        <div class="mb-3">
-                            <label for="total_price" class="form-label">Total Price</label>
-                            <input type="number" class="form-control" id="total_price" readonly>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Add</button>
-                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-
-    <script>
-        function openInvoiceModal(stockId, itemName, availableQty, purchasePrice, salePrice) {
-            // Set values in modal
-            document.getElementById('modalStockId2').value = stockId;
-            document.getElementById('modalItemName').textContent = itemName;
-            document.getElementById('modalAvailableQty').textContent = availableQty;
-
-            const quantityInput = document.getElementById('quantity');
-            const finalPriceInput = document.getElementById('final_price');
-            const totalPriceInput = document.getElementById('total_price');
-
-            // Set initial values
-            quantityInput.min = 1;
-            quantityInput.max = availableQty;
-            quantityInput.value = 1;
-
-            finalPriceInput.min = parseFloat(purchasePrice);
-            finalPriceInput.value = parseFloat(salePrice);
-
-            // Function to calculate total
-            const calculateTotal = () => {
-                const qty = parseFloat(quantityInput.value) || 0;
-                const price = parseFloat(finalPriceInput.value) || 0;
-                totalPriceInput.value = (qty * price).toFixed(2);
-            };
-
-            // Initial total
-            calculateTotal();
-
-            // Add event listeners
-            quantityInput.addEventListener('input', calculateTotal);
-            finalPriceInput.addEventListener('input', calculateTotal);
-
-            // Show modal
-            const myModal = new bootstrap.Modal(document.getElementById('invoiceModal'));
-            myModal.show();
-        }
-    </script>
-
-
-    <style>
-        .select2-container--default .select2-selection--single {
-            display: block;
-            width: 100%;
-            padding: 0.300rem 0.200rem 0.300rem 0.200rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #ced4da;
-            border-radius: 0.375rem;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            height: auto;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__arrow {
-            top: 50%;
-            right: 0.32rem;
-            transform: translateY(-50%);
-            height: auto;
-        }
-    </style>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
-    <script>
-        $('#company-select').select2({
-            placeholder: 'Select Company',
-            allowClear: true
-        });
-
-        $('#type-select').select2({
-            placeholder: 'Select Type',
-            allowClear: true
-        });
-    </script>
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(":input").inputmask();
-    </script>
-
-
-
-    <script>
-        $(document).ready(function() {
-            // Initialize counter-up
-            $('.count-animation').each(function() {
-                var $this = $(this),
-                    countTo = $this.attr('data-count');
-
-                $this.prop('Counter', 0).animate({
-                    Counter: countTo
-                }, {
-                    duration: 2000, // Duration of the animation in milliseconds
-                    easing: 'swing', // Easing function
-                    step: function(now) {
-                        $this.text('RS.' + Math.ceil(now).toLocaleString());
-                    }
-                });
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const balanceToggle = document.getElementById('balance-toggle');
-            const balance = document.getElementById('balance');
-            const toggleText = document.getElementById('toggle-text');
-            const toggleIcon = document.getElementById('toggle-icon');
-
-            // Check localStorage for the balance visibility state
-            const balanceVisible = localStorage.getItem('balanceVisible') === 'true';
-
-            // Set the initial state based on localStorage
-            if (balanceVisible) {
-                balance.style.display = 'block';
-                toggleText.textContent = 'Hide Balance';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                balance.style.display = 'none';
-                toggleText.textContent = 'Show Balance';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-
-            // Toggle balance visibility and update localStorage
-            balanceToggle.addEventListener('click', function() {
-                if (balance.style.display === 'none') {
-                    balance.style.display = 'block';
-                    toggleText.textContent = 'Hide Balance';
-                    toggleIcon.classList.remove('fa-eye');
-                    toggleIcon.classList.add('fa-eye-slash');
-                    localStorage.setItem('balanceVisible', 'true');
-                } else {
-                    balance.style.display = 'none';
-                    toggleText.textContent = 'Show Balance';
-                    toggleIcon.classList.remove('fa-eye-slash');
-                    toggleIcon.classList.add('fa-eye');
-                    localStorage.setItem('balanceVisible', 'false');
-                }
-            });
-        });
-    </script>
 
 
 

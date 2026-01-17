@@ -155,7 +155,7 @@
                     <a href="{{ url('/admin') }}" target="_BLANK" class="app-brand-link">
 
                         <img src="{{ asset('uploads/c2.png') }}" height="35px" width="35px" alt="">
-                        <span class="fw-bolder ms-2 small text-dark">Al-Karam Bags</span>
+                        <span class="fw-bolder ms-2 text-dark">Al-Karam Bags</span>
                     </a>
 
                     <a href="javascript:void(0);"
@@ -182,25 +182,40 @@
                     </li>
 
                     <li
-                        class="menu-item {{ Request::is('admin/stocks/parts') || Request::is('admin/stocks/tools') || Request::is('admin/stocks/tools/create') || Request::is('admin/stocks/parts/create') || Request::is('admin/stocks/parts/companies/create') || Request::is('admin/stocks/tools/companies/create') || Request::is('admin/stocks/parts/models/create') || Request::is('admin/stocks/tools/models/create') || Request::is('admin/stocks/parts/companies') || Request::is('admin/stocks/tools/companies') || Request::is('admin/stocks/tools/models') || Request::is('admin/stocks/parts/models') || Request::is('admin/stocks/parts/types') || Request::is('admin/stocks/parts/types/create') || Request::is('admin/stocks/tools/types') || Request::is('admin/stocks/tools/types/create') ? 'active' : '' }}">
+                        class="menu-item {{ Request::is('admin/stocks/parts') ? 'active' : '' }}">
                         <a href="javascript:void(0);"
-                            class="menu-link menu-toggle {{ !(Request::is('admin/stocks/parts') || Request::is('admin/stocks/tools') || Request::is('admin/stocks/tools/create') || Request::is('admin/stocks/parts/create') || Request::is('admin/stocks/parts/companies/create') || Request::is('admin/stocks/tools/companies/create') || Request::is('admin/stocks/parts/models/create') || Request::is('admin/stocks/tools/models/create') || Request::is('admin/stocks/parts/companies') || Request::is('admin/stocks/tools/companies') || Request::is('admin/stocks/tools/models') || Request::is('admin/stocks/parts/models') || Request::is('admin/stocks/parts/types') || Request::is('admin/stocks/parts/types/create') || Request::is('admin/stocks/tools/types') || Request::is('admin/stocks/tools/types/create')) ? 'text-dark' : '' }}">
+                            class="menu-link menu-toggle {{ !(Request::is('admin/stocks/parts') ) ? 'text-dark' : '' }}">
                             <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                             <div data-i18n="Misc">Stocks</div>
                         </a>
                         <ul class="menu-sub">
                             <li
-                                class="menu-item {{ Request::is('admin/stocks/parts') || Request::is('admin/stocks/parts/create') || Request::is('admin/stocks/parts/models/create') || Request::is('admin/stocks/parts/companies/create') || Request::is('admin/stocks/parts/companies') || Request::is('admin/stocks/parts/models') || Request::is('admin/stocks/parts/types') || Request::is('admin/stocks/parts/types/create') ? 'active' : '' }}">
-                                <a href="{{ url('admin/stocks/parts') }}"
-                                    class="menu-link {{ !Request::is('admin/stocks/parts') && !Request::is('admin/stocks/parts/create') && !Request::is('admin/stocks/parts/models/create') && !Request::is('admin/stocks/parts/companies/create') && !Request::is('admin/stocks/parts/companies') && !Request::is('admin/stocks/parts/models') && !Request::is('admin/stocks/parts/types') && !Request::is('admin/stocks/parts/types/create') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Error">Parts</div>
+                                class="menu-item {{ Request::is('admin/stocks/parts')? 'active' : '' }}">
+                                <a href="{{ url('admin/stocks/schoolbags') }}"
+                                    class="menu-link {{ !Request::is('admin/stocks/parts') ? 'text-dark' : '' }}">
+                                    <div data-i18n="Error">School Bags</div>
                                 </a>
                             </li>
                             <li
-                                class="menu-item {{ Request::is('admin/stocks/tools') || Request::is('admin/stocks/tools/create') || Request::is('admin/stocks/tools/models/create') || Request::is('admin/stocks/tools/companies/create') || Request::is('admin/stocks/tools/companies') || Request::is('admin/stocks/tools/models') || Request::is('admin/stocks/tools/types') || Request::is('admin/stocks/tools/types/create') ? 'active' : '' }}">
-                                <a href="{{ url('admin/stocks/tools') }}"
-                                    class="menu-link {{ !Request::is('admin/stocks/tools') && !Request::is('admin/stocks/tools/create') && !Request::is('admin/stocks/tools/models/create') && !Request::is('admin/stocks/tools/companies/create') && !Request::is('admin/stocks/tools/companies') && !Request::is('admin/stocks/tools/models') && !Request::is('admin/stocks/tools/types') && !Request::is('admin/stocks/tools/types/create') ? 'text-dark' : '' }}">
-                                    <div data-i18n="Under Maintenance">Tools</div>
+                                class="menu-item {{ Request::is('admin/stocks/tools') ? 'active' : '' }}">
+                                <a href="{{ url('admin/stocks/handcarries') }}"
+                                    class="menu-link {{ !Request::is('admin/stocks/tools') ? 'text-dark' : '' }}">
+                                    <div data-i18n="Under Maintenance">Hand Carries</div>
+                                </a>
+                            </li>
+                               <li
+                                class="menu-item {{ Request::is('admin/stocks/tools') ? 'active' : '' }}">
+                                <a href="{{ url('admin/stocks/travelbags') }}"
+                                    class="menu-link {{ !Request::is('admin/stocks/tools') ? 'text-dark' : '' }}">
+                                    <div data-i18n="Under Maintenance">Travel Bags</div>
+                                </a>
+                            </li>
+                             </li>
+                               <li
+                                class="menu-item {{ Request::is('admin/stocks/tools') ? 'active' : '' }}">
+                                <a href="{{ url('admin/stocks/handbags') }}"
+                                    class="menu-link {{ !Request::is('admin/stocks/tools') ? 'text-dark' : '' }}">
+                                    <div data-i18n="Under Maintenance">Hand Bags</div>
                                 </a>
                             </li>
                         </ul>

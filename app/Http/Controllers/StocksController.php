@@ -22,15 +22,6 @@ class StocksController extends Controller
             if ($request->name) {
                 $query->where('stocks.name', 'LIKE', '%' . $request->name . '%');
             }
-
-            if ($request->company_id) {
-                $query->whereIn('stocks.company_id', $request->company_id);
-            }
-
-            if ($request->part_type) {
-                $query->whereIn('stocks.type_id', $request->part_type);
-            }
-
             if ($request->status == "AVAILABLE") {
                 $query->where('stocks.qty', '>', 0);
             } elseif ($request->status == "AVAILABLE, LOW STOCK") {
@@ -44,18 +35,7 @@ class StocksController extends Controller
                 ->where('stocks.type', $type)
                 ->orderBy('stocks.created_at', 'desc')
                 ->paginate(1000);
-            $companies = DB::table('companies')
-                ->where('type', $type)
-                ->select('name', 'id')
-                ->get();
-            $totalproductsammount = DB::table('stocks')
-                ->where('status', 'Available')
-                ->sum('purchase_price');
-            $types = DB::table('types')
-                ->where('type', $type)
-                ->select('name', 'id')
-                ->get();
-            return view('stocks.index', compact('stocks', 'companies', 'totalproductsammount', 'types'));
+            return view('stocks.index', compact('stocks'));
         } else {
             return abort(401);
         }
