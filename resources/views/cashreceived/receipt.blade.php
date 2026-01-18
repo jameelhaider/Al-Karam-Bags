@@ -81,14 +81,13 @@
                             <div class="row">
                                 <div class="col-6">
                                     <small class="fw-bold text-dark">Address:</small>
-                                    <p class="mb-1 text-dark" style="font-size: 12px;">Shop # FF/340 D-Point Plaza GT
-                                        Road, Gujranwala</p>
+                                    <p class="mb-1 text-dark" style="font-size: 12px;">~Shop No#80 Gali Chubakan Wali Sad Nagrii Bazaar Sialkoti Gate Gujranwala</p>
                                 </div>
                                 <div class="col-6">
                                     <small class="fw-bold text-dark">Contact:</small>
                                     <p class="mb-1 text-dark" style="font-size: 12px;">
-                                        <strong>Husnain Nasir:</strong> 0337-4967077<br>
-                                        <strong>Nasir Ahmad:</strong> 0305-5760932
+                                        <strong>Rana Awais:</strong> 0315-8182213<br>
+                                        <strong>Sabir Ali:</strong> 0318-4499953
                                     </p>
                                 </div>
                             </div>

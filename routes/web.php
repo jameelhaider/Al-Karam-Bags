@@ -155,52 +155,11 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/', function () {
             if (Gate::allows('is_admin')) {
-
-
-                // Counts
-                $totalaccounts = DB::table('accounts')->count();
                 $totaldemands = DB::table('demands')->count();
                 $totalschooldemands = DB::table('demands')->where('type', 'schoolbags')->count();
                 $totalhandcarrydemands = DB::table('demands')->where('type', 'handcarries')->count();
                 $totaltraveldemands = DB::table('demands')->where('type', 'travelbags')->count();
                 $totalhanddemands = DB::table('demands')->where('type', 'handbags')->count();
-
-
-                $totaltools = DB::table('stocks')->where('type', 'tools')->count();
-                $totalparts = DB::table('stocks')->where('type', 'parts')->count();
-                $totalstockitems = DB::table('stocks')->count();
-                //total stocks
-                $totalavailitems = DB::table('stocks')->whereColumn('qty', '>', 'alert_qty')->count();
-                $totaloutitems = DB::table('stocks')->where('qty', '0')->count();
-                $totallowitems = DB::table('stocks')->whereColumn('qty', 'alert_qty')->count();
-                //parts stocks
-                $totalavailitemsparts = DB::table('stocks')
-                    ->where('type', 'parts')
-                    ->whereColumn('qty', '>', 'alert_qty')
-                    ->count();
-                $totaloutitemsparts = DB::table('stocks')
-                    ->where('type', 'parts')
-                    ->where('qty', '0')
-                    ->count();
-                $totallowitemsparts = DB::table('stocks')
-                    ->where('type', 'parts')
-                    ->whereColumn('qty', 'alert_qty')
-                    ->count();
-                //tools stocks
-                $totalavailitemstools = DB::table('stocks')
-                    ->where('type', 'tools')
-                    ->whereColumn('qty', '>', 'alert_qty')
-                    ->count();
-                $totaloutitemstools = DB::table('stocks')
-                    ->where('type', 'tools')
-                    ->where('qty', '0')
-                    ->count();
-                $totallowitemstools = DB::table('stocks')
-                    ->where('type', 'tools')
-                    ->whereColumn('qty', 'alert_qty')
-                    ->count();
-
-
                 // Revenues
                 $today = Carbon::today();
                 $startOfWeek = Carbon::now()->startOfWeek();
@@ -234,24 +193,18 @@ Route::middleware(['auth'])->group(function () {
                     ->whereBetween('created_at', [$startOfPreviousMonth, $endOfPreviousMonth])
                     ->where('status', '!=', 'Returned')
                     ->sum('profit');
-
-                // Expenses for This Month
                 $totalExpensesthismonth = DB::table('expenses')
                     ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
                     ->sum('ammount');
-
-                // Profit this month after expenses
                 $totalProfitthismonthAfterExpenses = $thisMonthRevenue - $totalExpensesthismonth;
 
                 $totalrass = DB::table('stocks')
                     ->select(DB::raw('SUM(qty * purchase_price) as total'))
                     ->value('total');
-
                 $totaltodaysales = DB::table('invoices')
                     ->whereDate('created_at', $today)
                     ->where('status', '!=', 'Returned')
                     ->sum('total_bill');
-
                 $totalthisweeksales = DB::table('invoices')
                     ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
                     ->where('status', '!=', 'Returned')
@@ -274,31 +227,12 @@ Route::middleware(['auth'])->group(function () {
                 $totalrem = DB::table('accounts')
                     ->where('prev_balance', '>', 0)
                     ->sum('prev_balance');
-
-
                 return view('admin', compact(
-                    'totalaccounts',
-                    //parts
-                    'totalavailitemsparts',
-                    'totaloutitemsparts',
-                    'totallowitemsparts',
-                    //tools
-                    'totalavailitemstools',
-                    'totaloutitemstools',
-                    'totallowitemstools',
-
-                    'totalavailitems',
-                    'totaloutitems',
-                    'totallowitems',
-
                     'totalschooldemands',
                     'totalhandcarrydemands',
                     'totaltraveldemands',
                     'totalhanddemands',
                     'totaldemands',
-
-                    'totaltools',
-                    'totalparts',
                     'todayRevenue',
                     'thisWeekRevenue',
                     'thisYearRevenue',
@@ -308,7 +242,6 @@ Route::middleware(['auth'])->group(function () {
                     'previousMonthRevenue',
                     'totalrass',
                     'totalProfitthismonthAfterExpenses',
-                    'totalstockitems',
                     'totaltodaysales',
                     'totalthisweeksales',
                     'totalthismonthsales',
@@ -334,7 +267,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [StocksController::class, 'update'])->name("update.stock");
             Route::get('/delete/{id}', [StocksController::class, 'delete'])->name("stock.delete");
             Route::get('/{type}', [StocksController::class, 'index'])->name("stock.index");
-
             Route::post('/addtodemand', [StocksController::class, 'addtodemand'])->name("add.stock.demand");
             // view
             Route::get('/{id}/view', [StocksController::class, 'view'])->name("stock.view");
@@ -425,8 +357,6 @@ Route::middleware(['auth'])->group(function () {
 
 
             Route::post('/return/invoice-item', [InvoicesController::class, 'returninvoiceitem'])->name("return.invoice.item");
-
-
             //index
             Route::get('/', [InvoicesController::class, 'index'])->name("index.invoice");
             //return
@@ -434,14 +364,6 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::get('/invoice/make', [InvoicesController::class, 'make'])->name("invoice.make");
         Route::post('/invoice/save', [InvoicesController::class, 'save'])->name("save.invoice");
-        //return
-        Route::post('/invoice/return/save', [InvoicesController::class, 'savereturn'])->name("save.invoice.return");
-
-        //return
-        Route::get('/invoice/make/return', [InvoicesController::class, 'makereturn'])->name("invoice.make.return");
-
-
-
     });
 });
 

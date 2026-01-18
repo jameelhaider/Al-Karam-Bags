@@ -28,6 +28,12 @@
                     List Sale Invoices
                 </a>
             </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link {{ Request::is('admin/invoices/return')  ? 'active' : '' }}"
+                href="{{ url('admin/invoices/return') }}">
+                    List Returned Invoices
+                </a>
+            </li>
 
         </ul>
 

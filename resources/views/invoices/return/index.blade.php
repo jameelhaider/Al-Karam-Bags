@@ -1,58 +1,22 @@
 @extends('components.invoicetabs')
-@section('admin_title', 'Admin | List Sale Invoices')
+@section('admin_title', 'Admin | List Returned Invoices')
 @section('content4')
     <div class="container-fluid px-3">
         <div class="card shadow-sm bg-white rounded-0">
             <div class="row">
                 <div class="col-lg-3 col-7 col-md-4 col-sm-5">
-                    <a href="{{ url('/admin/invoice/make') }}"
+                    <a href="{{ url('/admin') }}"
                         class="btn btn-primary custom-back-button d-flex align-items-center justify-content-center">
-                        <i class="bx bx-plus me-1"></i> Make Sale Invoice
+                        <i class="bx bx-home me-1"></i> Dashboard
                     </a>
                 </div>
                 <div class="col-lg-9 col-5 col-md-8 col-sm-7">
 
                     <div class="d-flex align-items-center">
-                        <h3 class="mt-1 d-none d-md-block d-lg-block" style="font-family: cursive;">List Sale Invoices</h3>
-                        <h5 class="mt-1 d-none d-sm-block d-md-none" style="font-family: cursive;">List Sale Invoices</h5>
-                        <small class="mt-1 d-block d-sm-none d-lg-none d-md-none" style="font-family: cursive;">List Sale
+                        <h3 class="mt-1 d-none d-md-block d-lg-block" style="font-family: cursive;">List Returned Invoices</h3>
+                        <h5 class="mt-1 d-none d-sm-block d-md-none" style="font-family: cursive;">List Returned Invoices</h5>
+                        <small class="mt-1 d-block d-sm-none d-lg-none d-md-none" style="font-family: cursive;">List Return
                             Invoices</small>
-
-
-                        <div class="form-check form-switch ms-4 d-none d-lg-block">
-                            <input class="form-check-input" type="checkbox" id="toggleProfit" onclick="toggleProfitField()"
-                                style="cursor: pointer">
-                            <label class="form-check-label" for="toggleProfit" style="cursor: pointer">Show Profit</label>
-                        </div>
-
-
-                        <script>
-                            function toggleProfitField() {
-                                const toggleSwitch = document.getElementById('toggleProfit');
-                                const isChecked = toggleSwitch.checked;
-                                localStorage.setItem('showProfit', isChecked);
-                                updatePriceVisibility(isChecked);
-                            }
-
-                            function updatePriceVisibility(isVisible) {
-                                const priceHeader = document.querySelector('.profit-header');
-                                const priceCells = document.querySelectorAll('.profit-cell');
-                                if (isVisible) {
-                                    priceHeader.style.display = '';
-                                    priceCells.forEach(cell => cell.style.display = '');
-                                } else {
-                                    priceHeader.style.display = 'none';
-                                    priceCells.forEach(cell => cell.style.display = 'none');
-                                }
-                            }
-                            document.addEventListener('DOMContentLoaded', () => {
-                                const savedState = localStorage.getItem('showProfit');
-                                const isVisible = savedState === 'true';
-                                const toggleSwitch = document.getElementById('toggleProfit');
-                                toggleSwitch.checked = isVisible;
-                                updatePriceVisibility(isVisible);
-                            });
-                        </script>
 
                     </div>
 
@@ -75,7 +39,7 @@
             }
 
             .custom-back-button:hover {
-                background-color: #2596be;
+                background-color: #8c0811;
                 border: 0px;
             }
 
@@ -91,7 +55,6 @@
             <form action="" method="GET">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-6 mt-1 mb-1">
-
                         <select name="account_id" class="form-select" id="acc-select" onchange="this.form.submit()">
                             <option value="{{ null }}">Select Account</option>
                             @foreach ($accounts as $account)
@@ -122,7 +85,7 @@
                     </div>
                     <div class="col-lg-2 col-md-6 col-sm-6 col-12 mt-1 mb-1">
                         <div class="btn-group w-100">
-                            <a href="{{ url('admin/invoices') }}" title="Clear" class="btn btn-outline-danger">Clear</a>
+                            <a href="{{ url('admin/invoices/return') }}" title="Clear" class="btn btn-outline-danger">Clear</a>
                             <button type="submit" title="Search" class="btn btn-outline-success">Search</button>
 
 
@@ -155,8 +118,7 @@
                                 <th style="font-size:14px" class="text-dark fw-bold">#</th>
                                 <th style="font-size:14px" class="text-dark fw-bold">Invoice ID</th>
                                 <th style="font-size:14px" class="text-dark fw-bold">Invoice No</th>
-                                <th style="font-size:14px" class="text-dark fw-bold profit-header">Profit</th>
-                                <th style="font-size:14px" class="text-dark fw-bold">Total Bill</th>
+                                <th style="font-size:14px" class="text-dark fw-bold">Total Return</th>
                                 <th style="font-size:14px" class="text-dark fw-bold">Total Items</th>
                                 <th style="font-size:14px" class="text-dark fw-bold">Date</th>
                                 <th style="font-size:14px" class="text-dark fw-bold">Action</th>
@@ -167,18 +129,13 @@
                                 <tr class="text-center">
                                     <td class="text-dark">{{ ++$key }}</td>
                                     <td title="{{ $invoice->invoice_id }}">
-                                        <a class="text-dark" target="_BLANK" href="{{ route('invoice.view', ['id' => $invoice->id]) }}">
+                                        <a class="text-dark" href="{{ route('invoice.return.view', ['id' => $invoice->id]) }}">
                                             {{ $invoice->invoice_id }}
-                                            <p class="mb-0 fw-bold" style="font-size: 12px"> {{ $invoice->invoice_to }}</p>
-
-                                            @if ($invoice->status == 'Returned')
-                                                <p class="mb-0 fw-light" style="font-size: 12px;color:rgb(253, 27, 27)">
-                                                    {{ $invoice->status }}</p>
-                                            @endif
+                                            <p class="mb-0 fw-bold" style="font-size: 12px"> {{ $invoice->return_from }}</p>
                                         </a>
                                     <td class="text-dark" title="{{ $invoice->id }}">
                                         {{ $invoice->id }}
-                                        <i class="bx bx-copy" style="color: #2596be;font-size:14px;cursor: pointer;"
+                                        <i class="bx bx-copy" style="color: #8c0811;font-size:14px;cursor: pointer;"
                                             onclick="copyToClipboard(this, '{{ $invoice->id }}')">
                                         </i>
                                         <span class="copied-msg"
@@ -201,16 +158,11 @@
 
 
 
-                                    <td title="{{ 'Rs.' . number_format($invoice->profit) }}" class="profit-cell"> <a
-                                            class="text-dark" href="{{ route('invoice.view', ['id' => $invoice->id]) }}">
-                                            {{ 'Rs.' . number_format($invoice->profit) }}
-                                        </a>
-                                    </td>
 
 
-                                    <td title="{{ 'Rs.' . number_format($invoice->total_bill) }}"> <a class="text-dark"
+                                    <td title="{{ 'Rs.' . number_format($invoice->total_return) }}"> <a class="text-dark"
                                             href="{{ route('invoice.view', ['id' => $invoice->id]) }}">
-                                            {{ 'Rs.' . number_format($invoice->total_bill) }}
+                                            {{ 'Rs.' . number_format($invoice->total_return) }}
                                         </a>
                                     </td>
                                     <td title="{{ $invoice->total_items }}"> <a class="nav-link"
@@ -235,17 +187,10 @@
                                             <ul class="dropdown-menu dropdown-menu-end"
                                                 aria-labelledby="dropdownMenuButton">
                                                 <li>
-                                                    <a class="dropdown-item" target="_BLANK"
-                                                        href="{{ route('invoice.view', ['id' => $invoice->id]) }}">View
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('invoice.return.view', ['id' => $invoice->id]) }}">View
                                                         Invoice</a>
                                                 </li>
-                                                @if ($invoice->status != 'Returned')
-                                                    <li>
-                                                        <a class="dropdown-item" href="javascript:void(0)"
-                                                            onclick="confirmReturned('{{ route('return.invoice', ['id' => $invoice->id, 'invoice_to' => $invoice->invoice_to, 'acc_id' => $invoice->acc_id]) }}')">Mark
-                                                            As Returned</a>
-                                                    </li>
-                                                @endif
                                             </ul>
                                         </div>
 
@@ -262,15 +207,14 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                            <tr class="text-center">
+                              <tr class="text-center">
                                 <th style="font-size:14px" class="text-dark fw-bold">#</th>
-                                <th style="font-size:14px" class="text-dark fw-bold">Invoice Id</th>
+                                <th style="font-size:14px" class="text-dark fw-bold">Invoice ID</th>
                                 <th style="font-size:14px" class="text-dark fw-bold">Invoice No</th>
-                                <th style="font-size:14px" class="text-dark fw-bold">Total Bill</th>
+                                <th style="font-size:14px" class="text-dark fw-bold">Total Return</th>
                                 <th style="font-size:14px" class="text-dark fw-bold">Total Items</th>
                                 <th style="font-size:14px" class="text-dark fw-bold">Date</th>
                                 <th style="font-size:14px" class="text-dark fw-bold">Action</th>
-
                             </tr>
                         </thead>
                     </table>
@@ -278,36 +222,16 @@
 
                 <h4 class="h4 mt-2 text-center text-dark fw-bold">No Data Found!</h4>
             @endif
-
         </div>
     </div>
 
-
-       <script>
-        // Function to handle Returned confirmation
-        function confirmReturned(url) {
-            Swal.fire({
-                title: 'Are you sure you want to Mark This Invoice As Returned?',
-                text: "You won't be able to revert this! This May Returned Complete Invoice. Plz Double Check The Invoice",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Marked it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            })
-        }
-    </script>
 
     <script>
         $(":input").inputmask();
     </script>
 
 
-    <style>
+<style>
         .select2-container--default .select2-selection--single {
             display: block;
             width: 100%;
@@ -332,7 +256,6 @@
         }
     </style>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
     <script>
@@ -341,6 +264,5 @@
             allowClear: true
         });
     </script>
-
 
 @endsection

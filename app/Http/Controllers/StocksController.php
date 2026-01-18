@@ -88,7 +88,7 @@ class StocksController extends Controller
             $stock = new Stocks();
             $stock->alert_qty = $request->alert_qty;
             $stock->purchase_price = $request->purchase_price;
-            $stock->name = $request->name;
+            $stock->name = strtoupper($request->name);
             $stock->sale_price = $request->sale_price;
             $stock->qty = $request->qty;
             $stock->type = $request->type;
@@ -116,7 +116,7 @@ class StocksController extends Controller
             $stock = Stocks::find($id);
             $stock->alert_qty = $request->alert_qty;
             $stock->purchase_price = $request->purchase_price;
-            $stock->name = $request->name;
+            $stock->name = strtoupper($request->name);
             $stock->sale_price = $request->sale_price;
             $stock->qty = $request->qty;
             $stock->save();
@@ -153,7 +153,7 @@ class StocksController extends Controller
             $demand = new Demands();
             $demand->qty = $request->qty ?? null;
             $demand->type = $request->type;
-            $demand->name = $stock->name;
+            $demand->name = strtoupper($stock->name);
             $demand->save();
             return redirect()->back()->with('success', 'Added to demand successfully');
         } else {

@@ -150,7 +150,6 @@ class AccountsController extends Controller
         $accounts = DB::table('accounts')
             ->select('customer_name', 'id')
             ->get();
-
         return view('accounts.returnhistory', compact('items', 'accounts'));
     }
 

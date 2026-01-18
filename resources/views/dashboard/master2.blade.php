@@ -259,6 +259,12 @@
                                 <div data-i18n="Carousel">List Sale Invoices</div>
                             </a>
                         </li>
+                         <li class="menu-item {{ Request::is('admin/invoices/return') ? 'active' : '' }}">
+                                <a href="{{ url('admin/invoices/return') }}"
+                                    class="menu-link {{ !Request::is('admin/invoices/return') ? 'text-dark' : '' }}">
+                                    <div data-i18n="Carousel">List Returned Invoices</div>
+                                </a>
+                            </li>
                     </ul>
                 </li>
 
@@ -277,6 +283,14 @@
                         <div data-i18n="Tables">Sale History</div>
                     </a>
                 </li>
+
+                 <li class="menu-item {{ Request::is('admin/return-history') ? 'active' : '' }}">
+                        <a href="{{ url('admin/return-history') }}"
+                            class="menu-link {{ Request::is('admin/return-history*') ? '' : 'text-dark' }}">
+                            <i class="menu-icon tf-icons bx bx-undo"></i>
+                            <div data-i18n="Tables">Return History</div>
+                        </a>
+                    </li>
 
 
 
