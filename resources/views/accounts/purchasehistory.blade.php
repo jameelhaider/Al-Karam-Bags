@@ -250,7 +250,7 @@
                         <div class="mt-2">
                             <label for="returnPrice" class="fw-bold">Return Price <span
                                     class="text-danger">*</span></label>
-                            <input type="number" min="1" name="return_price" class="form-control"
+                            <input type="number" readonly min="1" name="return_price" class="form-control"
                                 id="returnPrice" placeholder="Return Price">
                         </div>
                     </div>
