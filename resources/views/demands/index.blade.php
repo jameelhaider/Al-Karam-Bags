@@ -49,6 +49,15 @@
                                             : 'Title Not Found'))) }}
                         </h5>
 
+
+                          @if ($demands->count() > 0)
+                            <form action="{{ route('demands.download.pdf') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="type" value="{{ request()->type }}">
+                                <button type="submit" class="btn btn-primary ms-3">Download PDF</button>
+                            </form>
+                        @endif
+
                     </div>
 
 

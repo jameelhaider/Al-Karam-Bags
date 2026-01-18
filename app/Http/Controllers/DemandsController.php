@@ -43,7 +43,7 @@ class DemandsController extends Controller
     }
 
 
-    public function edit($type,$id)
+    public function edit($type, $id)
     {
         if (Gate::allows('is_admin')) {
             $demand = Demands::find($id);
@@ -61,7 +61,7 @@ class DemandsController extends Controller
         if (Gate::allows('is_admin')) {
             $demand = new Demands();
             $demand->type = $request->type;
-            $demand->name = $request->name;
+            $demand->name = strtoupper($request->name);
             $demand->qty = $request->qty ? $request->qty : null;
             $demand->save();
             if ($request->action === 'save_add_new') {
@@ -81,11 +81,10 @@ class DemandsController extends Controller
         if (Gate::allows('is_admin')) {
             $demand = Demands::findOrFail($id);
             $demand->qty = $request->qty ? $request->qty : null;
-             $demand->type = $request->type;
-            $demand->name = $request->name;
+            $demand->type = $request->type;
+            $demand->name = strtoupper($request->name);
             $demand->save();
-          return redirect()->route('index.demand', ['type' => $request->type])->with('success', 'Demand Updated Successfully!');
-
+            return redirect()->route('index.demand', ['type' => $request->type])->with('success', 'Demand Updated Successfully!');
         } else {
             return abort(401);
         }
@@ -134,35 +133,32 @@ class DemandsController extends Controller
 
 
 
-public function downloadpdf(Request $request)
+  public function downloadpdf(Request $request)
 {
     if (Gate::allows('is_admin')) {
+
         $query = DB::table('demands')
             ->where('type', $request->type);
-        $title = '';
-        if ($request->type === 'tools') {
-            $title = 'All Tools Demands';
-        } elseif ($request->type === 'parts') {
-            if ($request->filled('type_id') && $request->type_id !== 'All') {
-                $type = DB::table('types')->find($request->type_id);
-                $typeName = $type ? $type->name : 'Unknown';
-                $title = $typeName . ' Demands';
-                $query->where('item_type_id', $request->type_id);
-            } else {
-                $title = 'All Parts Demands';
-            }
+
+        if ($request->type === 'schoolbags') {
+            $title = 'School Bag Demands';
+        } elseif ($request->type === 'handcarries') {
+            $title = 'Hand Carry Demands';
+        } elseif ($request->type === 'travelbags') {
+            $title = 'Travel Bag Demands';
+        } else {
+            $title = 'Hand Bag Demands';
         }
         $demands = $query->orderBy('created_at', 'desc')->get();
         $pdf = Pdf::loadView('pdf.demands', [
             'demands' => $demands,
-            'type' => $request->type,
-            'title' => $title,
+            'title'   => $title,
         ]);
-        return $pdf->download('demands.pdf');
-    } else {
-        return abort(401);
+        $fileName = str_replace(' ', '_', strtolower($title)) . '.pdf';
+        return $pdf->download($fileName);
     }
-}
 
+    return abort(401);
+}
 
 }

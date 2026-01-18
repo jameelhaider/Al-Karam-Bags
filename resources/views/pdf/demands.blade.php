@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Al-Karam Bags | Demands</title>
+    <title>Al-Karam Bags | {{ $title }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -72,33 +72,26 @@
 
     <h1 class="header-title">Al-Karam Bags</h1>
     <hr>
-    <p style="text-align: center">-Shop # F-340 First Floor D-Point Plaza GT Road, Gujranwala</p>
-    <p style="text-align: center"><strong>Husnain Nasir:-</strong> 0337-4967077</p>
+    <p style="text-align: center">~Shop No#80 Gali Chubakan Wali Sad Nagrii Bazaar Sialkoti Gate Gujranwala</p>
+    <p style="text-align: center"><strong>Rana Awais:-</strong> 0315-8182213</p>
+    <p style="text-align: center"><strong>Sabir Ali:-</strong> 0318-4499953</p>
 
     <h2 class="section-title">{{ $title }}</h2>
 
     <table class="table">
         <thead>
             <tr>
-                <th>#</th>
+                <th style="text-align: center">#</th>
                 <th>Demand Name</th>
-                @if ($type=='parts')
-               <th>Type</th>
-                @endif
-
-                <th>Qty</th>
+                <th style="text-align: center">Qty</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($demands as $key => $demand)
                 <tr>
-                    <td>{{ ++$key }}</td>
+                    <td style="text-align: center">{{ ++$key }}</td>
                     <td title="{{ $demand->name }}">{{ $demand->name }}</td>
-                       @if ($type=='parts')
- <td title="{{ $demand->item_type }}">{{ $demand->item_type }}</td>
-                @endif
-
-                    <td title="{{ $demand->qty ? $demand->qty : '---------' }}">
+                    <td title="{{ $demand->qty ? $demand->qty : '---------' }}" style="text-align: center">
                         {{ $demand->qty ? $demand->qty : '---------' }}
                     </td>
                 </tr>
