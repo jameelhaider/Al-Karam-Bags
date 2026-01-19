@@ -17,5 +17,6 @@ class Invoices extends Model
         'account_id',
         'prev_balance',
         'status',
+        'customer_name',
     ];
 }

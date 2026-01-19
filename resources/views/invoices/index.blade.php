@@ -169,7 +169,13 @@
                                     <td title="{{ $invoice->invoice_id }}">
                                         <a class="text-dark" target="_BLANK" href="{{ route('invoice.view', ['id' => $invoice->id]) }}">
                                             {{ $invoice->invoice_id }}
-                                            <p class="mb-0 fw-bold" style="font-size: 12px"> {{ $invoice->invoice_to }}</p>
+                                      <p class="mb-0 fw-bold" style="font-size: 12px">
+    {{ $invoice->invoice_to }}
+    @if(!empty($invoice->customer_name))
+        - {{ $invoice->customer_name }}
+    @endif
+</p>
+
 
                                             @if ($invoice->status == 'Returned')
                                                 <p class="mb-0 fw-light" style="font-size: 12px;color:rgb(253, 27, 27)">

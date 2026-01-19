@@ -158,7 +158,8 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-6">
                                         <h5 class="fw-bold text-dark">Address</h5>
-                                        <h6 class="text-dark">~Shop No#80 Gali Chubakan Wali Sad Nagrii Bazaar Sialkoti Gate Gujranwala</h6>
+                                        <h6 class="text-dark">~Shop No#80 Gali Chubakan Wali Sad Nagrii Bazaar Sialkoti Gate
+                                            Gujranwala</h6>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-6">
                                         <h5 class="fw-bold text-dark">Contact</h5>
@@ -223,8 +224,7 @@
                                         <td class="not-show">
                                             <div class="dropdown ms-auto">
                                                 <button class="btn btn-dark btn-sm dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
+                                                    id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Actions
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end"
@@ -233,8 +233,8 @@
                                                     {{-- Return option --}}
                                                     @if ($item->status != 'Returned')
                                                         <li>
-                                                            <a href="#" class="dropdown-item"
-                                                                data-bs-toggle="modal" data-bs-target="#returnModal"
+                                                            <a href="#" class="dropdown-item" data-bs-toggle="modal"
+                                                                data-bs-target="#returnModal"
                                                                 data-invoice-id="{{ $invoice->id }}"
                                                                 data-item-id="{{ $item->item_id }}"
                                                                 data-item-name="{{ $item->name }}"
@@ -354,7 +354,13 @@
                         @if ($invoice->invoice_to)
                             <div>
                                 <h2 class="mt-3 fw-bold text-dark">Invoice To:</h2>
-                                <h3 class="fw-light text-dark">{{ $invoice->invoice_to }}</h3>
+                                <h3 class="fw-light text-dark">
+                                    {{ $invoice->invoice_to }}
+                                    @if (!empty($invoice->customer_name))
+                                        - {{ $invoice->customer_name }}
+                                    @endif
+                                </h3>
+
                             </div>
                         @endif
 

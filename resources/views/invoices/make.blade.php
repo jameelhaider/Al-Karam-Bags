@@ -123,7 +123,7 @@
 
 
 
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                    <div class="col-lg-2 col-md-6 col-sm-6 col-6">
                         <select name="status" required class="form-select form-select-lg" id="statusSelect">
                             <option value="">Select Status</option>
                             <option value="Paid">Paid</option>
@@ -132,8 +132,13 @@
                         </select>
                     </div>
 
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-12">
+                        <input type="text" name="customer_name" class="form-control form-control-lg"
+                            placeholder="Customer Name (Optional)" id="">
+                    </div>
 
-                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+
+                    <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                         <h2 class="text-end mt-2 mb-2 fw-bold text-dark">Total Bill: <span id="total_bill">Rs.0</span>
                         </h2>
                     </div>
@@ -217,7 +222,8 @@
 
 
                         <div class="col-lg-12 col-md-12 col-12 col-sm-12 mt-2">
-                            <label for="customer_phone" class="fw-bold mb-2">Phone<span class="text-danger">*</span></label>
+                            <label for="customer_phone" class="fw-bold mb-2">Phone<span
+                                    class="text-danger">*</span></label>
                             <input type="text" id="customer_phone" required value="{{ old('customer_phone') }}"
                                 name="customer_phone" placeholder="0300-0000000"
                                 class="form-control @error('customer_phone') is-invalid @enderror" maxlength="12">

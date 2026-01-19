@@ -16,7 +16,7 @@ class InvoicesController extends Controller
     {
         if (Gate::allows('is_admin')) {
             $query = Invoices::query()
-                ->select('invoices.total_bill as total_bill', 'invoices.total_items as total_items', 'invoices.id as id', 'invoices.invoice_id as invoice_id', 'invoices.created_at as created_at', 'invoices.profit as profit', 'invoices.invoice_to as invoice_to', 'invoices.account_id as acc_id', 'invoices.status as status');
+                ->select('invoices.total_bill as total_bill','invoices.customer_name as customer_name', 'invoices.total_items as total_items', 'invoices.id as id', 'invoices.invoice_id as invoice_id', 'invoices.created_at as created_at', 'invoices.profit as profit', 'invoices.invoice_to as invoice_to', 'invoices.account_id as acc_id', 'invoices.status as status');
 
             if ($request->invoice_id) {
                 $query->where('invoices.invoice_id', $request->invoice_id);
@@ -520,6 +520,7 @@ class InvoicesController extends Controller
                 'account_id'       => 'required|integer|exists:accounts,id',
                 'status'           => 'required|in:Paid,Un Paid,Blank',
                 'items'            => 'required|array|min:1',
+                'customer_name'            => 'nullable',
             ]);
 
             $account = DB::table('accounts')->where('id', $request->account_id)->first();
@@ -539,6 +540,7 @@ class InvoicesController extends Controller
                     'total_bill' => 0,
                     'total_items' => 0,
                     'profit' => 0,
+                    'customer_name' => $request->customer_name,
                     'invoice_to' => $account->customer_name,
                     'account_id' => $account->id,
                     'prev_balance' => $account->prev_balance,
