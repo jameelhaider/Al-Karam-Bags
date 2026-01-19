@@ -193,7 +193,7 @@ class AccountsController extends Controller
             ]);
 
             $account = new Accounts();
-            $account->customer_name = $request->customer_name;
+            $account->customer_name = ucwords(strtolower($request->customer_name));
             $account->customer_phone = $request->customer_phone;
             $account->customer_address = $request->customer_address;
             $account->save();
@@ -221,7 +221,7 @@ class AccountsController extends Controller
             ]);
 
             $account = Accounts::findOrFail($id);
-            $account->customer_name = $request->customer_name;
+            $account->customer_name = ucwords(strtolower($request->customer_name));
             $account->customer_phone = $request->customer_phone;
             $account->customer_address = $request->customer_address;
             $account->update();
