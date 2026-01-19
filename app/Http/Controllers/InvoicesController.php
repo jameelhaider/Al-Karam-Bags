@@ -540,7 +540,7 @@ class InvoicesController extends Controller
                     'total_bill' => 0,
                     'total_items' => 0,
                     'profit' => 0,
-                    'customer_name' => $request->customer_name,
+                    'customer_name' => strtoupper($request->customer_name),
                     'invoice_to' => $account->customer_name,
                     'account_id' => $account->id,
                     'prev_balance' => $account->prev_balance,
