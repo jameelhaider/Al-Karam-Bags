@@ -177,7 +177,7 @@
                     </div>
                     <div class="mt-2" style="background-color: rgba(0, 0, 0, 0.64);height:2px"></div>
 
-                    <h2 class="text-dark text-center fw-bold mt-2">Stock Return Invoice</h2>
+                    <h2 class="text-dark text-center fw-bold mt-2">Return Invoice</h2>
                     <div style="background-color: rgba(0, 0, 0, 0.64);height:2px"></div>
 
 
