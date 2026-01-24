@@ -33,7 +33,7 @@
 
             .custom-back-button:hover {
                 background-color: #2596be;
-                border:0px;
+                border: 0px;
             }
 
             .custom-back-button i {
@@ -61,22 +61,22 @@
             </form>
         </div>
 
-         <!-- Charts Section -->
-         @if ($sales!=null)
-         <div class="row">
-             <div class="col-lg-6 col-md-6 col-12 col-sm-12 mb-4">
-                 <div class="card p-2" style="background:linear-gradient(135deg, rgba(105, 108, 255, 0.16), white)">
-                     <canvas id="revenueChart"></canvas>
-                 </div>
+        <!-- Charts Section -->
+        @if ($sales != null)
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12 col-sm-12 mb-4">
+                    <div class="card p-2" style="background:linear-gradient(135deg, rgba(105, 108, 255, 0.16), white)">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
 
-             </div>
-             <div class="col-lg-6 col-md-6 col-12 col-sm-12 mb-4">
-                 <div class="card p-2" style="background:linear-gradient(135deg, rgba(105, 108, 255, 0.16), white)">
-                     <canvas id="expenseChart"></canvas>
-                 </div>
-             </div>
-         </div>
-         @endif
+                </div>
+                <div class="col-lg-6 col-md-6 col-12 col-sm-12 mb-4">
+                    <div class="card p-2" style="background:linear-gradient(135deg, rgba(105, 108, 255, 0.16), white)">
+                        <canvas id="expenseChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        @endif
 
 
         @if ($sales != null)
@@ -93,8 +93,7 @@
                     </div>
                     <!-- Total Expenses This Month -->
                     <div class="col-lg-4 col-md-6 mb-3">
-                        <div class="card text-center shadow-sm"
-                            style="background: rgb(252, 190, 190); border-radius: 8px;">
+                        <div class="card text-center shadow-sm" style="background: rgb(252, 190, 190); border-radius: 8px;">
                             <div class="card-body">
                                 <h5 class="card-title text-dark fw-bold">Total Expenses This Month</h5>
                                 <h4 class="text-dark">{{ 'Rs. ' . number_format($totalExpenses) }}</h4>
@@ -103,8 +102,7 @@
                     </div>
                     <!-- Total Profit This Month -->
                     <div class="col-lg-4 col-md-12 mb-3">
-                        <div class="card text-center shadow-sm"
-                            style="background: rgb(178, 240, 178); border-radius: 8px;">
+                        <div class="card text-center shadow-sm" style="background: rgb(178, 240, 178); border-radius: 8px;">
                             <div class="card-body">
                                 <h5 class="card-title text-dark fw-bold">Total Profit This Month</h5>
                                 <h4 class="text-dark">{{ 'Rs. ' . number_format($totalProfit) }}</h4>
@@ -156,8 +154,8 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th style="font-size:14px" class="text-dark fw-bold">#</th>
-                                            <th style="font-size:14px" class="text-dark fw-bold">Name</th>
-                                            <th style="font-size:14px" class="text-dark fw-bold">Amount</th>
+                                                <th style="font-size:14px" class="text-dark fw-bold">Name</th>
+                                                <th style="font-size:14px" class="text-dark fw-bold">Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -171,7 +169,8 @@
                                                             {{ $expense->expense_type }}
                                                         @endif
                                                     </td>
-                                                    <td class="text-dark">{{ 'Rs.' . number_format($expense->ammount) }}</td>
+                                                    <td class="text-dark">{{ 'Rs.' . number_format($expense->ammount) }}
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                             <tr class="text-center">
@@ -220,11 +219,13 @@
                                             @foreach ($sales as $key => $sale)
                                                 <tr class="text-center">
                                                     <td class="text-dark">{{ ++$key }}</td>
-                                                    <td><a href="{{ route('invoice.view', ['id' => $sale->id]) }}" class="text-dark">{{ $sale->invoice_id}}</a></td>
+                                                    <td><a href="{{ route('invoice.view', ['id' => $sale->id]) }}"
+                                                            class="text-dark">{{ $sale->invoice_id }}</a></td>
                                                     <td class="text-dark">{{ 'Rs.' . number_format($sale->profit) }}</td>
                                                     <td><a href="{{ route('invoice.view', ['id' => $sale->id]) }}"
-                                                        class="btn btn-dark btn-sm" title="View Invoice"> Invoice <i class="bx bx-show"></i>
-                                                    </a></td>
+                                                            class="btn btn-dark btn-sm" title="View Invoice"> Invoice <i
+                                                                class="bx bx-show"></i>
+                                                        </a></td>
                                                 </tr>
                                             @endforeach
                                             <tr class="text-center">
@@ -257,6 +258,138 @@
                 @endif
             </div>
         </div>
+
+
+
+
+<div class="mt-5 container">
+    <h4 class="mb-4 text-primary fw-bold text-center">Day-wise Report</h4>
+
+    <!-- Download Button -->
+    <div class="text-end mb-3">
+        <button id="downloadReport" class="btn btn-sm btn-primary">
+            Download Day-wise Report
+        </button>
+    </div>
+
+    <div id="dayWiseTable" class="table-responsive shadow-sm rounded">
+        <table class="table table-bordered table-striped table-hover align-middle mb-0">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Sale</th>
+                    <th>Revenue</th>
+                    <th>Expense</th>
+                    <th>Profit</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($dayWiseReport as $row)
+                    <tr class="text-center">
+                        <td class="text-dark">{{ $row['date'] }}</td>
+                        <td class="text-dark">{{ $row['day'] }}</td>
+                        <td class="fw-bold"
+                            style="color: {{ $row['total_bill'] > 0 ? 'rgb(1, 149, 1)' : ($row['total_bill'] < 0 ? 'red' : 'gray') }}">
+                            {{ 'Rs.' . number_format($row['total_bill']) }}
+                        </td>
+
+                        <td class="fw-bold"
+                            style="color: {{ $row['revenue'] > 0 ? '#10559f' : ($row['revenue'] < 0 ? 'rgb(253, 27, 27)' : 'gray') }}">
+                            {{ 'Rs.' . number_format($row['revenue']) }}
+                        </td>
+
+                        <td class="fw-bold"
+                            style="color: {{ $row['expense'] > 0 ? 'rgb(255, 162, 0)' : ($row['expense'] < 0 ? 'rgb(253, 27, 27)' : 'gray') }}">
+                            {{ 'Rs.' . number_format($row['expense']) }}
+                        </td>
+
+                        <td class="fw-bold"
+                            style="color: {{ $row['profit'] > 0 ? 'rgb(1, 149, 1)' : ($row['profit'] < 0 ? 'rgb(253, 27, 27)' : 'gray') }}">
+                            {{ 'Rs.' . number_format($row['profit']) }}
+                        </td>
+
+                        <td>
+                            @if ($row['profit'] > 0)
+                                <span class="badge" style="background-color: rgb(1, 149, 1)">In Profit</span>
+                            @elseif($row['profit'] < 0)
+                                <span class="badge" style="background-color: rgb(253, 27, 27)">In Loss</span>
+                            @else
+                                <span class="badge bg-secondary">No Profit No Loss</span>
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center text-muted fw-bold py-4">No data available</td>
+                    </tr>
+                @endforelse
+            </tbody>
+
+            <!-- Footer for totals -->
+            @php
+                $report = collect($dayWiseReport);
+            @endphp
+
+            <tfoot class="table-primary text-center fw-bold">
+                <tr>
+                    <td colspan="2">Total</td>
+                    <td style="color: rgb(1, 149, 1);font-size:18px" class="fw-bolder">
+                        {{ 'Rs.' . number_format($report->sum('total_bill')) }}</td>
+                    <td style="color: #10559f;font-size:18px" class="fw-bolder">
+                        {{ 'Rs.' . number_format($report->sum('revenue')) }}</td>
+                    <td style="color: rgb(255, 162, 0);font-size:18px" class="fw-bolder">
+                        {{ 'Rs.' . number_format($report->sum('expense')) }}</td>
+                    <td
+                        style="font-size:18px;color: {{ $report->sum('profit') > 0 ? 'rgb(1, 149, 1)' : ($report->sum('profit') < 0 ? 'rgb(253, 27, 27)' : 'gray') }}">
+                        {{ 'Rs.' . number_format($report->sum('profit')) }}
+                    </td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<!-- html2canvas JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    document.getElementById('downloadReport').addEventListener('click', function() {
+        const table = document.getElementById('dayWiseTable');
+        html2canvas(table).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'day_wise_report.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    });
+</script>
+
+
+
+        <style>
+            body {
+                background: #f4f7fa;
+            }
+
+            table thead th {
+                letter-spacing: 0.5px;
+            }
+
+            .table-hover tbody tr:hover {
+                background: #e9f5ff;
+                transition: 0.3s;
+            }
+        </style>
+
+
+
+
+
+
+
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
