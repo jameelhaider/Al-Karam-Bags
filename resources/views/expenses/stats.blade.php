@@ -136,8 +136,6 @@
 
 
 
-
-
         <div class="card p-3 mt-3">
             @if ($sales == null)
                 <h3 class="text-center fw-bold text-dark">Stats will load once you search by month</h3>
@@ -260,9 +258,8 @@
         </div>
 
 
-
-
-<div class="mt-5 container">
+    @if ($sales != null)
+<div class="mt-5 ">
     <h4 class="mb-4 text-primary fw-bold text-center">Day-wise Report</h4>
 
     <!-- Download Button -->
@@ -351,6 +348,9 @@
         </table>
     </div>
 </div>
+  @endif
+
+
 
 <!-- html2canvas JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
