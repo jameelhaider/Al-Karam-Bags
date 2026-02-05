@@ -1,17 +1,18 @@
 @extends('dashboard.master2')
 @php
-    $title = request()->type == 'handcarries'
-        ? 'Admin | Stocks | Hand Carries'
-        : (request()->type == 'handbags'
-            ? 'Admin | Stocks | Hand Bags'
-            : (request()->type == 'schoolbags'
-                ? 'Admin | Stocks | School Bags'
-                : (request()->type == 'travelbags'
-                    ? 'Admin | Stocks | Travel Bags'
-                    : 'Title Not Found')));
+    $title =
+        request()->type == 'handcarries'
+            ? 'Admin | Stocks | Hand Carries'
+            : (request()->type == 'handbags'
+                ? 'Admin | Stocks | Hand Bags'
+                : (request()->type == 'schoolbags'
+                    ? 'Admin | Stocks | School Bags'
+                    : (request()->type == 'travelbags'
+                        ? 'Admin | Stocks | Travel Bags'
+                        : 'Title Not Found')));
 @endphp
 
-@section('admin_title',$title)
+@section('admin_title', $title)
 @section('content2')
 
     <div class="container-fluid px-3">
@@ -199,8 +200,8 @@
                     {{-- Buttons --}}
                     <div class="col-lg-3 col-md-3 col-sm-6 col-12 mt-1 mb-1">
                         <div class="btn-group w-100">
-                            <a href="{{ route('stock.index',['type'=>request()->type]) }}"
-                                title="Clear" class="btn btn-outline-danger">Clear</a>
+                            <a href="{{ route('stock.index', ['type' => request()->type]) }}" title="Clear"
+                                class="btn btn-outline-danger">Clear</a>
                             <button type="submit" title="Search" class="btn btn-outline-success">Search</button>
                         </div>
                     </div>
@@ -322,7 +323,7 @@
                                                 <ul class="dropdown-menu dropdown-menu-end"
                                                     aria-labelledby="dropdownMenuButton">
 
-                                                      <li>
+                                                    <li>
                                                         <a class="dropdown-item" href="#"
                                                             onclick="openDemandModal({{ $stock->id }})">Add To
                                                             Demand</a>
@@ -392,7 +393,7 @@
 
 
 
- <!-- Demand Modal -->
+    <!-- Demand Modal -->
     <div class="modal fade" id="demandModal" tabindex="-1" aria-labelledby="demandModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form method="POST" action="{{ route('add.stock.demand') }}">
