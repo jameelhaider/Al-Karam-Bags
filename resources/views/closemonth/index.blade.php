@@ -106,7 +106,7 @@
                                     </td>
 
                                     <td>
-                                        <a class="text-dark"
+                                        <a class="text-dark fw-bold"
                                             href="{{ route('expense.view', ['month_id' => $closemonth->id]) }}">
                                             {{ 'Rs.' . number_format($closemonth->total_amount) }}</a>
 
@@ -185,6 +185,7 @@
                                     <option value="Electricity Bill">Electricity Bill</option>
                                     <option value="Internet Bill">Internet Bill</option>
                                     <option value="Shop Rent">Shop Rent</option>
+                                    <option value="Daily Expense">Daily Expense</option>
                                     <option value="Petrol Charges">Petrol Charges</option>
                                     <option value="Others">Others</option>
                                 </select>

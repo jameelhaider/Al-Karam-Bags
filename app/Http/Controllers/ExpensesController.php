@@ -16,7 +16,7 @@ class ExpensesController extends Controller
     {
         if (Gate::allows('is_admin')) {
             $expense = new Expenses();
-            $expense->name = $request->name;
+            $expense->name = ucwords($request->name);
             $expense->expense_type = $request->expense_type;
             $expense->ammount = $request->ammount;
             $expense->month_id = $request->closemonth_id;
@@ -65,7 +65,7 @@ class ExpensesController extends Controller
         $closed = $request->month ? DB::table('close_months')->where('month', $request->month)->first() : null;
 
         if ($request->month && !$closed) {
-            return redirect()->route('stats.profit')->with('error', 'This Month Is Not Closed Yet.');
+            return redirect()->route('stats.profit')->with('error', 'This Month Is Not Start Yet.');
         }
 
         if ($request->month && $closed) {

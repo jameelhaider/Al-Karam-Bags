@@ -55,9 +55,9 @@
 
 
         <div class="row">
-            <div class="col-lg-3 mt-3">
+            <div class="col-lg-2 mt-3">
             </div>
-            <div class="col-lg-6 mt-3">
+            <div class="col-lg-8 mt-3">
                 <div class="card p-2 mb-0" style="max-height: 500px;overflow:auto;">
                     @if ($expenses->count() > 0)
                         <div class="table-responsive">
@@ -67,21 +67,25 @@
                                         <th style="font-size:14px" class="text-dark fw-bold">#</th>
                                         <th style="font-size:14px" class="text-dark fw-bold">Name</th>
                                         <th style="font-size:14px" class="text-dark fw-bold">Amount</th>
+                                        <th style="font-size:14px" class="text-dark fw-bold">Expense Date</th>
                                         <th style="font-size:14px" class="text-dark fw-bold">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($expenses as $key => $expense)
                                         <tr class="text-center">
-                                            <td>{{ ++$key }}</td>
-                                            <td>
+                                            <td class="text-dark">{{ ++$key }}</td>
+                                            <td class="text-dark fw-bold">
                                                 @if ($expense->name)
                                                     {{ $expense->name }}
                                                 @else
                                                     {{ $expense->expense_type }}
                                                 @endif
                                             </td>
-                                            <td>{{ 'Rs.' . number_format($expense->ammount) }}</td>
+                                            <td class="text-dark">{{ 'Rs.' . number_format($expense->ammount) }}</td>
+                                             <td class="text-dark fw-bold">
+                                        {{ \Carbon\Carbon::parse($expense->created_at)->format('d M y') }}
+                                    </td>
                                             <td>
                                                 <div class="btn-group btn-group-sm">
                                                     <a style="color:rgb(222, 54, 54);cursor:pointer"
@@ -92,8 +96,10 @@
                                         </tr>
                                     @endforeach
                                     <tr class="text-center fw-bold">
-                                        <td colspan="2">Total</td>
-                                        <td>{{ 'Rs.' . number_format($totalAmount) }}</td>
+                                        <td colspan="2" class="text-dark">Total</td>
+                                        <td class="text-dark">{{ 'Rs.' . number_format($totalAmount) }}</td>
+
+                                        <td></td>
                                         <td></td>
                                     </tr>
                                 </tbody>
@@ -107,6 +113,7 @@
                                         <th style="font-size:14px" class="text-dark fw-bold">#</th>
                                         <th style="font-size:14px" class="text-dark fw-bold">Name</th>
                                         <th style="font-size:14px" class="text-dark fw-bold">Amount</th>
+                                        <th style="font-size:14px" class="text-dark fw-bold">Expense Date</th>
                                         <th style="font-size:14px" class="text-dark fw-bold">Action</th>
                                     </tr>
                                 </thead>
@@ -120,7 +127,7 @@
 
 
             </div>
-            <div class="col-lg-3"></div>
+            <div class="col-lg-2"></div>
         </div>
     </div>
 
