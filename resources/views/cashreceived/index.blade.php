@@ -99,11 +99,7 @@
 
         <div class="card p-2 mb-0">
             @if ($cash->count() > 0)
-                <form action="{{ route('cash.received.download.pdf') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="account_id" value="All">
-                    <input type="submit" value="Download PDF" class="btn btn-primary float-end mt-2">
-                </form>
+                
 
 
                 <div class="table-responsive">

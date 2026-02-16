@@ -195,7 +195,7 @@ class AccountsController extends Controller
             $account = new Accounts();
             $account->customer_name = strtoupper($request->customer_name);
             $account->customer_phone = $request->customer_phone;
-            $account->customer_address = $request->customer_address;
+            $account->customer_address = strtoupper($request->customer_address);
             $account->save();
 
             if ($request->action === 'save_add_new') {
@@ -223,7 +223,7 @@ class AccountsController extends Controller
             $account = Accounts::findOrFail($id);
             $account->customer_name = strtoupper($request->customer_name);
             $account->customer_phone = $request->customer_phone;
-            $account->customer_address = $request->customer_address;
+            $account->customer_address = strtoupper($request->customer_address);
             $account->update();
 
             return redirect()->route('index.account')->with('success', 'Account Updated Successfully!');
