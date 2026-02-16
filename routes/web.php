@@ -30,9 +30,6 @@ use App\Http\Controllers\CloseMonthController;
 */
 
 
-Route::post('stock/parts/download-pdf', [StocksController::class, 'downloadpartspdf'])->name('stock.parts.download.pdf');
-Route::post('stock/tools/download-pdf', [StocksController::class, 'downloadtoolspdf'])->name('stock.tools.download.pdf');
-Route::post('cash/received/download-pdf', [CashReceivedController::class, 'downloadpdf'])->name('cash.received.download.pdf');
 Route::post('demands/download/pdf', [DemandsController::class, 'downloadpdf'])->name('demands.download.pdf');
 Route::post('accounts/download-pdf', [AccountsController::class, 'downloadpdf'])->name('accounts.download.pdf');
 Route::get('demands/delete/all/{type}', [DemandsController::class, 'deleteall'])->name("demand.delete.all");
@@ -268,8 +265,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/delete/{id}', [StocksController::class, 'delete'])->name("stock.delete");
             Route::get('/{type}', [StocksController::class, 'index'])->name("stock.index");
             Route::post('/addtodemand', [StocksController::class, 'addtodemand'])->name("add.stock.demand");
-            // view
-            Route::get('/{id}/view', [StocksController::class, 'view'])->name("stock.view");
         });
 
 

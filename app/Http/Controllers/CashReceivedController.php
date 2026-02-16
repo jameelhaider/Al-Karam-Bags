@@ -196,22 +196,4 @@ class CashReceivedController extends Controller
 
 
 
-
-    public function downloadpdf(Request $request)
-    {
-        if (Gate::allows('is_admin')) {
-            $query = DB::table('cash_receiveds');
-            if ($request->account_id !== 'All') {
-                $query->where('account_id', $request->account_id);
-            }
-            if ($request->date) {
-                $query->whereDate('created_at', $request->date);
-            }
-            $data = $query->orderBy('created_at', 'desc')->get();
-            $pdf = Pdf::loadView('pdf.cashreceived', ['data' => $data]);
-            return $pdf->download('cash_received.pdf');
-        } else {
-            return abort(401);
-        }
-    }
 }

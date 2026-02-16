@@ -35,18 +35,6 @@ class StocksController extends Controller
         }
     }
 
-    public function view($id)
-    {
-        if (Gate::allows('is_admin')) {
-            $stock = DB::table('stocks')
-                ->select('stocks.name as name', 'stocks.id as id')
-                ->where('stocks.id', $id)->first();
-            return view('stocks.view', compact('stock'));
-        } else {
-            return abort(401);
-        }
-    }
-
 
 
 
