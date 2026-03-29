@@ -149,107 +149,107 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/update-show', [HomeController::class, 'updateshow'])->name("update.show");
 
-
         Route::get('/', function () {
-            if (Gate::allows('is_admin')) {
-                $totaldemands = DB::table('demands')->count();
-                $totalschooldemands = DB::table('demands')->where('type', 'schoolbags')->count();
-                $totalhandcarrydemands = DB::table('demands')->where('type', 'handcarries')->count();
-                $totaltraveldemands = DB::table('demands')->where('type', 'travelbags')->count();
-                $totalhanddemands = DB::table('demands')->where('type', 'handbags')->count();
-                // Revenues
-                $today = Carbon::today();
-                $startOfWeek = Carbon::now()->startOfWeek();
-                $startOfMonth = Carbon::now()->startOfMonth();
-                $endOfMonth = Carbon::now()->endOfMonth();
-                $endOfWeek = Carbon::now()->endOfWeek();
-                $startOfYear = Carbon::now()->startOfYear();
-                $endOfYear = Carbon::now()->endOfYear();
-                $startOfPreviousMonth = Carbon::now()->subMonth()->startOfMonth();
-                $endOfPreviousMonth = Carbon::now()->subMonth()->endOfMonth();
-                $todayRevenue = DB::table('invoices')
-                    ->whereDate('created_at', $today)
-                    ->where('status', '!=', 'Returned')
-                    ->sum('profit');
-                $thisWeekRevenue = DB::table('invoices')
-                    ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
-                    ->where('status', '!=', 'Returned')
-                    ->sum('profit');
-                $thisMonthRevenue = DB::table('invoices')
-                    ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-                    ->where('status', '!=', 'Returned')
-                    ->sum('profit');
-                $thisYearRevenue = DB::table('invoices')
-                    ->whereBetween('created_at', [$startOfYear, $endOfYear])
-                    ->where('status', '!=', 'Returned')
-                    ->sum('profit');
-                $overallRevenue = DB::table('invoices')
-                    ->where('status', '!=', 'Returned')
-                    ->sum('profit');
-                $previousMonthRevenue = DB::table('invoices')
-                    ->whereBetween('created_at', [$startOfPreviousMonth, $endOfPreviousMonth])
-                    ->where('status', '!=', 'Returned')
-                    ->sum('profit');
-                $totalExpensesthismonth = DB::table('expenses')
-                    ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-                    ->sum('ammount');
-                $totalProfitthismonthAfterExpenses = $thisMonthRevenue - $totalExpensesthismonth;
 
-                $totalrass = DB::table('stocks')
-                    ->select(DB::raw('SUM(qty * purchase_price) as total'))
-                    ->value('total');
-                $totaltodaysales = DB::table('invoices')
-                    ->whereDate('created_at', $today)
-                    ->where('status', '!=', 'Returned')
-                    ->sum('total_bill');
-                $totalthisweeksales = DB::table('invoices')
-                    ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
-                    ->where('status', '!=', 'Returned')
-                    ->sum('total_bill');
-                $totalthismonthsales = DB::table('invoices')
-                    ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-                    ->where('status', '!=', 'Returned')
-                    ->sum('total_bill');
-                $totalprevmonthsales = DB::table('invoices')
-                    ->whereBetween('created_at', [$startOfPreviousMonth, $endOfPreviousMonth])
-                    ->where('status', '!=', 'Returned')
-                    ->sum('total_bill');
-                $totalthisyearsales = DB::table('invoices')
-                    ->whereBetween('created_at', [$startOfYear, $endOfYear])
-                    ->where('status', '!=', 'Returned')
-                    ->sum('total_bill');
-                $totaloverallsales = DB::table('invoices')
-                    ->where('status', '!=', 'Returned')
-                    ->sum('total_bill');
-                $totalrem = DB::table('accounts')
-                    ->where('prev_balance', '>', 0)
-                    ->sum('prev_balance');
-                return view('admin', compact(
-                    'totalschooldemands',
-                    'totalhandcarrydemands',
-                    'totaltraveldemands',
-                    'totalhanddemands',
-                    'totaldemands',
-                    'todayRevenue',
-                    'thisWeekRevenue',
-                    'thisYearRevenue',
-                    'overallRevenue',
-                    'thisMonthRevenue',
-                    'totalExpensesthismonth',
-                    'previousMonthRevenue',
-                    'totalrass',
-                    'totalProfitthismonthAfterExpenses',
-                    'totaltodaysales',
-                    'totalthisweeksales',
-                    'totalthismonthsales',
-                    'totalprevmonthsales',
-                    'totalthisyearsales',
-                    'totaloverallsales',
-                    'totalrem'
-                ));
-            } else {
+            if (!Gate::allows('is_admin')) {
                 return abort(401);
             }
+            $now = Carbon::now();
+            $today = $now->copy()->today();
+            $startOfWeek = $now->copy()->startOfWeek();
+            $endOfWeek = $now->copy()->endOfWeek();
+            $startOfMonth = $now->copy()->startOfMonth();
+            $endOfMonth = $now->copy()->endOfMonth();
+            $previousMonth = $now->copy()->startOfMonth()->subMonth();
+            $startOfPreviousMonth = $previousMonth->copy()->startOfMonth();
+            $endOfPreviousMonth = $previousMonth->copy()->endOfMonth();
+            $startOfYear = $now->copy()->startOfYear();
+            $endOfYear = $now->copy()->endOfYear();
+            $totaldemands = DB::table('demands')->count();
+            $totalschooldemands = DB::table('demands')->where('type', 'schoolbags')->count();
+            $totalhandcarrydemands = DB::table('demands')->where('type', 'handcarries')->count();
+            $totaltraveldemands = DB::table('demands')->where('type', 'travelbags')->count();
+            $totalhanddemands = DB::table('demands')->where('type', 'handbags')->count();
+            $todayRevenue = DB::table('invoices')
+                ->whereDate('created_at', $today)
+                ->where('status', '!=', 'Returned')
+                ->sum('profit');
+            $thisWeekRevenue = DB::table('invoices')
+                ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+                ->where('status', '!=', 'Returned')
+                ->sum('profit');
+            $thisMonthRevenue = DB::table('invoices')
+                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                ->where('status', '!=', 'Returned')
+                ->sum('profit');
+            $previousMonthRevenue = DB::table('invoices')
+                ->whereBetween('created_at', [$startOfPreviousMonth, $endOfPreviousMonth])
+                ->where('status', '!=', 'Returned')
+                ->sum('profit');
+            $thisYearRevenue = DB::table('invoices')
+                ->whereBetween('created_at', [$startOfYear, $endOfYear])
+                ->where('status', '!=', 'Returned')
+                ->sum('profit');
+            $overallRevenue = DB::table('invoices')
+                ->where('status', '!=', 'Returned')
+                ->sum('profit');
+            $totalExpensesthismonth = DB::table('expenses')
+                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                ->sum('ammount');
+            $totalProfitthismonthAfterExpenses = $thisMonthRevenue - $totalExpensesthismonth;
+            $totalrass = DB::table('stocks')
+                ->select(DB::raw('SUM(qty * purchase_price) as total'))
+                ->value('total');
+            $totaltodaysales = DB::table('invoices')
+                ->whereDate('created_at', $today)
+                ->where('status', '!=', 'Returned')
+                ->sum('total_bill');
+            $totalthisweeksales = DB::table('invoices')
+                ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+                ->where('status', '!=', 'Returned')
+                ->sum('total_bill');
+            $totalthismonthsales = DB::table('invoices')
+                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                ->where('status', '!=', 'Returned')
+                ->sum('total_bill');
+            $totalprevmonthsales = DB::table('invoices')
+                ->whereBetween('created_at', [$startOfPreviousMonth, $endOfPreviousMonth])
+                ->where('status', '!=', 'Returned')
+                ->sum('total_bill');
+            $totalthisyearsales = DB::table('invoices')
+                ->whereBetween('created_at', [$startOfYear, $endOfYear])
+                ->where('status', '!=', 'Returned')
+                ->sum('total_bill');
+            $totaloverallsales = DB::table('invoices')
+                ->where('status', '!=', 'Returned')
+                ->sum('total_bill');
+            $totalrem = DB::table('accounts')
+                ->where('prev_balance', '>', 0)
+                ->sum('prev_balance');
+
+            return view('admin', compact(
+                'totalschooldemands',
+                'totalhandcarrydemands',
+                'totaltraveldemands',
+                'totalhanddemands',
+                'totaldemands',
+                'todayRevenue',
+                'thisWeekRevenue',
+                'thisYearRevenue',
+                'overallRevenue',
+                'thisMonthRevenue',
+                'previousMonthRevenue',
+                'totalExpensesthismonth',
+                'totalProfitthismonthAfterExpenses',
+                'totalrass',
+                'totaltodaysales',
+                'totalthisweeksales',
+                'totalthismonthsales',
+                'totalprevmonthsales',
+                'totalthisyearsales',
+                'totaloverallsales',
+                'totalrem'
+            ));
         });
 
 
