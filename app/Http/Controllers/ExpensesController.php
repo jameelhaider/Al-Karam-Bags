@@ -69,7 +69,7 @@ class ExpensesController extends Controller
         }
 
         if ($request->month && $closed) {
-            $date = Carbon::createFromFormat('Y-m', $request->month);
+            $date = Carbon::parse($request->month);
             $year = $date->year;
             $monthNumber = $date->month;
 
