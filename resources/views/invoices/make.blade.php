@@ -2,6 +2,8 @@
 @section('admin_title', 'Admin | Make Sale Invoice')
 @section('content4')
     <div class="container-fluid px-3">
+
+
         <div class="card shadow-sm bg-white rounded-0">
             <div class="row">
                 <div class="col-lg-3 col-6 col-md-3 col-sm-4">
@@ -16,16 +18,53 @@
                         <h5 class="mt-1 d-block d-sm-block d-lg-none d-md-none" style="font-family: cursive;">Make Sale
                             Invoice
                         </h5>
+
                         <div class="ms-4 d-none d-lg-block">
                             <span id="togglePurchasePriceButton" style="cursor: pointer;color:#2596be"
                                 onclick="togglePriceField()">
                                 <i class="bx bx-show"></i> Show Purchase Price
                             </span>
                         </div>
+
+                        <div class="ms-3 d-none d-md-block d-lg-block">
+                            <div class="item-counter-box d-flex align-items-center px-3 py-1">
+                                <i class="bx bx-cart-alt me-2"></i>
+                                <span class="me-2">Items</span>
+                                <span id="total_items" class="item-count">0</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
+        <style>
+            .item-counter-box {
+                background: linear-gradient(135deg, #2596be, #6dd5ed);
+                border-radius: 25px;
+                color: #fff;
+                font-weight: 500;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+            }
+
+            .item-counter-box:hover {
+                transform: scale(1.05);
+            }
+
+            .item-count {
+                background: #fff;
+                color: #2596be;
+                border-radius: 50%;
+                padding: 5px 12px;
+                font-weight: bold;
+                transition: transform 0.2s ease;
+            }
+        </style>
 
         <div class="card mb-2 p-2 mt-2 sticky-top">
             <form action="" method="GET">
@@ -281,6 +320,8 @@
                         Save <i class="bx bx-check-circle"></i>
                     </button>
 
+
+
                 </form>
             </div>
         </div>
@@ -331,6 +372,9 @@
                 });
             });
         </script>
+
+
+
         <script>
             function calculateTotalBill() {
                 let totalBill = 0;
@@ -427,5 +471,31 @@
                 updatePriceVisibility(isVisible);
             });
         </script>
+
+        <script>
+            function calculateTotalBill() {
+                let totalBill = 0;
+                let totalItems = 0; // 👈 count variable
+
+                document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+                    const id = checkbox.name.match(/items\[(\d+)\]\[selected\]/)[1];
+
+                    if (checkbox.checked) {
+                        totalItems++; // 👈 count increase
+
+                        const qty = parseFloat(document.querySelector(`input[name='items[${id}][qty]']`).value) || 0;
+                        const finalPrice = parseFloat(document.querySelector(`input[name='items[${id}][final_price]']`)
+                            .value) || 0;
+
+                        totalBill += qty * finalPrice;
+                    }
+                });
+
+                // 👇 update UI
+                document.getElementById('total_bill').textContent = 'Rs.' + totalBill.toFixed(2);
+                document.getElementById('total_items').textContent = totalItems;
+            }
+        </script>
+
     </div>
 @endsection
