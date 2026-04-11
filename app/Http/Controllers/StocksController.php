@@ -130,7 +130,7 @@ class StocksController extends Controller
     }
 
 
-      public function addtodemand(Request $request)
+    public function addtodemand(Request $request)
     {
         if (Gate::allows('is_admin')) {
             $request->validate([
@@ -148,6 +148,7 @@ class StocksController extends Controller
             return abort(401);
         }
     }
+
 
 
 
@@ -170,27 +171,40 @@ class StocksController extends Controller
                 'stocks.name',
                 DB::raw('SUM(invoice_items.qty) as total_sold')
             )
-            ->where('stocks.type', $type);
-        $topSelling = $query
-            ->groupBy(
-                'stocks.id',
-                'stocks.name',
-            )
-            ->orderByDesc('total_sold')
-            ->limit($limit)
-            ->get();
-           if($type=='schoolbags'){
- $tit='School Bags';
-            }elseif($type=='handcarries'){
- $tit='Hand Carries';
-            }
-            elseif($type=='travelbags'){
- $tit='Tarvel Bags';
-            }
-             elseif($type=='handbags'){
- $tit='Hand Bags';
-            }
+            ->where('stocks.type', $type)
+            ->groupBy('stocks.id', 'stocks.name')
+            ->orderByDesc('total_sold');
+
+        // Apply limit only if not "all"
+        if ($limit !== 'all') {
+            $query->limit((int)$limit);
+        }
+
+        $topSelling = $query->get();
+
+        // Title mapping
+        switch ($type) {
+            case 'schoolbags':
+                $tit = 'School Bags';
+                break;
+            case 'handcarries':
+                $tit = 'Hand Carries';
+                break;
+            case 'travelbags':
+                $tit = 'Travel Bags'; // fixed typo
+                break;
+            case 'handbags':
+                $tit = 'Hand Bags';
+                break;
+        }
+
+        // Title logic
+        if ($limit === 'all') {
+            $title2 = "Top Selling {$tit} (No Limit ~ All)";
+        } else {
             $title2 = "Top {$limit} Selling {$tit}";
+        }
+
         return view('stocks.sellingstats', compact('topSelling', 'limit', 'title2'));
     }
 }

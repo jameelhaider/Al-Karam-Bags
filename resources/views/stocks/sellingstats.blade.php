@@ -57,22 +57,22 @@
             <form action="" method="GET">
                 <div class="row">
 
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-1 mb-1">
-                            <select name="limit" class="form-select" onchange="this.form.submit()">
-                                <option value="10" {{ request()->input('limit', 10) == 10 ? 'selected' : '' }}>Limit 10
-                                </option>
-                                <option value="20" {{ request()->input('limit', 10) == 20 ? 'selected' : '' }}>20
-                                </option>
-                                <option value="30" {{ request()->input('limit', 10) == 30 ? 'selected' : '' }}>30
-                                </option>
-                                <option value="40" {{ request()->input('limit', 10) == 40 ? 'selected' : '' }}>40
-                                </option>
-                                <option value="50" {{ request()->input('limit', 10) == 50 ? 'selected' : '' }}>50
-                                </option>
-                                <option value="100" {{ request()->input('limit', 10) == 100 ? 'selected' : '' }}>100
-                                </option>
-                            </select>
-                        </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-1 mb-1">
+                        <select name="limit" class="form-select" onchange="this.form.submit()">
+                            <option value="10" {{ request()->input('limit', 10) == 10 ? 'selected' : '' }}>Limit 10
+                            </option>
+                            <option value="20" {{ request()->input('limit', 10) == 20 ? 'selected' : '' }}>20</option>
+                            <option value="30" {{ request()->input('limit', 10) == 30 ? 'selected' : '' }}>30</option>
+                            <option value="40" {{ request()->input('limit', 10) == 40 ? 'selected' : '' }}>40</option>
+                            <option value="50" {{ request()->input('limit', 10) == 50 ? 'selected' : '' }}>50</option>
+                            <option value="100" {{ request()->input('limit', 10) == 100 ? 'selected' : '' }}>100</option>
+
+                            <!-- FIXED -->
+                            <option value="all" {{ request()->input('limit') == 'all' ? 'selected' : '' }}>
+                                No Limit
+                            </option>
+                        </select>
+                    </div>
 
 
 
@@ -118,7 +118,7 @@
                                 <tr>
                                     <td class="text-dark">{{ ++$key }}</td>
                                     <td class="text-dark fw-bold">
-                                            {{ $item->name }}
+                                        {{ $item->name }}
                                     </td>
 
                                     <td class="text-center"><span class="badge bg-primary">{{ $item->total_sold }}</span>
@@ -126,6 +126,19 @@
                                 </tr>
                             @endforeach
                         </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" class="text-end fw-bolder text-dark" style="font-size: 20px;">Total</th>
+                                <th class="text-center">
+                                    <span class="badge p-2" style="background-color: rgb(1, 149, 1);font-size:10px">
+                                        {{ $topSelling->sum('total_sold') }}
+                                    </span>
+                                </th>
+                            </tr>
+                        </tfoot>
+
+
                     </table>
                 </div>
             @else
