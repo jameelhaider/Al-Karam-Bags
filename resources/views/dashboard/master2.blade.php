@@ -321,6 +321,27 @@
 
 
 
+
+
+
+
+                 <!-- Accounts -->
+                <li
+                    class="menu-header small text-uppercase fw-bold {{ Request::is('admin/accounts*') ? '' : 'text-dark' }}">
+                    <span class="menu-header-text">Spendings</span>
+                </li>
+                <li
+                    class="menu-item {{ Request::is('admin/spendings') || Request::is('admin/spendings/create') ? 'active' : '' }}">
+                    <a href="{{ url('admin/spendings') }}"
+                        class="menu-link {{ Request::is('admin/spendings*') ? '' : 'text-dark' }} d-flex align-items-center">
+                        <i class="menu-icon tf-icons bx bx-dollar"></i>
+                        <div data-i18n="Support" class="flex-grow-1">Spendings</div>
+
+                    </a>
+                </li>
+
+
+
                 <!-- Demands -->
                 <li
                     class="menu-header small text-uppercase fw-bold {{ Request::is('admin/demands/parts') || Request::is('admin/demands/tools') || Request::is('admin/demands/parts/create') || Request::is('admin/demands/tools/create') ? '' : 'text-dark' }}">

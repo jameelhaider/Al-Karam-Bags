@@ -17,6 +17,7 @@ use App\Http\Controllers\CashReceivedController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\CloseMonthController;
+use App\Http\Controllers\SpendingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -295,6 +296,20 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/{id}/ledger', [AccountsController::class, 'ledger'])->name("account.ledger");
             Route::get('/{id}/details', [AccountsController::class, 'details'])->name("account.details");
+        });
+
+
+
+        //spendings
+        Route::group(['prefix' => 'spendings'], function () {
+            //CRUD
+            Route::post('/submit', [SpendingController::class, 'submit'])->name("submit.spendings");
+            Route::get('/create', [SpendingController::class, 'create'])->name("create.spendings");
+            Route::get('/edit/{id}', [SpendingController::class, 'edit'])->name("spendings.edit");
+            Route::post('/update/{id}', [SpendingController::class, 'update'])->name("update.spendings");
+            Route::get('/delete/{id}', [SpendingController::class, 'delete'])->name("spendings.delete");
+            //index
+            Route::get('/', [SpendingController::class, 'index'])->name("index.spendings");
         });
 
 
