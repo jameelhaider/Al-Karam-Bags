@@ -16,26 +16,23 @@ class SpendingController extends Controller
         if (!Gate::allows('is_admin')) {
             abort(401);
         }
+
         $query = Spending::query();
+
+        $thismonthspend = null;
+
         if ($request->date) {
             $query->whereDate('date', $request->date);
         }
         if ($request->month) {
             $query->where('month', $request->month);
-        }
-        if ($request->day) {
-            $query->where('day', $request->day);
+            $thismonthspend = Spending::where('month', $request->month)->sum('amount');
         }
         $spendings = $query->orderBy('date', 'desc')->get();
         $grouped = $spendings->groupBy('date');
-        $totalSpend = $spendings->sum('amount');
-        $monthlyTotals = $spendings->groupBy('month')->map(function ($items) {
-            return $items->sum('amount');
-        });
         return view('spendings.index', compact(
             'grouped',
-            'totalSpend',
-            'monthlyTotals'
+            'thismonthspend'
         ));
     }
 
@@ -45,7 +42,7 @@ class SpendingController extends Controller
 
 
 
-     public function delete($id)
+    public function delete($id)
     {
         if (!Gate::allows('is_admin')) {
             abort(401, 'Unauthorized access.');
@@ -107,7 +104,7 @@ class SpendingController extends Controller
             $spending->date = $date;
             $spending->amount = $request->amount;
             $spending->day = $date->format('l');
-            $spending->month = $date->format('F');
+            $spending->month = $date->format('Y-m');
             $spending->description = strtoupper($request->description);
             $spending->save();
 
@@ -127,7 +124,7 @@ class SpendingController extends Controller
     {
         if (Gate::allows('is_admin')) {
 
-          $request->validate([
+            $request->validate([
                 'title' => ['required', 'string', 'max:255'],
                 'date' => ['required', 'date'],
                 'amount' => ['nullable', 'numeric', 'min:1'],
@@ -135,12 +132,12 @@ class SpendingController extends Controller
             ]);
 
             $spending = Spending::findOrFail($id);
-             $date = Carbon::parse($request->date);
+            $date = Carbon::parse($request->date);
             $spending->title = strtoupper($request->title);
             $spending->date = $date;
             $spending->amount = $request->amount;
             $spending->day = $date->format('l');
-            $spending->month = $date->format('F');
+            $spending->month = $date->format('Y-m');
             $spending->description = strtoupper($request->description);
             $spending->update();
 

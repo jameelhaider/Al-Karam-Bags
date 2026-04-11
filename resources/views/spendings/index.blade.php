@@ -53,32 +53,14 @@
         <div class="card mb-2 p-2 mt-2">
             <form action="" method="GET">
                 <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1 mb-1">
-                        <input type="date" min="1" class="form-control" value="{{ request()->date }}"
-                            name="date">
+                    <div class="col-lg-5 col-md-5 col-sm-6 col-12 mt-1 mb-1">
+                        <input type="date" class="form-control" value="{{ request()->date }}" name="date">
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1 mb-1">
-                        <select name="day" class="form-select" onchange="this.form.submit()">
-                            <option value="">Select Day</option>
-                            @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                                <option value="{{ $day }}" {{ request('day') == $day ? 'selected' : '' }}>
-                                    {{ $day }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1 mb-1">
-                        <select name="month" class="form-select" onchange="this.form.submit()">
-                            <option value="">Select Month</option>
-                            @foreach (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
-                                <option value="{{ $month }}" {{ request('month') == $month ? 'selected' : '' }}>
-                                    {{ $month }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-12 mt-1 mb-1">
+                        <input type="month" class="form-control" value="{{ request()->month }}" name="month">
                     </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6 mt-1 mb-1">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-12 mt-1 mb-1">
                         <div class="btn-group w-100">
                             <a href="{{ url('admin/spendings') }}" title="Clear" class="btn btn-outline-danger">Clear</a>
                             <button type="submit" title="Search" class="btn btn-outline-success">Search</button>
@@ -89,6 +71,32 @@
         </div>
 
 
+
+        @if ($thismonthspend != null && request()->month)
+            @php
+                $monthName = \Carbon\Carbon::createFromFormat('Y-m', request()->month)->format('F Y');
+            @endphp
+
+            <div class="card shadow-sm border-0 rounded-3 mb-3">
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <h6 class="text-muted mb-1">Monthly Summary</h6>
+                        <h4 class="mb-0 fw-bold text-dark">
+                            {{ $monthName }}
+                        </h4>
+                    </div>
+
+                    <div class="text-end">
+                        <div class="text-muted small">Total Spend</div>
+                        <div class="fs-4 fw-bold text-danger">
+                            Rs. {{ number_format($thismonthspend) }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        @endif
 
 
 
@@ -122,25 +130,28 @@
                                         <td class="text-dark text-center">{{ ++$key }}</td>
                                         <td class="text-dark fw-bold">{{ $spending->title }}</td>
                                         <td class="text-danger fw-bold">{{ 'Rs.' . number_format($spending->amount) }}</td>
-                                        <td class="text-dark">{{ $spending->description ?? 'N/A' }}</td>
+                                        <td class="text-dark">{{ $spending->description ? $spending->description : 'N/A' }}
+                                        </td>
                                         <td>
-                                                <div class="dropdown ms-auto">
-                                            <button class="btn btn-dark btn-sm dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Actions
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-end"
-                                                aria-labelledby="dropdownMenuButton">
-                                                <li>
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('spendings.edit', ['id' => $spending->id]) }}">Edit Spend</a>
-                                                </li>
-                                                 <li>
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('spendings.delete', ['id' => $spending->id]) }}">Delete Spend</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                            <div class="dropdown ms-auto">
+                                                <button class="btn btn-dark btn-sm dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Actions
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end"
+                                                    aria-labelledby="dropdownMenuButton">
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('spendings.edit', ['id' => $spending->id]) }}">Edit
+                                                            Spend</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('spendings.delete', ['id' => $spending->id]) }}">Delete
+                                                            Spend</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
