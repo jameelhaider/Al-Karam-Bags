@@ -26,13 +26,7 @@
                             </span>
                         </div>
 
-                        <div class="ms-3 d-none d-md-block d-lg-block">
-                            <div class="item-counter-box d-flex align-items-center px-3 py-1">
-                                <i class="bx bx-cart-alt me-2"></i>
-                                <span class="me-2">Items</span>
-                                <span id="total_items" class="item-count">0</span>
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>
@@ -69,12 +63,22 @@
         <div class="card mb-2 p-2 mt-2 sticky-top">
             <form action="" method="GET">
                 <div class="row">
-                    <div class="col-lg-9 col-md-8 col-sm-8 col-12 mt-1 mb-1">
+                    <div class="col-lg-7 col-md-6 col-sm-8 col-12 mt-1 mb-1">
                         <input type="text" class="form-control" value="{{ request()->name }}" placeholder="Name"
                             name="name">
                     </div>
 
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-12 mt-1 mb-1">
+                    <div class="col-lg-2 col-md-3">
+                         <div class="ms-3 d-none d-md-block d-lg-block">
+                            <div class="item-counter-box d-flex align-items-center px-3 py-1">
+                                <i class="bx bx-cart-alt me-2"></i>
+                                <span class="me-2">Items</span>
+                                <span id="total_items" class="item-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-12 mt-1 mb-1">
                         <div class="btn-group w-100">
                             <a href="{{ url('admin/invoice/make') }}" title="Clear"
                                 class="btn btn-outline-danger">Clear</a>
