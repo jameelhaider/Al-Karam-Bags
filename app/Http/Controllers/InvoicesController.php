@@ -546,7 +546,8 @@ class InvoicesController extends Controller
                     'prev_balance' => $account->prev_balance,
                     'status' => $request->status,
                     'invoice_id' => 'CC-' . rand(100000000, 999999999),
-                ]);
+                    'created_at' => \Carbon\Carbon::parse($request->invoice_date)->setTimeFrom(now()),
+]);
 
                 foreach ($selectedItems as $id => $item) {
                     $price = $item['price'];
@@ -570,6 +571,7 @@ class InvoicesController extends Controller
                         'qty' => $qty,
                         'final_price' => $final_price,
                         'total' => $total,
+                        'created_at' => \Carbon\Carbon::parse($request->invoice_date)->setTimeFrom(now()),
                     ]);
 
                     $stock->update([

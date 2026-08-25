@@ -18,5 +18,6 @@ class Invoices extends Model
         'prev_balance',
         'status',
         'customer_name',
+        'created_at'
     ];
 }

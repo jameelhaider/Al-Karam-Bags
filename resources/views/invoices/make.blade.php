@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="col-lg-2 col-md-3">
-                         <div class="ms-3 d-none d-md-block d-lg-block">
+                        <div class="ms-3 d-none d-md-block d-lg-block">
                             <div class="item-counter-box d-flex align-items-center px-3 py-1">
                                 <i class="bx bx-cart-alt me-2"></i>
                                 <span class="me-2">Items</span>
@@ -186,13 +186,77 @@
                         </h2>
                     </div>
                 </div>
+
+
+
+                {{-- <input type="date" name="invoice_date" class="form-control" id="">
                 <input type="submit" value="Make Invoice" class="btn btn-primary w-100" id="makeInvoiceBtn" disabled>
 
 
                 <a class="btn btn-primary mt-2" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
                     aria-controls="offcanvasExample">
                     Create Quick Account
-                </a>
+                </a> --}}
+
+                <div class="row g-2">
+                    <div class="col-12 col-lg-4">
+                        <input type="date" name="invoice_date" class="form-control" id="invoiceDate"
+                            value="{{ old('invoice_date', date('Y-m-d')) }}">
+                    </div>
+
+                    <div class="col-12 col-lg-4">
+                        <input type="submit" value="Make Invoice" class="btn btn-primary w-100" id="makeInvoiceBtn"
+                            disabled>
+                    </div>
+
+                    <div class="col-12 col-lg-4">
+                        <a class="btn btn-primary w-100" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                            aria-controls="offcanvasExample">
+                            Create Quick Account
+                        </a>
+                    </div>
+                </div>
+
+                <style>
+                    #invoiceDate::-webkit-clear-button,
+                    #invoiceDate::-webkit-inner-spin-button {
+                        display: none;
+                        -webkit-appearance: none;
+                    }
+                </style>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const invoiceDate = document.getElementById('invoiceDate');
+                        const todayStr = new Date().toISOString().split('T')[0];
+
+                        // Ensure default value on load (fallback in case server-side value fails)
+                        if (!invoiceDate.value) {
+                            invoiceDate.value = todayStr;
+                        }
+
+                        // Prevent clearing on change (e.g. manual delete + blur triggers change in some browsers)
+                        invoiceDate.addEventListener('change', function() {
+                            if (!this.value) {
+                                this.value = todayStr;
+                            }
+                        });
+
+                        // Prevent clearing on blur (covers Firefox / manual key deletion)
+                        invoiceDate.addEventListener('blur', function() {
+                            if (!this.value) {
+                                this.value = todayStr;
+                            }
+                        });
+
+                        // Block Delete/Backspace keys from clearing the field entirely
+                        invoiceDate.addEventListener('keydown', function(e) {
+                            if (e.key === 'Delete' || e.key === 'Backspace') {
+                                e.preventDefault();
+                            }
+                        });
+                    });
+                </script>
             </div>
 
 

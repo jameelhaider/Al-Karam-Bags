@@ -16,5 +16,6 @@ class InvoiceItems extends Model
         'final_price',
         'total',
         'stock_id',
+        'created_at'
     ];
 }
